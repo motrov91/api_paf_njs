@@ -61,8 +61,6 @@ const AllProducts = async(req, res, next) => {
 
 const updateProduct = async( req, res, next ) => {
 
-    console.log(req.body)
-
     const rolUser = await User.findByPk(req.user.id);
 
     //Check user is admin
@@ -91,11 +89,39 @@ const updateProduct = async( req, res, next ) => {
 
 }
 
+const deleteProduct = async (req, res, next) => {
+
+    const rolUser = await User.findByPk(req.user.id);
+
+    //Check user is admin
+    if( rolUser.rolId != 1) {
+        return res.status(401).json({
+            message : "No tienes los permisos para realizar la acción deseada"
+        })
+    }
+
+    //Check by exist product
+    const existProduct = await Product.findByPk(req.params.id);
+
+    if(!existProduct){
+        return res.status(400).json({
+            msg: "El producto no existe"
+        })
+    }
+
+    await existProduct.destroy();
+
+    return res.status(200).json({
+        msg: 'Producto eliminado exitosamente'
+    })
+}
+
 
 export {
     AddProduct,
     AllProducts,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }
 
 
