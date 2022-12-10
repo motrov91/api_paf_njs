@@ -38,6 +38,6 @@ app.use('/product', products);
 
 
 //Port
-app.listen(process.env.PORT_SERVER || 3000);
+app.listen(process.env.PORT || 3000);
 console.log('Server up in port ', process.env.PORT_SERVER );
 
