@@ -39,5 +39,5 @@ app.use('/product', products);
 
 //Port
 app.listen(process.env.PORT || 3000);
-console.log('Server up in port ', process.env.PORT_SERVER );
+console.log('Server up in port ', process.env.PORT );
 

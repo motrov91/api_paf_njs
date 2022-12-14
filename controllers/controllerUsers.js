@@ -7,8 +7,6 @@ import {User, Rol, Category} from '../models/index_model.js'
 //* Method to create users in db
 const addUser = async (req, res, next) => {
 
-    console.log('add', req.body);
-
     //Validate data of user
      await check('name').notEmpty().withMessage('El nombre es obligatorio').run(req)
      await check('email').isEmail().withMessage('No parece ser un email').run(req)
@@ -22,17 +20,27 @@ const addUser = async (req, res, next) => {
         return res.json(result.array())   
     }
 
-    //verify by duplicate email
-    const existUser = await User.findOne({ where:{ email : req.body.email } })
-
-    if(existUser){
-        return res.json({
-            message : 'El usuario ya se encuentra registrado',
-            code: 400
-        })
-    }
-
     try {
+
+        const rolUser = await User.findByPk(req.user.id);
+
+        //Check user is admin
+        if( rolUser.rolId != 1) {
+            return res.status(401).json({
+                message : "No tienes los permisos para realizar la acción deseada"
+            })
+        }
+
+        //verify by duplicate email
+        const existUser = await User.findOne({ where:{ email : req.body.email } })
+
+        if(existUser){
+            return res.json({
+                message : 'El usuario ya se encuentra registrado',
+                code: 400
+            })
+        }
+
         const user = await User.create(req.body)
 
         return res.status(200).json(user)
@@ -46,9 +54,29 @@ const addUser = async (req, res, next) => {
 
 //* Method to search all users in db
 const allUsers = async (req, res, next) =>{
+
+    try {
+
+        const rolUser = await User.findByPk(req.user.id);
+
+        //Check user is admin
+        if( rolUser.rolId != 1) {
+            return res.status(401).json({
+                message : "No tienes los permisos para realizar la acción deseada"
+            })
+        }
+
+        const users = await User.scope('deletePassword').findAll();
+
+        return res.json({users});
+        
+    } catch (error) {
+        return res.status(401).json({
+            msg: "No se pudo retornar los usuarios."
+        })
+    }
     
-    const users = await User.scope('deletePassword').findAll();
-    return res.json({users});
+    
 }
 
 //* Method to create administrators in db
@@ -79,40 +107,74 @@ const addRol = async (req, res, next) =>{
 
 const modifyUser = async (req, res, next) => {
 
-    const {name, email, cargo, rolId} = req.body;
+    try {
+        const {name, email, cargo, rolId} = req.body;
 
-    const existUser = await User.findByPk(req.params.id)
+        const rolUser = await User.findByPk(req.user.id);
 
-    if(!existUser){
+        //Check user is admin
+        if( rolUser.rolId != 1) {
+            return res.status(401).json({
+                message : "No tienes los permisos para realizar la acción deseada"
+            })
+        }
+
+        const existUser = await User.findByPk(req.params.id)
+
+        if(!existUser){
+            return res.status(400).json({
+                msg: "El usuario no existe"
+            })
+        }
+
+        existUser.set({
+            name,
+            email,
+            cargo,
+            rolId
+        })
+
+        await existUser.save();
+
+        return res.status(200).json({
+            response: "Success"
+        })
+
+    } catch (error) {
         return res.status(400).json({
-            msg: "El usuario no existe"
+            msg: `No se pudo actualizar el usuario ${error}`
         })
     }
 
-    existUser.set({
-        name,
-        email,
-        cargo,
-        rolId
-    })
-
-    await existUser.save();
-
-    return res.status(200).json({
-        response: "Success"
-    })
+    
 
 }
 
 const deleteUser = async (req, res, next) =>{
-    const { id } = req.params;
-    console.log('ID', id)
-    await User.destroy({
-        where: { id : id }
-    })
-    return res.status(200).json({
-        msg: "Eliminación Exitosa"
-    })
+    
+    try {
+
+        const rolUser = await User.findByPk(req.user.id);
+
+        //Check user is admin
+        if( rolUser.rolId != 1) {
+            return res.status(401).json({
+                message : "No tienes los permisos para realizar la acción deseada"
+            })
+        }
+
+        const { id } = req.params;
+        await User.destroy({
+            where: { id : id }
+        })
+        return res.status(200).json({
+            msg: "Eliminación Exitosa"
+        })
+    } catch (error) {
+        return res.status(400).json({
+            msg: `No se pudo eliminar el usuario ${error}`
+        })
+    }
 }
 
 export {
