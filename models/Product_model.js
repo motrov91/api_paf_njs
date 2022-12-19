@@ -2,6 +2,10 @@ import { DataTypes } from "sequelize";
 import db from '../config/db.js'
 
 const Product = db.define('Products', {
+    img: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false
