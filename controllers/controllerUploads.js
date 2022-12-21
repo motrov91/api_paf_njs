@@ -104,6 +104,12 @@ const updateImageProductCloud = async (req, res) => {
 
     await existProduct.save()
 
+    const product = await Product.findByPk(id ,{   
+        include: [
+            { model: User.scope('deletePassword') }
+        ]
+    });
+
 
     //Upload image 
     // const nameFile = await uploadFileHL(req.files, undefined, 'imgs');
@@ -114,9 +120,7 @@ const updateImageProductCloud = async (req, res) => {
 
     // console.log('Actualización existosa')
 
-    return res.status(200).json({
-        msg: 'Actualización exitosa.'
-    });
+    return res.status(200).json(product);
 
 }
 

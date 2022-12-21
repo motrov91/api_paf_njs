@@ -1,6 +1,7 @@
 import { Product, User } from '../models/index_model.js';
+import pdf from 'pdfkit';
 
-const AddProduct = async(req, res, next) => {
+const AddProduct = async(req, res) => {
  
     const { reference } = req.body;
 
@@ -34,7 +35,7 @@ const AddProduct = async(req, res, next) => {
 
 }
 
-const AllProducts = async(req, res, next) => {
+const AllProducts = async(req, res) => {
 
     //check that user exist
     const userExist = await User.findByPk(req.user.id);
@@ -59,7 +60,7 @@ const AllProducts = async(req, res, next) => {
     return res.status(200).json({products});
 }
 
-const updateProduct = async( req, res, next ) => {
+const updateProduct = async( req, res ) => {
 
     const rolUser = await User.findByPk(req.user.id);
 
@@ -89,7 +90,7 @@ const updateProduct = async( req, res, next ) => {
 
 }
 
-const deleteProduct = async (req, res, next) => {
+const deleteProduct = async (req, res) => {
 
     const rolUser = await User.findByPk(req.user.id);
 
@@ -116,12 +117,27 @@ const deleteProduct = async (req, res, next) => {
     })
 }
 
+const productPdf = async (req, res) => {
+
+    console.log(req.params.id)
+
+    const doc = new pdf();
+
+    doc
+        .fontSize(25)
+        .text('Texto de prueba', 100, 100)
+
+    doc.pipe(res)
+    doc.end();
+}
+
 
 export {
     AddProduct,
     AllProducts,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    productPdf
 }
 
 
