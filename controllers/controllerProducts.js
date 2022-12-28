@@ -1,5 +1,4 @@
 import { Product, User } from '../models/index_model.js';
-import pdf from 'pdfkit';
 
 const AddProduct = async(req, res) => {
  
@@ -65,7 +64,7 @@ const updateProduct = async( req, res ) => {
     const rolUser = await User.findByPk(req.user.id);
 
     //Check user is admin
-    if( rolUser.rolId != 1) {
+    if( rolUser.rolId == 3 ) {
         return res.status(401).json({
             message : "No tienes los permisos para realizar la acción deseada"
         })
@@ -119,16 +118,8 @@ const deleteProduct = async (req, res) => {
 
 const productPdf = async (req, res) => {
 
-    console.log(req.params.id)
+    res.send('message')
 
-    const doc = new pdf();
-
-    doc
-        .fontSize(25)
-        .text('Texto de prueba', 100, 100)
-
-    doc.pipe(res)
-    doc.end();
 }
 
 
