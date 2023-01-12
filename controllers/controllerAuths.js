@@ -1,7 +1,9 @@
 import {check, validationResult} from 'express-validator';
 import { User } from '../models/index_model.js';
-import { generateJWT } from '../helpers/tokens.js'
+import { generateJWT, tokenRecovery } from '../helpers/tokens.js'
 import { secureJWT } from '../helpers/generateJWT.js'
+import { emailRecovery } from '../helpers/emails.js';
+import bcrypt from 'bcrypt';
 
 const  loginUser = async (req, res, next) => {
     console.log(req.body);
@@ -77,7 +79,87 @@ const validateTokenUser = async(req, res) => {
     })
 }
 
+const validateEmail = async (req, res) => {
+
+    //console.log(req.body)
+
+    const { emailToVerificate } = req.body;
+
+    const userData = await User.findOne({
+        where: {
+            email : emailToVerificate 
+        }
+    })
+
+    if(!userData){
+        return res.status(400).json({ "usuarioStatus" : false })
+    }
+
+    try {
+        ///tokenRecovery crea el token y se lo asigna a token.
+        const token = tokenRecovery();
+
+        userData.set({
+            token
+        })
+
+        await userData.save();
+
+        //Función creada en el helper email y recibe como parametros [nombre, email, token]
+        emailRecovery({
+            nombre: userData.name,
+            email: userData.email,
+            token: token
+        })
+
+        res.status(200).json({"usuarioStatus" : true})
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            "usuarioStatus" : false
+        })
+    }
+
+    
+}
+
+const changesPassword = async(req, res) =>{
+
+    const tokenData = req.params['token'];
+    const { newPass, repeat } = req.body;
+
+    //Verificar que el token sea válido.
+    const userData = await User.findOne({ where: {token : tokenData}})
+
+    if(!userData){
+        return res.status(400).json({ msg:"Token no valido" });
+    }
+
+    try {
+
+        const salt = await bcrypt.genSalt(10);
+        const passwordEncrypted = await bcrypt.hash(newPass, salt);
+
+        userData.set({
+            password : passwordEncrypted,
+            token : null
+        })
+
+        await userData.save();
+
+        return res.status(200).json({msg: "success"});
+        
+    } catch (error) {
+        return res.status(400).json({ msg:"Error al modificar el password" });
+    }
+
+    
+}
+
 export {
     loginUser,
-    validateTokenUser
+    validateTokenUser,
+    validateEmail,
+    changesPassword
 }

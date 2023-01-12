@@ -20,6 +20,10 @@ const User = db.define('Users', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    token:{
+        type: DataTypes.STRING,
+        allowNull: true
+    }
 },{
     hooks: {
         //* when you have to create a new register, you take req.body in this case funciont(user)

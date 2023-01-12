@@ -1,1 +1,1 @@
-ALTER TABLE Products ADD COLUMN img varchar(255);
+ALTER TABLE Users ADD COLUMN token varchar(255);

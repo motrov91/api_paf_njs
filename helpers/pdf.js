@@ -9,6 +9,8 @@ const pdfGenerator = async (req, res) => {
 
     const productSelected = await Product.findByPk(req.params.id);
 
+    console.log(productSelected)
+
     let markets = [];
 
     if ( productSelected.market1 !== null ) {

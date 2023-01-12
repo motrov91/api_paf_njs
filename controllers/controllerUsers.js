@@ -105,7 +105,7 @@ const addRol = async (req, res, next) =>{
 
 }
 
-const modifyUser = async (req, res, next) => {
+const modifyUser = async (req, res) => {
 
     try {
         const {name, email, cargo, rolId} = req.body;

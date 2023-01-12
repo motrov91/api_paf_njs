@@ -9,7 +9,10 @@ const generateJWT = data => jwt.sign({
         expiresIn: '7d'
 })
 
+const tokenRecovery = () => Date.now().toString(32) + Math.random().toString().substring(2);
+
 export {
-    generateJWT
+    generateJWT,
+    tokenRecovery
 }
 

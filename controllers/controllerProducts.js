@@ -1,6 +1,8 @@
 import { Product, User } from '../models/index_model.js';
 
 const AddProduct = async(req, res) => {
+
+    console.log('******* ingresa ********');
  
     const { reference } = req.body;
 
@@ -39,7 +41,7 @@ const AllProducts = async(req, res) => {
     //check that user exist
     const userExist = await User.findByPk(req.user.id);
 
-    if( userExist.rolId == 1 ){
+    if( userExist.rolId == 1 || userExist.rolId == 3){
         const products = await Product.findAll({
             include: [
                 { model: User.scope('deletePassword') }
