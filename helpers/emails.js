@@ -7,7 +7,8 @@ const emailRecovery = async (data) => {
         secure: true,
         secureConnection: false,
         tls:{
-            ciphers:'SSLv3'
+            //ciphers:'SSLv3'
+            rejectUnauthorized: false,
         },
         requireTLS:true,
         debug: true,
@@ -17,6 +18,14 @@ const emailRecovery = async (data) => {
         }
     });
 
+    transport.verify(function (error, success) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("Server is ready to take our messages");
+    }
+    });
+
     const { email, nombre, token } = data;
 
     console.log('PASA');
@@ -24,7 +33,7 @@ const emailRecovery = async (data) => {
 
     //Structure email
     const mailOptions= {
-        from:'productospaf.com.co',
+        from:'recovery@productospaf.com.co',
         to: email,
         subject: 'Recuperación de contraseña productosPAF',
         text: 'Recupera tu cuenta en productospaf.com',
@@ -32,13 +41,13 @@ const emailRecovery = async (data) => {
             <p>Hola ${nombre}.</p>
             <p>Bienvenido al sistema para recuperación de tu contraseña.</p>
             <p>Tu cuenta ya esta lista, para cambiar tu contraseña solamente debes 
-                cambiar la contraseña en el siguiente enlace <a href="http://localhost:53750/#/auth/changePassword/${token}">Cambiar Contraseña</a>
+                cambiar la contraseña en el siguiente enlace <a href="https://productospaf.com.co/#/auth/changePassword/${token}">Cambiar Contraseña</a>
             </p>
         `
     };
 
     //Send email
-    return await transport.sendMail(mailOptions).then(() => {
+    return transport.sendMail(mailOptions).then(() => {
         console.log('Email sent successfully');
     }).catch((err) => {
         console.log('Fallo el envío del mensaje');
