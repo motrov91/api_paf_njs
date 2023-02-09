@@ -28,9 +28,6 @@ const emailRecovery = async (data) => {
 
     const { email, nombre, token } = data;
 
-    console.log('PASA');
-    console.log('email', email);
-
     //Structure email
     const mailOptions= {
         from:'recovery@productospaf.com.co',

@@ -50,8 +50,6 @@ const pdfGenerator = async (req, res) => {
         markets.push(productSelected.market12)
     }
 
-    console.log(markets.length)
-
     let imgProduct;
 
     if(productSelected.img){
@@ -84,11 +82,22 @@ const pdfGenerator = async (req, res) => {
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const pathImage1 = path.join( __dirname, '../assets/', 'img1.png' ); 
-    const pathImage2 = path.join( __dirname, '../assets/', 'img2.png' ); 
-    const pathImage3 = path.join( __dirname, '../assets/', 'img3.png' ); 
-    const pathImage4 = path.join( __dirname, '../assets/', 'img4.png' ); 
-    const pathImage5 = path.join( __dirname, '../assets/', 'img5.png' ); 
+    const logoAcueducto = path.join(__dirname, '../assets/logos/', 'acueductos.png' );
+    const logoAlimentos = path.join(__dirname, '../assets/logos/', 'alimentos.png' );
+    const logoClinico = path.join(__dirname, '../assets/logos/', 'clinico.png' );
+    const logoEducacion = path.join(__dirname, '../assets/logos/', 'educacion.png' );
+    const logoGobierno = path.join(__dirname, '../assets/logos/', 'gobierno.png' );
+    const logoIndustriales = path.join(__dirname, '../assets/logos/', 'industriales.png' );
+    const logoInvestigacion = path.join(__dirname, '../assets/logos/', 'investigacion.png' );
+    const logoQuimica = path.join(__dirname, '../assets/logos/', 'quimica.png' );
+    const logoTratamientoAguas = path.join(__dirname, '../assets/logos/', 'tratamientoAguas.png' );
+    const logoFarmaceutica = path.join(__dirname, '../assets/logos/', 'farmaceutica.png' );
+    const logoCannabis = path.join(__dirname, '../assets/logos/', 'cannabis.png' );
+    const pathImage1 = path.join( __dirname, '../assets/', 'numeroUno.png' ); 
+    const pathImage2 = path.join( __dirname, '../assets/', 'numeroDos.png' ); 
+    const pathImage3 = path.join( __dirname, '../assets/', 'numeroTres.png' ); 
+    const pathImage4 = path.join( __dirname, '../assets/', 'numeroCuatro.png' ); 
+    const pathImage5 = path.join( __dirname, '../assets/', 'numeroCinco.png' ); 
     const pathImage6 = path.join( __dirname, '../assets/', 'icon_video.png' ); 
     const ventaja1 = path.join( __dirname, '../assets/', 'ventaja1.png' ); 
     const ventaja2 = path.join( __dirname, '../assets/', 'ventaja2.png' ); 
@@ -111,6 +120,8 @@ const pdfGenerator = async (req, res) => {
     const fullDocH = 595;
     const cuadrado = [291, 140]
 
+    /* PFD PARA 1 PRODUCTO */
+
     if( markets.length === 1){
 
         doc
@@ -119,7 +130,22 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 220,10)
             .moveDown();
 
-        doc
+        if(productSelected.name.length > 25){
+            doc
+            .fillColor('#163461')
+            .fontSize(15)
+            .text(
+                productSelected.name, 
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            )
+            .moveDown();
+            
+        }else{
+            doc
             .fillColor('#163461')
             .fontSize(25)
             .text(
@@ -129,10 +155,12 @@ const pdfGenerator = async (req, res) => {
                     width: 200,
                     align: 'center'
                 }, 
-            );
+            ).moveDown();
+        }
+        
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 100, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 140, {width: 200})
             .moveDown();
 
         doc.lineJoin('test')
@@ -140,24 +168,67 @@ const pdfGenerator = async (req, res) => {
             .fill('#016db4')
             .moveDown();
 
-        doc
-            .fontSize(18)
+            doc
+            .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 380, 70, {width: 200})
+            .text(productSelected.market1, 380,65, {width: 220})
             .moveDown();
 
         doc
-            .fontSize(12)
+            .fontSize(11)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 380, 100, {width:200})
+            .text(productSelected.description_market1, 380, 105, {width:200})
             .moveDown();
+        
+        
 
-        doc.circle(330, 145, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoClinico, 305, 105, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoQuimica, 305, 105, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
         .rect(0, 320, fullDocH, 60).fill('#2e6ca7');
@@ -207,7 +278,7 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'
                 
             })
-        doc.image(pathImage2, 366, 415, {width: 40})
+        doc.image(pathImage2, 370, 420, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(300, 575, 170, 170).fill('#ff9f0f');
@@ -228,7 +299,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage3, 366, 585, {width: 40})
+        doc.image(pathImage4, 370, 595, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(125, 575, 170, 170).fill('#f8c901');
@@ -249,7 +320,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage4, 190, 585, {width: 40})
+        doc.image(pathImage3, 195, 595, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(99, 750, 402, 80).fill('#ff6510');
@@ -260,7 +331,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 775, {width: 40})
+        doc.image(pathImage5, 125, 775, {width: 30})
 
         doc
             .fontSize(11)
@@ -388,14 +459,31 @@ const pdfGenerator = async (req, res) => {
 
         doc.image(logo, 250, 748, {width: 120})
 
-    } else if( markets.length === 2 ){
+    } 
+    /* PDF PARA UN PRODUCTO DE DOS (2) MERCADOS */
+    else if( markets.length === 2 ){
         doc
             .fillColor('#016cb2')
             .fontSize(12)
             .text('Purificación y Análisis de Fluidos', 80,10)
             .moveDown();
 
-        doc
+        if(productSelected.name.length > 25){
+            doc
+            .fillColor('#163461')
+            .fontSize(15)
+            .text(
+                productSelected.name, 
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            )
+            .moveDown();
+            
+        }else{
+            doc
             .fillColor('#163461')
             .fontSize(25)
             .text(
@@ -405,10 +493,11 @@ const pdfGenerator = async (req, res) => {
                     width: 200,
                     align: 'center'
                 }, 
-            );
+            ).moveDown();
+        }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 110, {width: 250})
+            .image('data:image/jpeg;base64,'+imgProduct , 40, 110, {width: 250})
             .moveDown();
 
         doc.lineJoin('test')
@@ -419,7 +508,7 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 20, {width: 250})
+            .text(productSelected.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
@@ -429,19 +518,104 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market1, 370, 50, {width: 210})
             .moveDown();
 
-        doc.circle(330, 76, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoClinico, 305, 50, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoQuimica, 305, 50, { width:50 })
+                .moveDown();
+                break;
+        }
+
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 150, cuadrado[0], 150).fill('#ecc101');
 
-        doc.circle(330, 226, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoClinico, 305, 200, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoQuimica, 305, 200, { width:50 })
+                .moveDown();
+                break;
+        }
+
 
         doc
             .fontSize(16)
@@ -506,7 +680,7 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'
                 
             })
-        doc.image(pathImage2, 366, 415, {width: 40})
+        doc.image(pathImage2, 370, 420, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(300, 575, 170, 170).fill('#ff9f0f');
@@ -527,7 +701,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage3, 366, 585, {width: 40})
+        doc.image(pathImage4, 370, 595, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(125, 575, 170, 170).fill('#f8c901');
@@ -548,7 +722,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage4, 190, 585, {width: 40})
+        doc.image(pathImage3, 195, 595, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(99, 750, 402, 80).fill('#ff6510');
@@ -559,7 +733,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 775, {width: 40})
+        doc.image(pathImage5, 125, 775, {width: 30})
 
         doc
             .fontSize(11)
@@ -694,7 +868,22 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 80,10)
             .moveDown();
 
-        doc
+        if(productSelected.name.length > 25){
+            doc
+            .fillColor('#163461')
+            .fontSize(15)
+            .text(
+                productSelected.name, 
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            )
+            .moveDown();
+            
+        }else{
+            doc
             .fillColor('#163461')
             .fontSize(25)
             .text(
@@ -704,7 +893,8 @@ const pdfGenerator = async (req, res) => {
                     width: 200,
                     align: 'center'
                 }, 
-            );
+            ).moveDown();
+        }
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 60, 140, {width: 200})
@@ -718,34 +908,119 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(18)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 380, 20, {width: 250})
+            .text(productSelected.market1, 370, 10, {width: 230})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 380, 50, {width: 210})
+            .text(productSelected.description_market1, 370, 50, {width: 210})
             .moveDown();
 
-        doc.circle(330, 57, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
+
 
         doc.lineJoin('producto 2')
             .rect(fullDocH / 1.8, 120, cuadrado[0], 120).fill('#ecc101');
 
-        doc.circle(330, 180, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 155, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 155, { width:50 })
+                .moveDown();
+                break;
+        }
+
 
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 140, {width: 250})
+            .text(productSelected.market2, 370, 130, {width: 250})
             .moveDown();
 
         doc
@@ -758,15 +1033,57 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('producto 3')
             .rect(fullDocH / 1.8, 240, cuadrado[0], 120).fill('#25acb1');
 
-        doc.circle(330, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market3){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 278, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 278, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market3, 370, 260, {width: 250})
+            .text(productSelected.market3, 370, 250, {width: 250})
             .moveDown();
 
         doc
@@ -826,7 +1143,7 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'
                 
             })
-        doc.image(pathImage2, 366, 430, {width: 40})
+        doc.image(pathImage2, 370, 435, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(300, 590, 170, 170).fill('#ff9f0f');
@@ -847,7 +1164,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage3, 366, 600, {width: 40})
+        doc.image(pathImage4, 370, 610, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(125, 590, 170, 170).fill('#f8c901');
@@ -868,7 +1185,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage4, 190, 600, {width: 40})
+        doc.image(pathImage3, 195, 610, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
             .rect(99, 770, 402, 80).fill('#ff6510');
@@ -879,7 +1196,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 785, {width: 40})
+        doc.image(pathImage5, 125, 785, {width: 30})
 
         doc
             .fontSize(11)
@@ -1013,15 +1330,33 @@ const pdfGenerator = async (req, res) => {
         .text('Purificación y Análisis de Fluidos', 50,10)
         .moveDown();
 
-        doc
+        if(productSelected.name.length > 25){
+            doc
+            .fillColor('#163461')
+            .fontSize(15)
+            .text(
+                productSelected.name, 
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            )
+            .moveDown();
+            
+        }else{
+            doc
             .fillColor('#163461')
             .fontSize(25)
             .text(
                 productSelected.name, 
-                { width: 200 }, 
-                200, 0
-            )
-            .moveDown();
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            ).moveDown();
+        }
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
@@ -1042,43 +1377,168 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 60)
+            .text(productSelected.description_market1, 370, 60, {width: 210})
             .moveDown();
 
-        doc.circle(330, 85, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 210, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 258, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 178, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 220, {width: 250})
+            .text(productSelected.market2, 370, 220, {width: 210})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 250)
+            .text(productSelected.description_market2, 370, 260, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 420, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        doc.circle(330, 515, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market3){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 470, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 468, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -1090,17 +1550,58 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 460)
+            .text(productSelected.description_market3, 370, 470, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 630, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        doc.circle(330, 720, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market4){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 680, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 678, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -1112,7 +1613,7 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 680)
+            .text(productSelected.description_market4, 370, 690, {width: 210})
             .moveDown();
 
         doc
@@ -1156,7 +1657,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage1, 185, 130, {width: 30})
+        doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
             .rect(301, 100, 200, 200).fill('#f8c901');
@@ -1189,7 +1690,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
         
-        doc.image(pathImage3, 185, 330, {width: 30})
+        doc.image(pathImage3, 185, 335, {width: 30})
 
         doc
             .fontSize(11)
@@ -1210,7 +1711,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage4, 380, 325, {width: 40})
+        doc.image(pathImage4, 385, 335, {width: 30})
 
         doc
             .fontSize(11)
@@ -1231,7 +1732,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 526, {width: 40})
+        doc.image(pathImage5, 125, 526, {width: 30})
 
         doc
             .fontSize(11)
@@ -1369,23 +1870,41 @@ const pdfGenerator = async (req, res) => {
         .text('Purificación y Análisis de Fluidos', 50,10)
         .moveDown();
 
-        doc
+        if(productSelected.name.length > 25){
+            doc
+            .fillColor('#163461')
+            .fontSize(15)
+            .text(
+                productSelected.name, 
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            )
+            .moveDown();
+            
+        }else{
+            doc
             .fillColor('#163461')
             .fontSize(25)
             .text(
                 productSelected.name, 
-                { width: 200 }, 
-                200, 0
-            )
-            .moveDown();
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            ).moveDown();
+        }
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
             .moveDown();
 
         doc.lineJoin('test')
-            .rect(fullDocH / 1.8, 0, cuadrado[0], cuadrado[1])
-            .fill('#016db4')
+            .rect(fullDocH / 1.8, 0, cuadrado[0], cuadrado[1]) 
+            .fill('#016db4') 
             .moveDown();
 
         doc
@@ -1398,27 +1917,110 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 60, {width: 210})
+            .text(productSelected.description_market1, 370, 50, {width: 210})
             .moveDown();
 
-        doc.circle(330, 85, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 180, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 270, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 230, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 230, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 200, {width: 250})
+            .text(productSelected.market2, 370, 190, {width: 250})
             .moveDown();
 
         doc
@@ -1431,15 +2033,57 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 360, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        doc.circle(330, 450, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market3){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 405, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 405, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 380, {width: 200})
+            .text(productSelected.market3, 370, 370, {width: 200})
             .moveDown();
 
         doc
@@ -1452,51 +2096,133 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 540, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        doc.circle(330, 630, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market4){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 580, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 580, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 570, {width: 250})
+            .text(productSelected.market4, 370, 550, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 600, {width: 210} )
+            .text(productSelected.description_market4, 370, 590, {width: 210} )
             .moveDown();
 
         doc.lineJoin('miter')
-            .rect(fullDocH / 1.8, 720, cuadrado[0], 170).fill('#ecc101');
+            .rect(fullDocH / 1.8, 700, cuadrado[0], 170).fill('#ecc101');
 
-        doc.circle(330, 800, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market5){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 350, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 775, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 775, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 775, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 775, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 775, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 775, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 775, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 770, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 770, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 770, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market5, 370, 740, {width: 250})
+            .text(productSelected.market5, 370, 720, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 770, {width: 210})
+            .text(productSelected.description_market5, 370, 760, {width: 210})
             .moveDown();
 
         doc
             .fillColor('#016cb2')
             .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 790)
+            .text('www.paf.com.co', fullDocH/5.5, 700)
             .link(100, 100, 160, 27, 'https://www.paf.com.co/')
 
     //------------------------------ NEW PAGE ------------------------------------------
@@ -1534,7 +2260,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage1, 185, 130, {width: 30})
+        doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
             .rect(301, 100, 200, 200).fill('#f8c901');
@@ -1567,7 +2293,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
         
-        doc.image(pathImage3, 185, 330, {width: 30})
+        doc.image(pathImage3, 185, 335, {width: 30})
 
         doc
             .fontSize(11)
@@ -1588,7 +2314,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage4, 380, 325, {width: 40})
+        doc.image(pathImage4, 385, 335, {width: 30})
 
         doc
             .fontSize(11)
@@ -1609,7 +2335,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 526, {width: 40})
+        doc.image(pathImage5, 125, 526, {width: 30})
 
         doc
             .fontSize(11)
@@ -1747,15 +2473,34 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 50,10)
             .moveDown();
 
-        doc
+        if(productSelected.name.length > 25){
+            doc
+            .fillColor('#163461')
+            .fontSize(15)
+            .text(
+                productSelected.name, 
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            )
+            .moveDown();
+            
+        }else{
+            doc
             .fillColor('#163461')
             .fontSize(25)
             .text(
                 productSelected.name, 
-                { width: 200 }, 
-                200, 0
-            )
-            .moveDown();
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            ).moveDown();
+        }
+
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
@@ -1776,27 +2521,64 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 40, {width: 210})
-            .moveDown();
-
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+            .text(productSelected.description_market1, 370, 50, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 200, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
+
 
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 150, {width: 250})
+            .text(productSelected.market2, 370, 140, {width: 250})
             .moveDown();
 
         doc
@@ -1809,15 +2591,57 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        doc.circle(330, 340, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 178, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 290, {width: 200})
+            .text(productSelected.market3, 370, 280, {width: 200})
             .moveDown();
 
         doc
@@ -1830,16 +2654,57 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        doc.circle(330, 480, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market3){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 310, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 310, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 430, {width: 250})
+            .text(productSelected.market4, 370, 425, {width: 250})
             .moveDown();
 
         doc
@@ -1856,7 +2721,7 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market5, 370, 570, {width: 250})
+            .text(productSelected.market5, 370, 560, {width: 250})
             .moveDown();
 
         doc
@@ -1866,11 +2731,52 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market5, 370, 600, {width: 210})
             .moveDown();
 
-        doc.circle(330, 640, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market4){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 458, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 690, cuadrado[0], cuadrado[1]).fill('#25acb1');
@@ -1878,7 +2784,7 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market6, 370, 710, {width: 250})
+            .text(productSelected.market6, 370, 700, {width: 250})
             .moveDown();
 
         doc
@@ -1888,10 +2794,99 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market6, 370, 740, {width: 210})
             .moveDown();
         
-        doc.circle(330, 760, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market5){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 638, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 595, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
+
+        switch(productSelected.market6){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 730, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 730, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fillColor('#016cb2')
@@ -1934,7 +2929,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage1, 185, 130, {width: 30})
+        doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
             .rect(301, 100, 200, 200).fill('#f8c901');
@@ -1967,7 +2962,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
         
-        doc.image(pathImage3, 185, 330, {width: 30})
+        doc.image(pathImage3, 185, 335, {width: 30})
 
         doc
             .fontSize(11)
@@ -1988,7 +2983,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage4, 380, 325, {width: 40})
+        doc.image(pathImage4, 385, 335, {width: 30})
 
         doc
             .fontSize(11)
@@ -2009,7 +3004,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 526, {width: 40})
+        doc.image(pathImage5, 125, 526, {width: 30})
 
         doc
             .fontSize(11)
@@ -2148,15 +3143,33 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 50,10)
             .moveDown();
 
-        doc
+       if(productSelected.name.length > 25){
+            doc
+            .fillColor('#163461')
+            .fontSize(15)
+            .text(
+                productSelected.name, 
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            )
+            .moveDown();
+            
+        }else{
+            doc
             .fillColor('#163461')
             .fontSize(25)
             .text(
                 productSelected.name, 
-                { width: 200 }, 
-                200, 0
-            )
-            .moveDown();
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            ).moveDown();
+        }
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
@@ -2177,22 +3190,105 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 40, {width: 210})
+            .text(productSelected.description_market1, 370, 50, {width: 210})
             .moveDown();
 
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 200, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 178, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -2204,16 +3300,58 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 180, {width: 210})
+            .text(productSelected.description_market2, 370, 190, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        doc.circle(330, 340, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market3){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 318, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -2225,17 +3363,58 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 320, {width: 210})
+            .text(productSelected.description_market3, 370, 330, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        doc.circle(330, 480, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market4){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 458, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -2247,7 +3426,7 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 460, {width: 210} )
+            .text(productSelected.description_market4, 370, 470, {width: 210} )
             .moveDown();
 
 
@@ -2264,14 +3443,55 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 600, {width: 210})
+            .text(productSelected.description_market5, 370, 610, {width: 210})
             .moveDown();
 
-        doc.circle(330, 640, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market5){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 598, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 690, cuadrado[0], 300).fill('#25acb1');
@@ -2286,13 +3506,55 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market6, 370, 740, {width: 210})
+            .text(productSelected.description_market6, 370, 730, {width: 210})
             .moveDown();
         
-        doc.circle(330, 760, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market6){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 738, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fillColor('#016cb2')
@@ -2334,11 +3596,52 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market7, 370, 60, {width: 210})
             .moveDown();
 
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market7){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
 
         doc.lineJoin('miter')
@@ -2360,7 +3663,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage1, 185, 280, {width: 30})
+        doc.image(pathImage1, 185, 285, {width: 30})
 
         doc.lineJoin('miter')
             .rect(301, 250, 200, 200).fill('#f8c901');
@@ -2393,7 +3696,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
         
-        doc.image(pathImage3, 185, 480, {width: 30})
+        doc.image(pathImage3, 185, 485, {width: 30})
 
         doc
             .fontSize(11)
@@ -2414,7 +3717,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage4, 380, 465, {width: 40})
+        doc.image(pathImage4, 385, 485, {width: 30})
 
         doc
             .fontSize(11)
@@ -2435,7 +3738,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 676, {width: 40})
+        doc.image(pathImage5, 125, 676, {width: 30})
 
         doc
             .fontSize(11)
@@ -2574,15 +3877,33 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 50,10)
             .moveDown();
 
-        doc
+        if(productSelected.name.length > 25){
+            doc
+            .fillColor('#163461')
+            .fontSize(15)
+            .text(
+                productSelected.name, 
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            )
+            .moveDown();
+            
+        }else{
+            doc
             .fillColor('#163461')
             .fontSize(25)
             .text(
                 productSelected.name, 
-                { width: 200 }, 
-                200, 0
-            )
-            .moveDown();
+                60, 50,
+                { 
+                    width: 200,
+                    align: 'center'
+                }, 
+            ).moveDown();
+        }
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
@@ -2603,22 +3924,105 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 40, {width: 210})
+            .text(productSelected.description_market1, 370, 45, {width: 210})
             .moveDown();
 
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 200, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 178, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -2630,16 +4034,58 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 180, {width: 210})
+            .text(productSelected.description_market2, 370, 185, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        doc.circle(330, 340, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market3){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 318, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -2651,17 +4097,58 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 320, {width: 210})
+            .text(productSelected.description_market3, 370, 325, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        doc.circle(330, 480, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market4){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 458, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -2690,14 +4177,55 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 600, {width: 210})
+            .text(productSelected.description_market5, 370, 605, {width: 210})
             .moveDown();
 
-        doc.circle(330, 640, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market5){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 598, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 690, cuadrado[0], 300).fill('#25acb1');
@@ -2712,13 +4240,55 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market6, 370, 740, {width: 210})
+            .text(productSelected.description_market6, 370, 745, {width: 210})
             .moveDown();
         
-        doc.circle(330, 760, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market6){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 738, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fillColor('#016cb2')
@@ -2757,27 +4327,110 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market7, 370, 60, {width: 210})
+            .text(productSelected.description_market7, 370, 50, {width: 210})
             .moveDown();
 
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market7){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 200, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market8){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 178, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market8, 370, 150, {width: 250})
+            .text(productSelected.market8, 370, 145, {width: 250})
             .moveDown();
 
         doc
@@ -2807,7 +4460,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage1, 185, 380, {width: 30})
+        doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
             .rect(301, 350, 200, 200).fill('#f8c901');
@@ -2840,7 +4493,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
         
-        doc.image(pathImage3, 185, 580, {width: 30})
+        doc.image(pathImage3, 185, 585, {width: 30})
 
         doc
             .fontSize(11)
@@ -2861,7 +4514,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage4, 380, 565, {width: 40})
+        doc.image(pathImage4, 385, 585, {width: 30})
 
         doc
             .fontSize(11)
@@ -2882,7 +4535,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 776, {width: 40})
+        doc.image(pathImage5, 125, 776, {width: 30})
 
         doc
             .fontSize(11)
@@ -3053,19 +4706,102 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market1, 370, 40, {width: 210})
             .moveDown();
 
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 200, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 178, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -3083,10 +4819,52 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        doc.circle(330, 340, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market3){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 318, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -3104,11 +4882,52 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        doc.circle(330, 480, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market4){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 458, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -3140,11 +4959,52 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market5, 370, 600, {width: 210})
             .moveDown();
 
-        doc.circle(330, 640, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market5){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 598, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 690, cuadrado[0], 300).fill('#25acb1');
@@ -3162,10 +5022,52 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market6, 370, 740, {width: 210})
             .moveDown();
         
-        doc.circle(330, 760, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market6){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 738, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fillColor('#016cb2')
@@ -3207,19 +5109,102 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market7, 370, 40, {width: 210})
             .moveDown();
 
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market7){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 140, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 210, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+       switch(productSelected.market8){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -3237,22 +5222,64 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(10, 0, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        doc.circle(0, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market9){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 0, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market9, 40, 10, {width: 200})
+            .text(productSelected.market9, 60, 10, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market9, 40, 60, {width: 210})
+            .text(productSelected.description_market9, 60, 60, {width: 210})
             .moveDown();
 
 
@@ -3276,7 +5303,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage1, 185, 380, {width: 30})
+        doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
             .rect(301, 350, 200, 200).fill('#f8c901');
@@ -3309,7 +5336,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
         
-        doc.image(pathImage3, 185, 580, {width: 30})
+        doc.image(pathImage3, 185, 585, {width: 30})
 
         doc
             .fontSize(11)
@@ -3330,7 +5357,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage4, 380, 565, {width: 40})
+        doc.image(pathImage4, 385, 585, {width: 30})
 
         doc
             .fontSize(11)
@@ -3351,7 +5378,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 776, {width: 40})
+        doc.image(pathImage5, 125, 776, {width: 30})
 
         doc
             .fontSize(11)
@@ -3521,19 +5548,102 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market1, 370, 40, {width: 210})
             .moveDown();
 
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market1){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 200, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market2){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 178, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -3551,10 +5661,52 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        doc.circle(330, 340, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market3){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 318, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 318, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -3572,11 +5724,52 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        doc.circle(330, 480, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market4){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 458, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 458, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -3608,11 +5801,52 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market5, 370, 600, {width: 210})
             .moveDown();
 
-        doc.circle(330, 640, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market5){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 598, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 598, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 690, cuadrado[0], 300).fill('#25acb1');
@@ -3630,10 +5864,52 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market6, 370, 740, {width: 210})
             .moveDown();
         
-        doc.circle(330, 760, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market6){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 738, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 738, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fillColor('#016cb2')
@@ -3675,19 +5951,102 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market7, 370, 40, {width: 210})
             .moveDown();
 
-        doc.circle(330, 60, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
-            .moveDown();
+        switch(productSelected.market7){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 38, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 140, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        doc.circle(330, 210, 25)
-            .lineWidth(3)
-            .fillOpacity(0.98)
-            .fillAndStroke("white", "#f6f6f6")
+        switch(productSelected.market8){
+            case "INDUSTRIA QUÍMICA":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "PROCESOS INDUSTRIALES":
+                doc.image(logoIndustriales, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ACUEDUCTOS":
+                doc.image(logoAcueducto, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "EDUCACIÓN":
+                doc.image(logoEducacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "ALIMENTOS":
+                doc.image(logoAlimentos, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "GOBIERNO":
+                doc.image(logoGobierno, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "INVESTIGACIÓN":
+                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CLINICO Y HOSPITALARIO":
+                doc.image(logoClinico, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "TRATAMIENTO DE AGUA INDUSTRIAL":
+                doc.image(logoTratamientoAguas, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "FARMACÉUTICA":
+                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                .moveDown();
+                break;
+            case "CANNABIS":
+                doc.image(logoCannabis, 305, 178, { width:50 })
+                .moveDown();
+                break;
+        }
 
         doc
             .fontSize(16)
@@ -3765,7 +6124,7 @@ const pdfGenerator = async (req, res) => {
                 
             })
 
-        doc.image(pathImage1, 185, 380, {width: 30})
+        doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
             .rect(301, 350, 200, 200).fill('#f8c901');
@@ -3798,7 +6157,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
         
-        doc.image(pathImage3, 185, 580, {width: 30})
+        doc.image(pathImage3, 185, 585, {width: 30})
 
         doc
             .fontSize(11)
@@ -3819,7 +6178,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage4, 380, 565, {width: 40})
+        doc.image(pathImage4, 385, 585, {width: 30})
 
         doc
             .fontSize(11)
@@ -3840,7 +6199,7 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 121, 776, {width: 40})
+        doc.image(pathImage5, 125, 776, {width: 30})
 
         doc
             .fontSize(11)
