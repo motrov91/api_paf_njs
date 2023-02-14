@@ -69,6 +69,8 @@ const updateImageProductCloud = async (req, res) => {
 
     const { id } = req.params;
 
+    console.log('++++',req.files)
+
     //Check by exist product
     const existProduct = await Product.findByPk(id);
 
@@ -77,6 +79,21 @@ const updateImageProductCloud = async (req, res) => {
             msg: "El producto no existe"
         })
     }
+
+    // const nameArr = existProduct.img.split('/');
+
+    // let extensionArc = nameArr[nameArr.length-1];
+
+    // let extensionFinal = extensionArc.split('.');
+
+    // console.log(extensionFinal)
+
+    // if(extensionFinal[extensionArc.length-1] == 'webp'  ){
+    //     console.log('ingresa');
+    //     return res.status(400).json({
+    //         msg: 'La imagen no tiene un formato valido'
+    //     })
+    // }
 
     try {
 
@@ -94,6 +111,7 @@ const updateImageProductCloud = async (req, res) => {
             // }
 
             const nameArr = existProduct.img.split('/');
+
             const reference = nameArr[ nameArr.length - 1 ];
             const [ public_id ] = reference.split('.');
 

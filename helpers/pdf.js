@@ -9,8 +9,6 @@ const pdfGenerator = async (req, res) => {
 
     const productSelected = await Product.findByPk(req.params.id);
 
-    console.log(productSelected)
-
     let markets = [];
 
     if ( productSelected.market1 !== null ) {
@@ -497,7 +495,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 40, 110, {width: 250})
+            .image('data:image/jpeg;base64,'+imgProduct , 40, 110, { fit: [250, 200], align:'center', valign:'center'})
             .moveDown();
 
         doc.lineJoin('test')
@@ -627,7 +625,7 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 210, {width: 210})
+            .text(productSelected.description_market2, 370, 210, {width: 210})
             .moveDown();
 
         //* -------------------- CARACTERISTICAS -------------------------
@@ -1027,7 +1025,7 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 170, {width: 210})
+            .text(productSelected.description_market2, 370, 170, {width: 210})
             .moveDown();
 
         doc.lineJoin('producto 3')
@@ -1432,47 +1430,47 @@ const pdfGenerator = async (req, res) => {
 
         switch(productSelected.market2){
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 178, { width:50 })
+                doc.image(logoAcueducto, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
-                doc.image(logoIndustriales, 305, 178, { width:50 })
+                doc.image(logoIndustriales, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "ACUEDUCTOS":
-                doc.image(logoAcueducto, 305, 178, { width:50 })
+                doc.image(logoAcueducto, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "EDUCACIÓN":
-                doc.image(logoEducacion, 305, 178, { width:50 })
+                doc.image(logoEducacion, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "ALIMENTOS":
-                doc.image(logoAlimentos, 305, 178, { width:50 })
+                doc.image(logoAlimentos, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "GOBIERNO":
-                doc.image(logoGobierno, 305, 178, { width:50 })
+                doc.image(logoGobierno, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "INVESTIGACIÓN":
-                doc.image(logoInvestigacion, 305, 178, { width:50 })
+                doc.image(logoInvestigacion, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "CLINICO Y HOSPITALARIO":
-                doc.image(logoClinico, 305, 178, { width:50 })
+                doc.image(logoClinico, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "TRATAMIENTO DE AGUA INDUSTRIAL":
-                doc.image(logoTratamientoAguas, 305, 258, { width:50 })
+                doc.image(logoTratamientoAguas, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "FARMACÉUTICA":
-                doc.image(logoFarmaceutica, 305, 178, { width:50 })
+                doc.image(logoFarmaceutica, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "CANNABIS":
-                doc.image(logoCannabis, 305, 178, { width:50 })
+                doc.image(logoCannabis, 305, 254, { width:50 })
                 .moveDown();
                 break;
         }
@@ -3904,6 +3902,8 @@ const pdfGenerator = async (req, res) => {
                 }, 
             ).moveDown();
         }
+
+        console.log('*********',imgProduct)
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
