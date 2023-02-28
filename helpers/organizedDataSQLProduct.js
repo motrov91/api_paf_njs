@@ -24,7 +24,7 @@ const organizedDataSQL = data => {
 
     for(let i=0; i<=11; i++){
 
-    if(data.markets[i] != null){
+        if(data.markets[i] != null){
             dataProduct['market'+[i+1]] = data.markets[i];
             dataProduct['description_market'+[i+1]] = data.descriptionsMarkets[i];
         }
