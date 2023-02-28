@@ -1,6 +1,7 @@
 import {fileURLToPath} from 'url';
 import fs from 'fs';
 import path from 'path';
+import { organizedDataSQL, formaterProduct } from '../helpers/organizedDataSQLProduct.js';
 
 import { v2 as cloudinary } from 'cloudinary'
 
@@ -140,7 +141,9 @@ const updateImageProductCloud = async (req, res) => {
 
         // console.log('Actualización existosa')
 
-        return res.status(200).json(product);
+        let dataFormater = await formaterProduct(product);
+
+        return res.status(200).json(dataFormater);
         
     } catch (error) {
         console.log(error)

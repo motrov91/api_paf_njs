@@ -1,9 +1,7 @@
+import { organizedDataSQL, formaterProduct } from '../helpers/organizedDataSQLProduct.js';
 import { Product, User } from '../models/index_model.js';
 
 const AddProduct = async(req, res) => {
-
-    console.log('******* ingresa ********');
- 
     const { reference } = req.body;
 
     //Verify product by reference
@@ -17,18 +15,22 @@ const AddProduct = async(req, res) => {
 
     try {
 
-        req.body['userId'] = req.user.id
+        //Retorna el body en formato listo para cargar a la DB.
+        //en el body llegan elementos dentro de listas, al final retorma un objeto, listo para cargar.
+        let dataProduct = organizedDataSQL(req.body);
+
+        //Revisar esta linea porque puede esta haciendo lo mismo que la de abajo(40).
+        dataProduct['userId'] = req.user.id;
         
-        const productData = await Product.create(req.body);
+        //Se le asigna la respuesta de la creacion del usuario en la base de datos.
+        const productData = await Product.create(dataProduct);
 
-        const data = await Product.findOne({ 
-            where : { id : productData.id },
-            include:[
-                {model : User.scope('deletePassword')}
-            ]
-        })
+        console.log(productData);
 
-        return res.status(200).json(data);
+        //Recibe el objeto del producto recien creado y lo formatea para organizarlo en listas para mostrar en la respuesta.
+        let dataFormater = await formaterProduct(productData);
+
+        return res.status(200).json(dataFormater);
         
     } catch (error) {
          return console.log(`Error: ${error}`)
@@ -38,17 +40,32 @@ const AddProduct = async(req, res) => {
 
 const AllProducts = async(req, res) => {
 
+    let dataProducts = {
+        "products" : []
+    };
+
     //check that user exist
     const userExist = await User.findByPk(req.user.id);
+
+    
 
     if( userExist.rolId == 1 || userExist.rolId == 3){
         const products = await Product.findAll({
             include: [
                 { model: User.scope('deletePassword') }
             ]
-        });
+        });         
 
-        return res.status(200).json({products});
+        console.log('PRODUCTOS', products.length);
+        for(let j=0; j<products.length; j++){
+
+            let dataFormater = await formaterProduct(products[j]);
+            dataProducts.products.push(dataFormater);
+        }
+
+        // console.log('DATAPRODUCTS', dataProducts);
+
+        return res.status(200).json(dataProducts);
     }
         
     const products = await Product.findAll({ 
@@ -57,6 +74,7 @@ const AllProducts = async(req, res) => {
             { model: User.scope('deletePassword') }
         ]
     });
+
 
     return res.status(200).json({products});
 }
@@ -81,7 +99,11 @@ const updateProduct = async( req, res ) => {
         })
     }
 
-    existProduct.set(req.body);
+    //Retorna el body en formato listo para cargar a la DB.
+    //en el body llegan elementos dentro de listas, al final retorma un objeto, listo para cargar.
+    let dataProduct = organizedDataSQL(req.body);
+
+    existProduct.set(dataProduct);
 
     await existProduct.save()
 
@@ -119,18 +141,80 @@ const deleteProduct = async (req, res) => {
 }
 
 const productPdf = async (req, res) => {
-
     res.send('message')
-
 }
 
+const productById = async(req, res) => {
+    
+    //check that user exist
+    //const userExist = await User.findByPk(req.user.id);
+
+    let markets = [];
+    let descriptions = [];
+    let observations = [];
+    let features = [];
+    let observationsFeatures = [];
+    let adventages = [];
+    let observationsAdventages = [];
+
+
+    //TODO: Verificar si existe el usuario
+
+
+    //Search product
+    const product = await Product.findByPk(req.params.id);
+
+    if(product){
+        for(let i=1; i<=12; i++){
+            if(product['market'+[i]] != null){
+                markets.push(product['market'+[i]]);
+                descriptions.push(product['description_market'+[i]])
+                observations.push(product['observations'+[i]])
+            }
+        }
+
+        for(let i=1; i<=5; i++){
+            if(product['feature'+[i]] != null){
+                features.push(product['feature'+[i]]);
+                observationsFeatures.push(product['observationsFeature'+[i]]);
+            }
+
+            if(product['adventage'+[i]] != null){
+                adventages.push(product['feature'+[i]]);
+                observationsAdventages.push(product['observationsAdventages'+[i]]);
+            }
+        }
+    }
+
+
+    let productById = {
+        "id" : product.id,
+        "img" : product.img,
+        "name" : product.name,
+        "reference" : product.reference,
+        "state" : product.state,
+        "url_video" : product.url_video,
+        "userId" : product.userId,
+        "markets" : markets,
+        "descriptions" : descriptions,
+        "observationsMarket" : observations,
+        "features" : features,
+        "observationsFeatures" : observationsFeatures,
+        "adventages" : adventages,
+        "observationsAdventages" : observationsAdventages
+    }
+
+
+    res.status(200).json(productById);
+}
 
 export {
     AddProduct,
     AllProducts,
     updateProduct,
     deleteProduct,
-    productPdf
+    productPdf,
+    productById
 }
 
 
