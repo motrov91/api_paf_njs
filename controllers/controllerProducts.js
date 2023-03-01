@@ -49,14 +49,14 @@ const AllProducts = async(req, res) => {
 
     
 
-    if( userExist.rolId == 1 || userExist.rolId == 3){
+
+    if( userExist.rolId == 1 || userExist.rolId == 3 ){
         const products = await Product.findAll({
             include: [
                 { model: User.scope('deletePassword') }
             ]
         });         
 
-        console.log('PRODUCTOS', products.length);
         for(let j=0; j<products.length; j++){
 
             let dataFormater = await formaterProduct(products[j]);
