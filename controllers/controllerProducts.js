@@ -49,7 +49,9 @@ const AllProducts = async(req, res) => {
 
     
 
-
+    //* Si el rol del usuario es 1 0 3 podrán ver todos los productos.
+    //* si el rol es 2 no se ejecuta y pasa a la otra consulta. una vez ingresa a la condicion formatea el resultado 
+    //* para entregarlo como un conjunto de arreglos para cada producto.
     if( userExist.rolId == 1 || userExist.rolId == 3 ){
         const products = await Product.findAll({
             include: [
@@ -63,20 +65,27 @@ const AllProducts = async(req, res) => {
             dataProducts.products.push(dataFormater);
         }
 
-        // console.log('DATAPRODUCTS', dataProducts);
-
         return res.status(200).json(dataProducts);
     }
-        
-    const products = await Product.findAll({ 
+
+
+    //* Si el rolId es 2 se ejecuta el bloque de código de abajo, se buscan los productos que tengan como userId 
+    //* del usuario que esta haciendo la consulta y retorna esa información, pero antes formatea la información para en-
+    //* viarla como un objeto de arreglos.
+    const productsData = await Product.findAll({ 
         where: { userId : userExist.id },   
         include: [
             { model: User.scope('deletePassword') }
         ]
     });
 
+    for(let j=0; j<productsData.length; j++){
 
-    return res.status(200).json({products});
+        let dataFormater = await formaterProduct(productsData[j]);
+        dataProducts.products.push(dataFormater);
+    }
+
+    return res.status(200).json(dataProducts);
 }
 
 const updateProduct = async( req, res ) => {

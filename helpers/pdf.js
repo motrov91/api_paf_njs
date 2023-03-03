@@ -158,7 +158,7 @@ const pdfGenerator = async (req, res) => {
         
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 140, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 100, {width: 200})
             .moveDown();
 
         doc.lineJoin('test')
@@ -279,7 +279,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage2, 370, 420, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(300, 575, 170, 170).fill('#ff9f0f');
+            .rect(300, 575, 170, 170).fill('#90caf9');
 
         doc.circle(385, 610, 25)
             .lineWidth(3)
@@ -340,12 +340,18 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
+        //* ventajas competitivas
+
         doc.addPage({
             size: [595, 920],
         })
             .moveDown()
 
-        doc.lineJoin('VentajasCompetitivas')
+        doc.lineJoin('round')
+            .roundedRect(50,0, 500, 400, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
+
+         doc.lineJoin('fondoazul')
             .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
 
         doc
@@ -354,28 +360,36 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        doc.circle(100, 120, 25)
+        doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+        doc.circle(100, 113, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("#2e6ca7", "#fff")
             .moveDown();
 
-        doc.image(ventaja1, 88, 108, {width: 25})
+        doc.image(ventaja1, 88, 100, {width: 25})
 
         doc
             .fontSize(11)
             .fillColor('#163461')
             .text(productSelected.adventage1,
-            140, 103,  
+            140, 90,  
             {
                 width:350,
                 align: 'center'    
             })
 
+        doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
+
         doc.circle(100, 180, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 168, {width: 30})
@@ -384,11 +398,15 @@ const pdfGenerator = async (req, res) => {
             .fontSize(11)
             .fillColor('#163461')
             .text(productSelected.adventage2,
-            140, 163,  
+            140, 170,  
             {
                 width:350,
                 align: 'center'    
             })
+
+        doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
 
         doc.circle(100, 240, 25)
             .lineWidth(3)
@@ -402,11 +420,15 @@ const pdfGenerator = async (req, res) => {
             .fontSize(11)
             .fillColor('#163461')
             .text(productSelected.adventage3,
-            140, 223,  
+            140, 250,  
             {
                 width:350,
                 align: 'center'    
             })
+
+        doc.lineJoin('fondoGris')
+            .roundedRect(70, 320, 450, 70, 3 )
+            .fill('#E2E8EA')
 
         doc.circle(100, 300, 25)
             .lineWidth(3)
@@ -420,11 +442,15 @@ const pdfGenerator = async (req, res) => {
             .fontSize(11)
             .fillColor('#163461')
             .text(productSelected.adventage4,
-            140, 283,  
+            140, 330,  
             {
                 width:350,
                 align: 'center'    
             })
+
+        doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
 
         doc.circle(100, 360, 25)
             .lineWidth(3)
@@ -432,18 +458,21 @@ const pdfGenerator = async (req, res) => {
             .fillAndStroke("#ff6510", "#fff")
             .moveDown();
 
-        doc.image(ventaja5, 88, 348, {width: 30})
+        doc.image(ventaja5, 84, 346, {width: 30})
+
 
         doc
             .fontSize(11)
             .fillColor('#163461')
             .text(productSelected.adventage5,
-            140, 343,  
+            140, 410,  
             {
                 width:350,
                 align: 'center'    
             })
 
+
+        //* TIPS COMERCIALES 
         doc 
             .fontSize(20)
             .fillColor('#163461')
@@ -456,6 +485,8 @@ const pdfGenerator = async (req, res) => {
             .link(300, 420, 200, 105, `${productSelected.url_video}`)
 
         doc.image(logo, 250, 748, {width: 120})
+
+        
 
     } 
     /* PDF PARA UN PRODUCTO DE DOS (2) MERCADOS */
@@ -702,7 +733,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage4, 370, 595, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 575, 170, 170).fill('#f8c901');
+            .rect(125, 575, 170, 170).fill('#ff7043');
 
         doc.circle(210, 610, 25)
             .lineWidth(3)
@@ -777,7 +808,7 @@ const pdfGenerator = async (req, res) => {
         doc.circle(100, 180, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 168, {width: 30})
@@ -1165,7 +1196,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage4, 370, 610, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 590, 170, 170).fill('#f8c901');
+            .rect(125, 590, 170, 170).fill('#ff7043');
 
         doc.circle(210, 625, 25)
             .lineWidth(3)
@@ -1240,7 +1271,7 @@ const pdfGenerator = async (req, res) => {
         doc.circle(100, 180, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 168, {width: 30})
@@ -1658,7 +1689,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 100, 200, 200).fill('#f8c901');
+            .rect(301, 100, 200, 200).fill('#ff7043');
 
         doc.circle(400, 150, 25)
             .lineWidth(3)
@@ -1789,7 +1820,7 @@ const pdfGenerator = async (req, res) => {
         doc.circle(100, 180, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 168, {width: 30})
@@ -2261,7 +2292,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 100, 200, 200).fill('#f8c901');
+            .rect(301, 100, 200, 200).fill('#ff7043');
 
         doc.circle(400, 150, 25)
             .lineWidth(3)
@@ -2392,7 +2423,7 @@ const pdfGenerator = async (req, res) => {
         doc.circle(100, 180, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 168, {width: 30})
@@ -2930,7 +2961,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 100, 200, 200).fill('#f8c901');
+            .rect(301, 100, 200, 200).fill('#ff7043');
 
         doc.circle(400, 150, 25)
             .lineWidth(3)
@@ -3061,7 +3092,7 @@ const pdfGenerator = async (req, res) => {
         doc.circle(100, 180, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 168, {width: 30})
@@ -3664,7 +3695,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 285, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 250, 200, 200).fill('#f8c901');
+            .rect(301, 250, 200, 200).fill('#ff7043');
 
         doc.circle(400, 300, 25)
             .lineWidth(3)
@@ -3795,7 +3826,7 @@ const pdfGenerator = async (req, res) => {
         doc.circle(100, 180, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 168, {width: 30})
@@ -4463,7 +4494,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 350, 200, 200).fill('#f8c901');
+            .rect(301, 350, 200, 200).fill('#ff7043');
 
         doc.circle(400, 400, 25)
             .lineWidth(3)
@@ -4594,7 +4625,7 @@ const pdfGenerator = async (req, res) => {
         doc.circle(100, 380, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 368, {width: 30})
@@ -5306,7 +5337,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 350, 200, 200).fill('#f8c901');
+            .rect(301, 350, 200, 200).fill('#ff7043');
 
         doc.circle(400, 400, 25)
             .lineWidth(3)
@@ -5437,7 +5468,7 @@ const pdfGenerator = async (req, res) => {
         doc.circle(100, 380, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
+            .fillAndStroke("#ff7043", "#fff")
             .moveDown();
 
         doc.image(ventaja2, 88, 368, {width: 30})
@@ -6127,7 +6158,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 350, 200, 200).fill('#f8c901');
+            .rect(301, 350, 200, 200).fill('#ff7043');
 
         doc.circle(400, 400, 25)
             .lineWidth(3)
