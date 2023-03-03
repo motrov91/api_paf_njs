@@ -9,6 +9,12 @@ const pdfGenerator = async (req, res) => {
 
     const productSelected = await Product.findByPk(req.params.id);
 
+    const { adventage1, adventage2, adventage3, adventage4, adventage5, url_video } = productSelected;
+
+    const adventagesData = { adventage1, adventage2, adventage3, adventage4, adventage5, url_video };
+
+    adventagesData;
+
     let markets = [];
 
     if ( productSelected.market1 !== null ) {
@@ -96,13 +102,13 @@ const pdfGenerator = async (req, res) => {
     const pathImage3 = path.join( __dirname, '../assets/', 'numeroTres.png' ); 
     const pathImage4 = path.join( __dirname, '../assets/', 'numeroCuatro.png' ); 
     const pathImage5 = path.join( __dirname, '../assets/', 'numeroCinco.png' ); 
-    const pathImage6 = path.join( __dirname, '../assets/', 'icon_video.png' ); 
     const ventaja1 = path.join( __dirname, '../assets/', 'ventaja1.png' ); 
     const ventaja2 = path.join( __dirname, '../assets/', 'ventaja2.png' ); 
     const ventaja3 = path.join( __dirname, '../assets/', 'ventaja3.png' ); 
     const ventaja4 = path.join( __dirname, '../assets/', 'ventaja4.png' ); 
-    const ventaja5 = path.join( __dirname, '../assets/', 'ventaja5.png' ); 
-    const logo = path.join( __dirname, '../assets/', 'logo.png' ); 
+    const ventaja5 = path.join( __dirname, '../assets/', 'ventaja5.png' );
+    const pathImage6 = path.join( __dirname, '../assets/', 'icon_video.png' ); 
+    const logo = path.join( __dirname, '../assets/', 'logo.png' );   
 
     //Crea el pdf y se asignamos un tamaño y una información general
     const doc = new pdf({ 
@@ -340,15 +346,15 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
-        //* ventajas competitivas
+        //* Ventajas comerciales 
 
         doc.addPage({
             size: [595, 920],
         })
             .moveDown()
 
-        doc.lineJoin('round')
-            .roundedRect(50,0, 500, 400, 30 )
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
             .fillAndStroke('#EDF4F7', '#D5E8F4')
 
          doc.lineJoin('fondoazul')
@@ -360,133 +366,155 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        doc.lineJoin('fondoGris')
+        if(productSelected.adventage1 != null){
+
+            doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
             .fill('#E2E8EA')
 
-        doc.circle(100, 113, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
 
-        doc.image(ventaja1, 88, 100, {width: 25})
+            doc.image(ventaja1, 88, 100, {width: 25})
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 90,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
 
-        doc.lineJoin('fondoGris')
+        if(productSelected.adventage2 != null){
+
+            doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
             .fill('#E2E8EA')
 
-        doc.circle(100, 180, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
 
-        doc.image(ventaja2, 88, 168, {width: 30})
+            doc.image(ventaja2, 88, 183, {width: 30})
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 170,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
 
-        doc.lineJoin('fondoGris')
+        }
+        if(productSelected.adventage3 != null){
+
+            doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
             .fill('#E2E8EA')
 
-        doc.circle(100, 240, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
 
-        doc.image(ventaja3, 88, 228, {width: 30})
+            doc.image(ventaja3, 88, 263, {width: 30})
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 250,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
 
-        doc.lineJoin('fondoGris')
-            .roundedRect(70, 320, 450, 70, 3 )
-            .fill('#E2E8EA')
+        }
+        if(productSelected.adventage4 != null){
 
-        doc.circle(100, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
 
-        doc.image(ventaja4, 88, 288, {width: 30})
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 330,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.image(ventaja4, 88, 343, {width: 30})
 
-        doc.lineJoin('fondoGris')
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
             .fill('#E2E8EA')
 
-        doc.circle(100, 360, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
 
-        doc.image(ventaja5, 84, 346, {width: 30})
+            doc.image(ventaja5, 84, 426, {width: 30})
 
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 410,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
 
 
         //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
+
         doc 
             .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 100, 440)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
             .fillColor('#016cb2')
             .fontSize(12)
-            .image(pathImage6, 300, 420, {width: 200})
-            .link(300, 420, 200, 105, `${productSelected.url_video}`)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc.image(logo, 250, 748, {width: 120})
-
-        
 
     } 
     /* PDF PARA UN PRODUCTO DE DOS (2) MERCADOS */
@@ -778,6 +806,10 @@ const pdfGenerator = async (req, res) => {
         })
             .moveDown()
 
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
+
         doc.lineJoin('VentajasCompetitivas')
             .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
 
@@ -787,106 +819,155 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        doc.circle(100, 120, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 108, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 103,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
 
-        doc.circle(100, 180, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
+            doc.image(ventaja1, 88, 100, {width: 25})
 
-        doc.image(ventaja2, 88, 168, {width: 30})
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 163,  
-            {
-                width:350,
-                align: 'center'    
-            })
+        if(productSelected.adventage2 != null){
 
-        doc.circle(100, 240, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
 
-        doc.image(ventaja3, 88, 228, {width: 30})
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 223,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.image(ventaja2, 88, 183, {width: 30})
 
-        doc.circle(100, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
 
-        doc.image(ventaja4, 88, 288, {width: 30})
+        }
+        if(productSelected.adventage3 != null){
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 283,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
 
-        doc.circle(100, 360, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
 
-        doc.image(ventaja5, 88, 348, {width: 30})
+            doc.image(ventaja3, 88, 263, {width: 30})
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 343,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
 
         doc 
             .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 100, 440)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
             .fillColor('#016cb2')
             .fontSize(12)
-            .image(pathImage6, 300, 420, {width: 200})
-            .link(300, 420, 200, 105, `${productSelected.url_video}`)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+
+        
 
         doc.image(logo, 250, 748, {width: 120})
 
@@ -1241,6 +1322,10 @@ const pdfGenerator = async (req, res) => {
         })
             .moveDown()
 
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
+
         doc.lineJoin('VentajasCompetitivas')
             .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
 
@@ -1250,106 +1335,153 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        doc.circle(100, 120, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 108, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 103,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
 
-        doc.circle(100, 180, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
+            doc.image(ventaja1, 88, 100, {width: 25})
 
-        doc.image(ventaja2, 88, 168, {width: 30})
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 163,  
-            {
-                width:350,
-                align: 'center'    
-            })
+        if(productSelected.adventage2 != null){
 
-        doc.circle(100, 240, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
 
-        doc.image(ventaja3, 88, 228, {width: 30})
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 223,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.image(ventaja2, 88, 183, {width: 30})
 
-        doc.circle(100, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
 
-        doc.image(ventaja4, 88, 288, {width: 30})
+        }
+        if(productSelected.adventage3 != null){
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 283,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
 
-        doc.circle(100, 360, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
 
-        doc.image(ventaja5, 88, 348, {width: 30})
+            doc.image(ventaja3, 88, 263, {width: 30})
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 343,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
 
         doc 
             .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 100, 440)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
             .fillColor('#016cb2')
             .fontSize(12)
-            .image(pathImage6, 300, 420, {width: 200})
-            .link(300, 420, 200, 105, `${productSelected.url_video}`)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)        
 
         doc.image(logo, 250, 748, {width: 120})
     } else if( markets.length === 4 ){
@@ -1799,97 +1931,156 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        doc.circle(100, 120, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 108, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
 
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 103,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
 
-        doc.circle(100, 180, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
-
-        doc.image(ventaja2, 88, 168, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 163,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 240, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
-
-        doc.image(ventaja3, 88, 228, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 223,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
-
-        doc.image(ventaja4, 88, 288, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 283,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 360, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
-
-        doc.image(ventaja5, 88, 348, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 343,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            doc.image(ventaja1, 88, 100, {width: 25})
 
             doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
+
+        if(productSelected.adventage2 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
+
+            doc.image(ventaja2, 88, 183, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage3 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
+
+            doc.image(ventaja3, 88, 263, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
+
+        doc 
+            .fontSize(20)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
+
+        doc
+            .fillColor('#016cb2')
+            .fontSize(12)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+        
+
+        doc
             .image(logo, 200, 700, {width: 200})
 
     } else if( markets.length === 5 ){
@@ -2402,95 +2593,153 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        doc.circle(100, 120, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 108, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
+
+            doc.image(ventaja1, 88, 100, {width: 25})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
+
+        if(productSelected.adventage2 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
+
+            doc.image(ventaja2, 88, 183, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage3 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
+
+            doc.image(ventaja3, 88, 263, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
+
+        doc 
+            .fontSize(20)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 103,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 180, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
-
-        doc.image(ventaja2, 88, 168, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 163,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 240, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
-
-        doc.image(ventaja3, 88, 228, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 223,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
-
-        doc.image(ventaja4, 88, 288, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 283,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 360, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
-
-        doc.image(ventaja5, 88, 348, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 343,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            .fillColor('#016cb2')
+            .fontSize(12)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc
             .image(logo, 200, 700, {width: 200})
@@ -3071,95 +3320,153 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        doc.circle(100, 120, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 108, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
+
+            doc.image(ventaja1, 88, 100, {width: 25})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
+
+        if(productSelected.adventage2 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
+
+            doc.image(ventaja2, 88, 183, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage3 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
+
+            doc.image(ventaja3, 88, 263, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
+
+        doc 
+            .fontSize(20)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 103,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 180, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
-
-        doc.image(ventaja2, 88, 168, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 163,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 240, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
-
-        doc.image(ventaja3, 88, 228, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 223,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
-
-        doc.image(ventaja4, 88, 288, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 283,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 360, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
-
-        doc.image(ventaja5, 88, 348, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 343,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            .fillColor('#016cb2')
+            .fontSize(12)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc
             .image(logo, 200, 700, {width: 200})
@@ -3805,95 +4112,153 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        doc.circle(100, 120, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 108, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
+
+            doc.image(ventaja1, 88, 100, {width: 25})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
+
+        if(productSelected.adventage2 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
+
+            doc.image(ventaja2, 88, 183, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage3 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
+
+            doc.image(ventaja3, 88, 263, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
+
+        doc 
+            .fontSize(20)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 103,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 180, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
-
-        doc.image(ventaja2, 88, 168, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 163,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 240, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
-
-        doc.image(ventaja3, 88, 228, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 223,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 300, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
-
-        doc.image(ventaja4, 88, 288, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 283,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 360, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
-
-        doc.image(ventaja5, 88, 348, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 343,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            .fillColor('#016cb2')
+            .fontSize(12)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc
             .image(logo, 200, 700, {width: 200})
@@ -4604,95 +4969,153 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,218, {width:300})
             .moveDown();
 
-        doc.circle(100, 320, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 308, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
+
+            doc.image(ventaja1, 88, 100, {width: 25})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
+
+        if(productSelected.adventage2 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
+
+            doc.image(ventaja2, 88, 183, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage3 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
+
+            doc.image(ventaja3, 88, 263, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
+
+        doc 
+            .fontSize(20)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 303,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 380, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
-
-        doc.image(ventaja2, 88, 368, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 363,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 440, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
-
-        doc.image(ventaja3, 88, 428, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 423,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 500, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
-
-        doc.image(ventaja4, 88, 488, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 483,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 560, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
-
-        doc.image(ventaja5, 88, 548, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 543,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            .fillColor('#016cb2')
+            .fontSize(12)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)        
 
         doc
             .image(logo, 200, 700, {width: 200})
@@ -5447,95 +5870,153 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,218, {width:300})
             .moveDown();
 
-        doc.circle(100, 320, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 308, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
+
+            doc.image(ventaja1, 88, 100, {width: 25})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
+
+        if(productSelected.adventage2 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
+
+            doc.image(ventaja2, 88, 183, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage3 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
+
+            doc.image(ventaja3, 88, 263, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
+
+        doc 
+            .fontSize(20)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 303,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 380, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff7043", "#fff")
-            .moveDown();
-
-        doc.image(ventaja2, 88, 368, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 363,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 440, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
-
-        doc.image(ventaja3, 88, 428, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 423,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 500, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
-
-        doc.image(ventaja4, 88, 488, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 483,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 560, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
-
-        doc.image(ventaja5, 88, 548, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 543,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            .fillColor('#016cb2')
+            .fontSize(12)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc
             .image(logo, 200, 700, {width: 200})
@@ -6268,95 +6749,153 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,218, {width:300})
             .moveDown();
 
-        doc.circle(100, 320, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#2e6ca7", "#fff")
-            .moveDown();
+        if(productSelected.adventage1 != null){
 
-        doc.image(ventaja1, 88, 308, {width: 25})
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 80, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 113, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#2e6ca7", "#fff")
+                .moveDown();
+
+            doc.image(ventaja1, 88, 100, {width: 25})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage1,
+                140, 90,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+        }
+
+        if(productSelected.adventage2 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 160, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 195, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff7043", "#fff")
+                .moveDown();
+
+            doc.image(ventaja2, 88, 183, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage2,
+                140, 170,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage3 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 240, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 275, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff9f0f", "#fff")
+                .moveDown();
+
+            doc.image(ventaja3, 88, 263, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage3,
+                140, 250,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage4 != null){
+
+            doc.lineJoin('fondoGris')
+                .roundedRect(70, 320, 450, 70, 3 )
+                .fill('#E2E8EA')
+
+            doc.circle(100, 355, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#24abb1", "#fff")
+                .moveDown();
+
+            doc.image(ventaja4, 88, 343, {width: 30})
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage4,
+                140, 330,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+        if(productSelected.adventage5 != null){
+
+            doc.lineJoin('fondoGris')
+            .roundedRect(70, 400, 450, 70, 3 )
+            .fill('#E2E8EA')
+
+            doc.circle(100, 440, 25)
+                .lineWidth(3)
+                .fillOpacity(0.95)
+                .fillAndStroke("#ff6510", "#fff")
+                .moveDown();
+
+            doc.image(ventaja5, 84, 426, {width: 30})
+
+
+            doc
+                .fontSize(11)
+                .fillColor('#163461')
+                .text(productSelected.adventage5,
+                140, 410,  
+                {
+                    width:350,
+                    align: 'center'    
+                })
+
+        }
+
+
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 520, 175, 55).fill('#2e6ca7');
+
+        doc 
+            .fontSize(20)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 540)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
 
         doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage1,
-            140, 303,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 380, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#f8c901", "#fff")
-            .moveDown();
-
-        doc.image(ventaja2, 88, 368, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage2,
-            140, 363,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 440, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff9f0f", "#fff")
-            .moveDown();
-
-        doc.image(ventaja3, 88, 428, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage3,
-            140, 423,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 500, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#24abb1", "#fff")
-            .moveDown();
-
-        doc.image(ventaja4, 88, 488, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage4,
-            140, 483,  
-            {
-                width:350,
-                align: 'center'    
-            })
-
-        doc.circle(100, 560, 25)
-            .lineWidth(3)
-            .fillOpacity(0.95)
-            .fillAndStroke("#ff6510", "#fff")
-            .moveDown();
-
-        doc.image(ventaja5, 88, 548, {width: 30})
-
-        doc
-            .fontSize(11)
-            .fillColor('#163461')
-            .text(productSelected.adventage5,
-            140, 543,  
-            {
-                width:350,
-                align: 'center'    
-            })
+            .fillColor('#016cb2')
+            .fontSize(12)
+            .image(pathImage6, 300, 600, {width: 200})
+            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc
             .image(logo, 200, 700, {width: 200})
