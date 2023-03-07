@@ -9,12 +9,6 @@ const pdfGenerator = async (req, res) => {
 
     const productSelected = await Product.findByPk(req.params.id);
 
-    const { adventage1, adventage2, adventage3, adventage4, adventage5, url_video } = productSelected;
-
-    const adventagesData = { adventage1, adventage2, adventage3, adventage4, adventage5, url_video };
-
-    adventagesData;
-
     let markets = [];
 
     if ( productSelected.market1 !== null ) {
@@ -400,7 +394,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -761,7 +755,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage4, 370, 595, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 575, 170, 170).fill('#ff7043');
+            .rect(125, 575, 170, 170).fill('#fbc02d');
 
         doc.circle(210, 610, 25)
             .lineWidth(3)
@@ -853,7 +847,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -966,8 +960,6 @@ const pdfGenerator = async (req, res) => {
             .fontSize(12)
             .image(pathImage6, 300, 600, {width: 200})
             .link(300, 600, 200, 105, `${productSelected.url_video}`)
-
-        
 
         doc.image(logo, 250, 748, {width: 120})
 
@@ -1277,7 +1269,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage4, 370, 610, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 590, 170, 170).fill('#ff7043');
+            .rect(125, 590, 170, 170).fill('#fbc02d');
 
         doc.circle(210, 625, 25)
             .lineWidth(3)
@@ -1369,7 +1361,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -1821,7 +1813,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 100, 200, 200).fill('#ff7043');
+            .rect(301, 100, 200, 200).fill('#fbc02d');
 
         doc.circle(400, 150, 25)
             .lineWidth(3)
@@ -1904,16 +1896,25 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 620, 175, 55).fill('#2e6ca7');
+
         doc 
             .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 100, 640)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 640)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
 
         doc
             .fillColor('#016cb2')
             .fontSize(12)
-            .image(pathImage6, 300, 620, {width: 200})
-            .link(300, 620, 200, 105, `${productSelected.url_video}`)
+            .image(pathImage6, 300, 700, {width: 200})
+            .link(300, 700, 200, 105, `${productSelected.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -1921,6 +1922,16 @@ const pdfGenerator = async (req, res) => {
             size: [595, 920],
         })
             .moveDown()
+
+        doc
+            .fillColor('#fff')
+            .fontSize(30)
+            .text('Ventajas competitivas', 170,18)
+            .moveDown();
+
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
 
         doc.lineJoin('VentajasCompetitivas')
             .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
@@ -1965,7 +1976,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -2057,27 +2068,6 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
         
 
         doc
@@ -2483,7 +2473,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 100, 200, 200).fill('#ff7043');
+            .rect(301, 100, 200, 200).fill('#fbc02d');
 
         doc.circle(400, 150, 25)
             .lineWidth(3)
@@ -2566,16 +2556,25 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 620, 175, 55).fill('#2e6ca7');
+
         doc 
             .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 100, 640)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 640)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
 
         doc
             .fillColor('#016cb2')
             .fontSize(12)
-            .image(pathImage6, 300, 620, {width: 200})
-            .link(300, 620, 200, 105, `${productSelected.url_video}`)
+            .image(pathImage6, 300, 700, {width: 200})
+            .link(300, 700, 200, 105, `${productSelected.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2583,6 +2582,11 @@ const pdfGenerator = async (req, res) => {
             size: [595, 920],
         })
             .moveDown()
+
+
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
 
         doc.lineJoin('VentajasCompetitivas')
             .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
@@ -2592,6 +2596,7 @@ const pdfGenerator = async (req, res) => {
             .fontSize(30)
             .text('Ventajas competitivas', 170,18)
             .moveDown();
+
 
         if(productSelected.adventage1 != null){
 
@@ -2627,7 +2632,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -2720,26 +2725,6 @@ const pdfGenerator = async (req, res) => {
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc
             .image(logo, 200, 700, {width: 200})
@@ -3210,7 +3195,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 135, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 100, 200, 200).fill('#ff7043');
+            .rect(301, 100, 200, 200).fill('#fbc02d');
 
         doc.circle(400, 150, 25)
             .lineWidth(3)
@@ -3293,16 +3278,25 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
+        //* TIPS COMERCIALES 
+         doc.lineJoin('fondoazul')
+            .rect(40, 620, 175, 55).fill('#2e6ca7');
+
         doc 
             .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 100, 640)
+            .fillColor('#fff')
+            .text('Tips comerciales', 50, 640)
+
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
 
         doc
             .fillColor('#016cb2')
             .fontSize(12)
-            .image(pathImage6, 300, 620, {width: 200})
-            .link(300, 620, 200, 105, `${productSelected.url_video}`)
+            .image(pathImage6, 300, 700, {width: 200})
+            .link(300, 700, 200, 105, `${productSelected.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -3310,6 +3304,10 @@ const pdfGenerator = async (req, res) => {
             size: [595, 920],
         })
             .moveDown()
+
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
 
         doc.lineJoin('VentajasCompetitivas')
             .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
@@ -3354,7 +3352,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -3447,26 +3445,6 @@ const pdfGenerator = async (req, res) => {
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc
             .image(logo, 200, 700, {width: 200})
@@ -4002,7 +3980,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 285, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 250, 200, 200).fill('#ff7043');
+            .rect(301, 250, 200, 200).fill('#fbc02d');
 
         doc.circle(400, 300, 25)
             .lineWidth(3)
@@ -4085,16 +4063,6 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
-        doc 
-            .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 100, 780)
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 770, {width: 200})
-            .link(300, 770, 200, 105, `${productSelected.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -4102,6 +4070,10 @@ const pdfGenerator = async (req, res) => {
             size: [595, 920],
         })
             .moveDown()
+
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
 
         doc.lineJoin('VentajasCompetitivas')
             .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
@@ -4146,7 +4118,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -4261,7 +4233,7 @@ const pdfGenerator = async (req, res) => {
             .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
         doc
-            .image(logo, 200, 700, {width: 200})
+            .image(logo, 200, 750, {width: 200})
 
     } else if( markets.length === 8 ){
 
@@ -4859,7 +4831,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 350, 200, 200).fill('#ff7043');
+            .rect(301, 350, 200, 200).fill('#fbc02d');
 
         doc.circle(400, 400, 25)
             .lineWidth(3)
@@ -4949,24 +4921,18 @@ const pdfGenerator = async (req, res) => {
         })
             .moveDown()
 
-        doc 
-            .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 50, 50)
 
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 240, 40, {width: 200})
-            .link(240, 40, 200, 105, `${productSelected.url_video}`)
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
 
         doc.lineJoin('VentajasCompetitivas')
-            .rect(0, 200, fullDocH, 60).fill('#2e6ca7');
+            .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
 
         doc
             .fillColor('#fff')
             .fontSize(30)
-            .text('Ventajas competitivas', 170,218, {width:300})
+            .text('Ventajas competitivas', 170, 15, {width:300})
             .moveDown();
 
         if(productSelected.adventage1 != null){
@@ -5003,7 +4969,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -5760,7 +5726,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 350, 200, 200).fill('#ff7043');
+            .rect(301, 350, 200, 200).fill('#fbc02d');
 
         doc.circle(400, 400, 25)
             .lineWidth(3)
@@ -5850,24 +5816,17 @@ const pdfGenerator = async (req, res) => {
         })
             .moveDown()
 
-        doc 
-            .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 50, 50)
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 240, 40, {width: 200})
-            .link(240, 40, 200, 105, `${productSelected.url_video}`)
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
 
         doc.lineJoin('VentajasCompetitivas')
-            .rect(0, 200, fullDocH, 60).fill('#2e6ca7');
+            .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
 
         doc
             .fillColor('#fff')
             .fontSize(30)
-            .text('Ventajas competitivas', 170,218, {width:300})
+            .text('Ventajas competitivas', 170, 20, {width:300})
             .moveDown();
 
         if(productSelected.adventage1 != null){
@@ -5904,7 +5863,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -6018,9 +5977,7 @@ const pdfGenerator = async (req, res) => {
             .image(pathImage6, 300, 600, {width: 200})
             .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
-        doc
-            .image(logo, 200, 700, {width: 200})
-
+        
     } else if( markets.length === 10){
         doc
             .fillColor('#016cb2')
@@ -6639,7 +6596,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage1, 185, 385, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 350, 200, 200).fill('#ff7043');
+            .rect(301, 350, 200, 200).fill('#fbc02d');
 
         doc.circle(400, 400, 25)
             .lineWidth(3)
@@ -6729,25 +6686,21 @@ const pdfGenerator = async (req, res) => {
         })
             .moveDown()
 
-        doc 
-            .fontSize(20)
-            .fillColor('#163461')
-            .text('Tips comerciales', 50, 50)
+        doc.lineJoin('FondoAzulClaro')
+            .roundedRect(50,0, 500, 500, 30 )
+            .fillAndStroke('#EDF4F7', '#D5E8F4')
 
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 240, 40, {width: 200})
-            .link(240, 40, 200, 105, `${productSelected.url_video}`)
+        
 
         doc.lineJoin('VentajasCompetitivas')
-            .rect(0, 200, fullDocH, 60).fill('#2e6ca7');
+            .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
 
         doc
             .fillColor('#fff')
             .fontSize(30)
-            .text('Ventajas competitivas', 170,218, {width:300})
+            .text('Ventajas competitivas', 170, 15, {width:300})
             .moveDown();
+
 
         if(productSelected.adventage1 != null){
 
@@ -6783,7 +6736,7 @@ const pdfGenerator = async (req, res) => {
             doc.circle(100, 195, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
-                .fillAndStroke("#ff7043", "#fff")
+                .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
             doc.image(ventaja2, 88, 183, {width: 30})
@@ -6897,12 +6850,7 @@ const pdfGenerator = async (req, res) => {
             .image(pathImage6, 300, 600, {width: 200})
             .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
-        doc
-            .image(logo, 200, 700, {width: 200})
     }
-
-    
-    
 
 
     doc.pipe(res)
