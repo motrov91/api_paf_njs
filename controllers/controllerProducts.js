@@ -158,7 +158,7 @@ const deleteProduct = async (req, res) => {
     const rolUser = await User.findByPk(req.user.id);
 
     //Check user is admin
-    if( rolUser.rolId != 1) {
+    if( rolUser.rolId == 3) {
         return res.status(401).json({
             message : "No tienes los permisos para realizar la acción deseada"
         })
