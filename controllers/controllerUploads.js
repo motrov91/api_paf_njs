@@ -66,6 +66,7 @@ const updateImageProduct = async (req, res) => {
     res.json({nameFile})
 
 }
+
 const updateImageProductCloud = async (req, res) => {
 
     const { id } = req.params;

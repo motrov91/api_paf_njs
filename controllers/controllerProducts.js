@@ -1,5 +1,6 @@
 import { organizedDataSQL, formaterProduct } from '../helpers/organizedDataSQLProduct.js';
-import { Product, User } from '../models/index_model.js';
+import { Product, User, ProductXCategory } from '../models/index_model.js';
+import { LocalPDF } from '../helpers/localPDF.js';
 
 const AddProduct = async(req, res) => {
     const { reference } = req.body;
@@ -25,7 +26,7 @@ const AddProduct = async(req, res) => {
         //Se le asigna la respuesta de la creacion del usuario en la base de datos.
         const productData = await Product.create(dataProduct);
 
-        console.log(productData);
+        //console.log(productData);
 
         //Recibe el objeto del producto recien creado y lo formatea para organizarlo en listas para mostrar en la respuesta.
         let dataFormater = await formaterProduct(productData);
@@ -123,8 +124,8 @@ const updateProduct = async( req, res ) => {
 }
 
 const updateStatus = async (req, res ) => {
-
-    const {state} = req.body;
+    let createPdf = {};
+    const {state} = req.body; 
 
     const rolUser = await User.findByPk(req.user.id);
 
@@ -144,13 +145,69 @@ const updateStatus = async (req, res ) => {
         })
     }
 
+    /* Si el producto existe cambia el estado del producto.
+    y lo modifica en el producto. */
     existProduct.set({state});
 
+    /* Almacena en la base de datos el producto con los cambios generados */
     await existProduct.save()
 
-    return res.status(200).json({
-        msg: 'Actualización exitosa.'
-    });
+    if(state == 1){
+
+        await LocalPDF(existProduct).then(url => {
+            console.log('URL del archivo generado: ', url);
+
+            // createPdf.nameProduct = existProduct.name;
+            // createPdf.secureUrl = url.urlSecure;
+            // createPdf.publicId = url.public_id;
+            // createPdf.productId = existProduct.id;
+
+            // console.log('CREATEPDF', createPdf)
+
+            //await PfdProduct.create(createPdf);
+
+            return res.status(200).json({
+                msg: 'Actualización exitosa.'
+            });
+
+        }).catch( error => {
+            console.error('Error al generar el archivo', error);
+
+            return res.status(200).json({
+                msg: 'No se ha podido actualizar el producto, por el pdf'
+            });
+        })
+
+    } else{
+        console.log('despublicar');
+        return res.json('Despublicado...');
+    }
+
+    return;
+
+    // if(state == 1){
+
+    //     const urlPDF = await LocalPDF(existProduct);
+    //     console.log('rul', urlPDF);
+        
+    //    console.log('se ejecuta al final');
+
+       
+    // }else{
+    //     //Check by exist product
+    //     // const existProductPdf = await Product.findOne({
+    //     //     where: {productId : existProduct.id}
+    //     // });
+
+    //     // if(!existProductPdf){
+    //     //     return res.status(400).json({
+    //     //         msg: "El producto no existe"
+    //     //     })
+    //     // }
+
+    //     // await existProductPdf.destroy();
+    // }
+
 }
 
 const deleteProduct = async (req, res) => {
@@ -248,14 +305,61 @@ const productById = async(req, res) => {
     res.status(200).json(productById);
 }
 
+const addProductToCategory = async (req, res) => {
+
+    await ProductXCategory.create(req.body)
+
+    console.log('Exitoso');
+
+    res.json({msg: "Exitoso"})
+
+}
+
+const getProductsByCategory = async (req, res) => {
+
+    let dataProducts = {
+        "products" : []
+    };
+
+    let productsDB = [];
+
+    //check that user exist
+    const userExist = await User.findByPk(req.user.id);
+
+     //* Si el rol del usuario es 1 0 3 podrán ver todos los productos.
+    //* si el rol es 2 no se ejecuta y pasa a la otra consulta. una vez ingresa a la condicion formatea el resultado 
+    //* para entregarlo como un conjunto de arreglos para cada producto.
+
+    const products = await ProductXCategory.findAll({
+        where: { CategoryId : req.params.id},
+    }); 
+
+    for(let i=0; i<products.length; i++){
+        let product = await Product.findByPk(products[i].ProductId);
+        productsDB.push(product);
+    }
+
+    for(let j=0; j<productsDB.length; j++){
+
+        let dataFormater = await formaterProduct(productsDB[j]);
+        dataProducts.products.push(dataFormater);
+    }
+
+    return res.status(200).json(dataProducts);
+
+}
+
 export {
     AddProduct,
+    addProductToCategory,
     AllProducts,
     updateProduct,
     updateStatus,
     deleteProduct,
     productPdf,
-    productById
+    productById,
+    getProductsByCategory
+
 }
 
 

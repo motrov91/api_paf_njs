@@ -2,6 +2,7 @@ import path from 'path';
 import {fileURLToPath} from 'url';
 import { v4 as uuidv4 } from 'uuid';
 
+
 const uploadFileHL = ( files, validExtension = [ 'png', 'jpg', 'jpeg', 'gif'], folder = '' ) => {
 
     return new Promise((resolve, reject) => {

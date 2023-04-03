@@ -247,6 +247,14 @@ const Product = db.define('Products', {
         allowNull: true
     },
     
+},{
+    scopes:{
+        deleteDates:{
+            attributes:{
+                exclude: [, 'createdAt', 'updatedAt']
+            }
+        }
+    }
 });
 
 export default Product;

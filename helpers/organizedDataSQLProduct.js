@@ -36,12 +36,14 @@ const organizedDataSQL = data => {
 
 const formaterProduct = async (dataSQL) => {
 
+    console.log('ingresa formater')
+
     let datasql = {
         "id" : dataSQL.id,
         "img": dataSQL.img,
         "name": dataSQL.name,
         "reference": dataSQL.reference,
-        "state": false,
+        "state": dataSQL.state,
         "createdAt": dataSQL.createdAt,
         "updatedAt": dataSQL.updatedAt,
         "url_video": dataSQL.url_video,

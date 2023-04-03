@@ -1,58 +1,64 @@
-import { Product } from '../models/index_model.js';
 import pdf from 'pdfkit';
 import imageToBase from 'image-to-base64';
+import { PfdProduct } from '../models/index_model.js';
 
 import {fileURLToPath} from 'url';
 import path from 'path';
 
-const pdfGenerator = async (req, res) => {
+import { v2 as cloudinary } from 'cloudinary';
 
-    const productSelected = await Product.findByPk(req.params.id);
+cloudinary.config( process.env.CLOUDINARY_URL )
+
+
+async function LocalPDF (data){
+
+    const { id, name } = data;
+
 
     let markets = [];
 
-    if ( productSelected.market1 !== null ) {
-        markets.push(productSelected.market1)
+    if ( data.market1 !== null ) {
+        markets.push(data.market1)
     }
-    if ( productSelected.market2 !== null ) {
-        markets.push(productSelected.market2)
+    if ( data.market2 !== null ) {
+        markets.push(data.market2)
     }
-    if ( productSelected.market3 !== null ) {
-        markets.push(productSelected.market3)
+    if ( data.market3 !== null ) {
+        markets.push(data.market3)
     }
-    if ( productSelected.market4 !== null ) {
-        markets.push(productSelected.market4)
+    if ( data.market4 !== null ) {
+        markets.push(data.market4)
     }
-    if ( productSelected.market5 !== null ) {
-        markets.push(productSelected.market5)
+    if ( data.market5 !== null ) {
+        markets.push(data.market5)
     }
-    if ( productSelected.market6 !== null ) {
-        markets.push(productSelected.market6)
+    if ( data.market6 !== null ) {
+        markets.push(data.market6)
     }
-    if ( productSelected.market7 !== null ) {
-        markets.push(productSelected.market7)
+    if ( data.market7 !== null ) {
+        markets.push(data.market7)
     }
-    if ( productSelected.market8 !== null ) {
-        markets.push(productSelected.market8)
+    if ( data.market8 !== null ) {
+        markets.push(data.market8)
     }
-    if ( productSelected.market9 !== null ) {
-        markets.push(productSelected.market9)
+    if ( data.market9 !== null ) {
+        markets.push(data.market9)
     }
-    if ( productSelected.market10 !== null ) {
-        markets.push(productSelected.market10)
+    if ( data.market10 !== null ) {
+        markets.push(data.market10)
     }
-    if ( productSelected.market11 !== null ) {
-        markets.push(productSelected.market11)
+    if ( data.market11 !== null ) {
+        markets.push(data.market11)
     }
-    if ( productSelected.market12 !== null ) {
-        markets.push(productSelected.market12)
+    if ( data.market12 !== null ) {
+        markets.push(data.market12)
     }
 
     let imgProduct;
 
-    if(productSelected.img){
+    if(data.img){
         imgProduct = await new Promise(function(resolve,reject){
-        imageToBase(productSelected.img) // you can also to use url
+        imageToBase(data.img) // you can also to use url
         .then(
             (response) => {resolve(response);}
         )
@@ -80,7 +86,6 @@ const pdfGenerator = async (req, res) => {
 
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const logoPaf = path.join(__dirname, '../assets/', 'logo.png' );
     const logoAcueducto = path.join(__dirname, '../assets/logos/', 'acueductos.png' );
     const logoAlimentos = path.join(__dirname, '../assets/logos/', 'alimentos.png' );
     const logoClinico = path.join(__dirname, '../assets/logos/', 'clinico.png' );
@@ -129,12 +134,12 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 220,10)
             .moveDown();
 
-        if(productSelected.name.length > 25){
+        if(data.name.length > 25){
             doc
             .fillColor('#163461')
             .fontSize(15)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -148,7 +153,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -170,30 +175,19 @@ const pdfGenerator = async (req, res) => {
             doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 380,65, {width: 220})
+            .text(data.market1, 380,65, {width: 220})
             .moveDown();
 
         doc
             .fontSize(11)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 380, 105, {width:200})
+            .text(data.description_market1, 380, 105, {width:200})
             .moveDown();
         
         
 
-        switch(productSelected.market1){
-            case "TODOS LOS MERCADOS":
-                
-                doc.circle(330, 130, 25)
-                    .lineWidth(3)
-                    .fillAndStroke("white", "#fff")
-                    .moveDown();
-
-                doc.image(logoPaf, 305, 118, { width:50 })
-                .moveDown();
-
-                break;
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 105, { width:50 })
                 .moveDown();
@@ -260,7 +254,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature1,
+            .text(data.feature1,
             135, 465,  
             {
                 width:150,
@@ -281,7 +275,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature2,
+            .text(data.feature2,
             310, 465,  
             {
                 width:150,
@@ -301,7 +295,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature3,
+            .text(data.feature3,
             310, 640,  
             {
                 width:150,
@@ -322,7 +316,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature4,
+            .text(data.feature4,
             138, 640,  
             {
                 width:150,
@@ -345,7 +339,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(productSelected.feature5,
+            .text(data.feature5,
             170, 760,  
             {
                 width:300,
@@ -372,7 +366,7 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -389,7 +383,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -397,7 +391,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -414,7 +408,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -422,7 +416,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -439,7 +433,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -447,7 +441,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -464,7 +458,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -472,7 +466,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -490,7 +484,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -518,7 +512,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+            .link(300, 600, 200, 105, `${data.url_video}`)
 
         doc.image(logo, 250, 748, {width: 120})
 
@@ -531,12 +525,12 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 80,10)
             .moveDown();
 
-        if(productSelected.name.length > 25){
+        if(data.name.length > 25){
             doc
             .fillColor('#163461')
             .fontSize(15)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -550,7 +544,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -571,17 +565,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 250})
+            .text(data.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 50, {width: 210})
+            .text(data.description_market1, 370, 50, {width: 210})
             .moveDown();
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 50, { width:50 })
                 .moveDown();
@@ -632,7 +626,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 150, cuadrado[0], 150).fill('#ecc101');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 200, { width:50 })
                 .moveDown();
@@ -683,14 +677,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 180, {width: 250})
+            .text(data.market2, 370, 180, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 210, {width: 210})
+            .text(data.description_market2, 370, 210, {width: 210})
             .moveDown();
 
         //* -------------------- CARACTERISTICAS -------------------------
@@ -715,7 +709,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature1,
+            .text(data.feature1,
             135, 465,  
             {
                 width:150,
@@ -736,7 +730,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature2,
+            .text(data.feature2,
             310, 465,  
             {
                 width:150,
@@ -756,7 +750,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature3,
+            .text(data.feature3,
             310, 640,  
             {
                 width:150,
@@ -777,7 +771,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature4,
+            .text(data.feature4,
             138, 640,  
             {
                 width:150,
@@ -800,7 +794,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(productSelected.feature5,
+            .text(data.feature5,
             170, 760,  
             {
                 width:300,
@@ -825,7 +819,7 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -842,7 +836,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -850,7 +844,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -867,7 +861,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -875,7 +869,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -892,7 +886,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -900,7 +894,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -917,7 +911,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -925,7 +919,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -943,7 +937,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -971,7 +965,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+            .link(300, 600, 200, 105, `${data.url_video}`)
 
         doc.image(logo, 250, 748, {width: 120})
 
@@ -982,12 +976,12 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 80,10)
             .moveDown();
 
-        if(productSelected.name.length > 25){
+        if(data.name.length > 25){
             doc
             .fillColor('#163461')
             .fontSize(15)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -1001,7 +995,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -1022,17 +1016,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(18)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 230})
+            .text(data.market1, 370, 10, {width: 230})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 50, {width: 210})
+            .text(data.description_market1, 370, 50, {width: 210})
             .moveDown();
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -1083,7 +1077,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('producto 2')
             .rect(fullDocH / 1.8, 120, cuadrado[0], 120).fill('#ecc101');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 155, { width:50 })
                 .moveDown();
@@ -1134,20 +1128,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 130, {width: 250})
+            .text(data.market2, 370, 130, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 170, {width: 210})
+            .text(data.description_market2, 370, 170, {width: 210})
             .moveDown();
 
         doc.lineJoin('producto 3')
             .rect(fullDocH / 1.8, 240, cuadrado[0], 120).fill('#25acb1');
 
-        switch(productSelected.market3){
+        switch(data.market3){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 278, { width:50 })
                 .moveDown();
@@ -1197,14 +1191,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market3, 370, 250, {width: 250})
+            .text(data.market3, 370, 250, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 290, {width: 210})
+            .text(data.description_market3, 370, 290, {width: 210})
             .moveDown();
 
         //* -------------------- CARACTERISTICAS -------------------------
@@ -1229,7 +1223,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature1,
+            .text(data.feature1,
             135, 480,  
             {
                 width:150,
@@ -1250,7 +1244,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature2,
+            .text(data.feature2,
             310, 480,  
             {
                 width:150,
@@ -1270,7 +1264,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature3,
+            .text(data.feature3,
             310, 655,  
             {
                 width:150,
@@ -1291,7 +1285,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(10)
-            .text(productSelected.feature4,
+            .text(data.feature4,
             138, 655,  
             {
                 width:150,
@@ -1314,7 +1308,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(productSelected.feature5,
+            .text(data.feature5,
             170, 780,  
             {
                 width:300,
@@ -1339,7 +1333,7 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -1356,7 +1350,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -1364,7 +1358,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -1381,7 +1375,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -1389,7 +1383,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -1406,7 +1400,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -1414,7 +1408,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -1431,7 +1425,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -1439,7 +1433,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -1457,7 +1451,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -1485,7 +1479,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)        
+            .link(300, 600, 200, 105, `${data.url_video}`)        
 
         doc.image(logo, 250, 748, {width: 120})
     } else if( markets.length === 4 ){
@@ -1495,12 +1489,12 @@ const pdfGenerator = async (req, res) => {
         .text('Purificación y Análisis de Fluidos', 50,10)
         .moveDown();
 
-        if(productSelected.name.length > 25){
+        if(data.name.length > 25){
             doc
             .fillColor('#163461')
             .fontSize(15)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -1514,7 +1508,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -1535,17 +1529,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 250})
+            .text(data.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 60, {width: 210})
+            .text(data.description_market1, 370, 60, {width: 210})
             .moveDown();
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -1595,7 +1589,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 210, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 254, { width:50 })
                 .moveDown();
@@ -1645,20 +1639,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 220, {width: 210})
+            .text(data.market2, 370, 220, {width: 210})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 260, {width: 210})
+            .text(data.description_market2, 370, 260, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 420, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        switch(productSelected.market3){
+        switch(data.market3){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -1708,20 +1702,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 430, {width: 200})
+            .text(data.market3, 370, 430, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 470, {width: 210})
+            .text(data.description_market3, 370, 470, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 630, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        switch(productSelected.market4){
+        switch(data.market4){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -1771,14 +1765,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 650, {width: 250})
+            .text(data.market4, 370, 650, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 690, {width: 210})
+            .text(data.description_market4, 370, 690, {width: 210})
             .moveDown();
 
         doc
@@ -1814,7 +1808,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature1}`,
+            .text(`${data.feature1}`,
             125, 190,  
             {
                 width:150,
@@ -1837,7 +1831,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature2}`,
+            .text(`${data.feature2}`,
             325, 190,  
             {
                 width:150,
@@ -1859,7 +1853,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature3}`,
+            .text(`${data.feature3}`,
             125, 390,  
             {
                 width:150,
@@ -1880,7 +1874,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature4}`,
+            .text(`${data.feature4}`,
             330, 390,  
             {
                 width:150,
@@ -1901,7 +1895,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature5}`,
+            .text(`${data.feature5}`,
             170, 520,  
             {
                 width:300,
@@ -1926,7 +1920,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${productSelected.url_video}`)
+            .link(300, 700, 200, 105, `${data.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -1954,7 +1948,7 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -1971,7 +1965,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -1979,7 +1973,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -1996,7 +1990,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -2004,7 +1998,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -2021,7 +2015,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -2029,7 +2023,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -2046,7 +2040,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -2054,7 +2048,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -2072,7 +2066,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -2092,12 +2086,12 @@ const pdfGenerator = async (req, res) => {
         .text('Purificación y Análisis de Fluidos', 50,10)
         .moveDown();
 
-        if(productSelected.name.length > 25){
+        if(data.name.length > 25){
             doc
             .fillColor('#163461')
             .fontSize(15)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -2111,7 +2105,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -2132,17 +2126,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 250})
+            .text(data.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 50, {width: 210})
+            .text(data.description_market1, 370, 50, {width: 210})
             .moveDown();
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -2192,7 +2186,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 180, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 230, { width:50 })
                 .moveDown();
@@ -2242,20 +2236,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 190, {width: 250})
+            .text(data.market2, 370, 190, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 230, {width: 210})
+            .text(data.description_market2, 370, 230, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 360, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        switch(productSelected.market3){
+        switch(data.market3){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 405, { width:50 })
                 .moveDown();
@@ -2305,20 +2299,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 370, {width: 200})
+            .text(data.market3, 370, 370, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 410, {width: 210})
+            .text(data.description_market3, 370, 410, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 540, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        switch(productSelected.market4){
+        switch(data.market4){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 580, { width:50 })
                 .moveDown();
@@ -2368,20 +2362,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 550, {width: 250})
+            .text(data.market4, 370, 550, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 590, {width: 210} )
+            .text(data.description_market4, 370, 590, {width: 210} )
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 700, cuadrado[0], 170).fill('#ecc101');
 
-        switch(productSelected.market5){
+        switch(data.market5){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 350, { width:50 })
                 .moveDown();
@@ -2431,14 +2425,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market5, 370, 720, {width: 250})
+            .text(data.market5, 370, 720, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 760, {width: 210})
+            .text(data.description_market5, 370, 760, {width: 210})
             .moveDown();
 
         doc
@@ -2474,7 +2468,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature1}`,
+            .text(`${data.feature1}`,
             125, 190,  
             {
                 width:150,
@@ -2497,7 +2491,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature2}`,
+            .text(`${data.feature2}`,
             325, 190,  
             {
                 width:150,
@@ -2519,7 +2513,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature3}`,
+            .text(`${data.feature3}`,
             125, 390,  
             {
                 width:150,
@@ -2540,7 +2534,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature4}`,
+            .text(`${data.feature4}`,
             330, 390,  
             {
                 width:150,
@@ -2561,7 +2555,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature5}`,
+            .text(`${data.feature5}`,
             170, 520,  
             {
                 width:300,
@@ -2586,7 +2580,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${productSelected.url_video}`)
+            .link(300, 700, 200, 105, `${data.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2610,7 +2604,7 @@ const pdfGenerator = async (req, res) => {
             .moveDown();
 
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -2627,7 +2621,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -2635,7 +2629,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -2652,7 +2646,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -2660,7 +2654,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -2677,7 +2671,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -2685,7 +2679,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -2702,7 +2696,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -2710,7 +2704,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -2728,7 +2722,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -2748,12 +2742,12 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 50,10)
             .moveDown();
 
-        if(productSelected.name.length > 25){
+        if(data.name.length > 25){
             doc
             .fillColor('#163461')
             .fontSize(15)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -2767,7 +2761,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -2789,20 +2783,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 250})
+            .text(data.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 50, {width: 210})
+            .text(data.description_market1, 370, 50, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -2853,20 +2847,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 140, {width: 250})
+            .text(data.market2, 370, 140, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 180, {width: 210})
+            .text(data.description_market2, 370, 180, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -2916,20 +2910,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 280, {width: 200})
+            .text(data.market3, 370, 280, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 320, {width: 210})
+            .text(data.description_market3, 370, 320, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        switch(productSelected.market3){
+        switch(data.market3){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 310, { width:50 })
                 .moveDown();
@@ -2979,14 +2973,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 425, {width: 250})
+            .text(data.market4, 370, 425, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 460, {width: 210} )
+            .text(data.description_market4, 370, 460, {width: 210} )
             .moveDown();
 
 
@@ -2996,17 +2990,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market5, 370, 560, {width: 250})
+            .text(data.market5, 370, 560, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 600, {width: 210})
+            .text(data.description_market5, 370, 600, {width: 210})
             .moveDown();
 
-        switch(productSelected.market4){
+        switch(data.market4){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 458, { width:50 })
                 .moveDown();
@@ -3059,17 +3053,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market6, 370, 700, {width: 250})
+            .text(data.market6, 370, 700, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market6, 370, 740, {width: 210})
+            .text(data.description_market6, 370, 740, {width: 210})
             .moveDown();
         
-        switch(productSelected.market5){
+        switch(data.market5){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 595, { width:50 })
                 .moveDown();
@@ -3116,7 +3110,7 @@ const pdfGenerator = async (req, res) => {
                 break;
         }
 
-        switch(productSelected.market6){
+        switch(data.market6){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 730, { width:50 })
                 .moveDown();
@@ -3196,7 +3190,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature1}`,
+            .text(`${data.feature1}`,
             125, 190,  
             {
                 width:150,
@@ -3219,7 +3213,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature2}`,
+            .text(`${data.feature2}`,
             325, 190,  
             {
                 width:150,
@@ -3241,7 +3235,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature3}`,
+            .text(`${data.feature3}`,
             125, 390,  
             {
                 width:150,
@@ -3262,7 +3256,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature4}`,
+            .text(`${data.feature4}`,
             330, 390,  
             {
                 width:150,
@@ -3283,7 +3277,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature5}`,
+            .text(`${data.feature5}`,
             170, 520,  
             {
                 width:300,
@@ -3308,7 +3302,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${productSelected.url_video}`)
+            .link(300, 700, 200, 105, `${data.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -3330,7 +3324,7 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -3347,7 +3341,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -3355,7 +3349,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -3372,7 +3366,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -3380,7 +3374,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -3397,7 +3391,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -3405,7 +3399,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -3422,7 +3416,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -3430,7 +3424,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -3448,7 +3442,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -3469,12 +3463,12 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 50,10)
             .moveDown();
 
-       if(productSelected.name.length > 25){
+       if(data.name.length > 25){
             doc
             .fillColor('#163461')
             .fontSize(15)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -3488,7 +3482,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -3509,17 +3503,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 250})
+            .text(data.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 50, {width: 210})
+            .text(data.description_market1, 370, 50, {width: 210})
             .moveDown();
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -3569,7 +3563,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -3619,20 +3613,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 150, {width: 250})
+            .text(data.market2, 370, 150, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 190, {width: 210})
+            .text(data.description_market2, 370, 190, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        switch(productSelected.market3){
+        switch(data.market3){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 318, { width:50 })
                 .moveDown();
@@ -3682,20 +3676,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 290, {width: 200})
+            .text(data.market3, 370, 290, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 330, {width: 210})
+            .text(data.description_market3, 370, 330, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        switch(productSelected.market4){
+        switch(data.market4){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 458, { width:50 })
                 .moveDown();
@@ -3745,14 +3739,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 430, {width: 250})
+            .text(data.market4, 370, 430, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 470, {width: 210} )
+            .text(data.description_market4, 370, 470, {width: 210} )
             .moveDown();
 
 
@@ -3762,17 +3756,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market5, 370, 570, {width: 250})
+            .text(data.market5, 370, 570, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 610, {width: 210})
+            .text(data.description_market5, 370, 610, {width: 210})
             .moveDown();
 
-        switch(productSelected.market5){
+        switch(data.market5){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 598, { width:50 })
                 .moveDown();
@@ -3825,17 +3819,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market6, 370, 710, {width: 250})
+            .text(data.market6, 370, 710, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market6, 370, 730, {width: 210})
+            .text(data.description_market6, 370, 730, {width: 210})
             .moveDown();
         
-        switch(productSelected.market6){
+        switch(data.market6){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 738, { width:50 })
                 .moveDown();
@@ -3912,17 +3906,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market7, 370, 10, {width: 250})
+            .text(data.market7, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market7, 370, 60, {width: 210})
+            .text(data.description_market7, 370, 60, {width: 210})
             .moveDown();
 
-        switch(productSelected.market7){
+        switch(data.market7){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -3981,7 +3975,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature1}`,
+            .text(`${data.feature1}`,
             125, 330,  
             {
                 width:150,
@@ -4004,7 +3998,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature2}`,
+            .text(`${data.feature2}`,
             325, 340,  
             {
                 width:150,
@@ -4026,7 +4020,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature3}`,
+            .text(`${data.feature3}`,
             125, 540,  
             {
                 width:150,
@@ -4047,7 +4041,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature4}`,
+            .text(`${data.feature4}`,
             330, 540,  
             {
                 width:150,
@@ -4068,7 +4062,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature5}`,
+            .text(`${data.feature5}`,
             170, 670,  
             {
                 width:300,
@@ -4096,7 +4090,7 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170,18)
             .moveDown();
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -4113,7 +4107,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -4121,7 +4115,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -4138,7 +4132,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -4146,7 +4140,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -4163,7 +4157,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -4171,7 +4165,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -4188,7 +4182,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -4196,7 +4190,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -4214,7 +4208,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -4242,7 +4236,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+            .link(300, 600, 200, 105, `${data.url_video}`)
 
         doc
             .image(logo, 200, 750, {width: 200})
@@ -4255,12 +4249,12 @@ const pdfGenerator = async (req, res) => {
             .text('Purificación y Análisis de Fluidos', 50,10)
             .moveDown();
 
-        if(productSelected.name.length > 25){
+        if(data.name.length > 25){
             doc
             .fillColor('#163461')
             .fontSize(15)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -4274,7 +4268,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 60, 50,
                 { 
                     width: 200,
@@ -4282,8 +4276,6 @@ const pdfGenerator = async (req, res) => {
                 }, 
             ).moveDown();
         }
-
-        console.log('*********',imgProduct)
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
@@ -4297,17 +4289,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 250})
+            .text(data.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 45, {width: 210})
+            .text(data.description_market1, 370, 45, {width: 210})
             .moveDown();
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -4357,7 +4349,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -4407,20 +4399,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 150, {width: 250})
+            .text(data.market2, 370, 150, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 185, {width: 210})
+            .text(data.description_market2, 370, 185, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        switch(productSelected.market3){
+        switch(data.market3){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 318, { width:50 })
                 .moveDown();
@@ -4470,20 +4462,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 290, {width: 200})
+            .text(data.market3, 370, 290, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 325, {width: 210})
+            .text(data.description_market3, 370, 325, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        switch(productSelected.market4){
+        switch(data.market4){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 458, { width:50 })
                 .moveDown();
@@ -4533,14 +4525,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 430, {width: 250})
+            .text(data.market4, 370, 430, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 460, {width: 210} )
+            .text(data.description_market4, 370, 460, {width: 210} )
             .moveDown();
 
 
@@ -4550,17 +4542,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market5, 370, 570, {width: 250})
+            .text(data.market5, 370, 570, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 605, {width: 210})
+            .text(data.description_market5, 370, 605, {width: 210})
             .moveDown();
 
-        switch(productSelected.market5){
+        switch(data.market5){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 598, { width:50 })
                 .moveDown();
@@ -4613,17 +4605,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market6, 370, 710, {width: 250})
+            .text(data.market6, 370, 710, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market6, 370, 745, {width: 210})
+            .text(data.description_market6, 370, 745, {width: 210})
             .moveDown();
         
-        switch(productSelected.market6){
+        switch(data.market6){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 738, { width:50 })
                 .moveDown();
@@ -4700,17 +4692,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market7, 370, 10, {width: 250})
+            .text(data.market7, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market7, 370, 50, {width: 210})
+            .text(data.description_market7, 370, 50, {width: 210})
             .moveDown();
 
-        switch(productSelected.market7){
+        switch(data.market7){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -4760,7 +4752,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market8){
+        switch(data.market8){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -4810,14 +4802,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market8, 370, 145, {width: 250})
+            .text(data.market8, 370, 145, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market8, 370, 180, {width: 210})
+            .text(data.description_market8, 370, 180, {width: 210})
             .moveDown();
 
 
@@ -4832,7 +4824,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature1}`,
+            .text(`${data.feature1}`,
             125, 440,  
             {
                 width:150,
@@ -4855,7 +4847,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature2}`,
+            .text(`${data.feature2}`,
             325, 440,  
             {
                 width:150,
@@ -4877,7 +4869,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature3}`,
+            .text(`${data.feature3}`,
             125, 640,  
             {
                 width:150,
@@ -4898,7 +4890,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature4}`,
+            .text(`${data.feature4}`,
             330, 640,  
             {
                 width:150,
@@ -4919,7 +4911,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature5}`,
+            .text(`${data.feature5}`,
             170, 770,  
             {
                 width:300,
@@ -4947,7 +4939,7 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170, 15, {width:300})
             .moveDown();
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -4964,7 +4956,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -4972,7 +4964,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -4989,7 +4981,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -4997,7 +4989,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -5014,7 +5006,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -5022,7 +5014,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -5039,7 +5031,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -5047,7 +5039,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -5065,7 +5057,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -5093,7 +5085,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)        
+            .link(300, 600, 200, 105, `${data.url_video}`)        
 
         doc
             .image(logo, 200, 700, {width: 200})
@@ -5110,7 +5102,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 { width: 200 }, 
                 200, 0
             )
@@ -5128,17 +5120,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 250})
+            .text(data.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 40, {width: 210})
+            .text(data.description_market1, 370, 40, {width: 210})
             .moveDown();
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -5188,7 +5180,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -5238,20 +5230,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 150, {width: 250})
+            .text(data.market2, 370, 150, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 180, {width: 210})
+            .text(data.description_market2, 370, 180, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        switch(productSelected.market3){
+        switch(data.market3){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 318, { width:50 })
                 .moveDown();
@@ -5301,20 +5293,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 290, {width: 200})
+            .text(data.market3, 370, 290, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 320, {width: 210})
+            .text(data.description_market3, 370, 320, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        switch(productSelected.market4){
+        switch(data.market4){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 458, { width:50 })
                 .moveDown();
@@ -5364,14 +5356,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 430, {width: 250})
+            .text(data.market4, 370, 430, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 460, {width: 210} )
+            .text(data.description_market4, 370, 460, {width: 210} )
             .moveDown();
 
 
@@ -5381,17 +5373,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market5, 370, 570, {width: 250})
+            .text(data.market5, 370, 570, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 600, {width: 210})
+            .text(data.description_market5, 370, 600, {width: 210})
             .moveDown();
 
-        switch(productSelected.market5){
+        switch(data.market5){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 598, { width:50 })
                 .moveDown();
@@ -5444,17 +5436,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market6, 370, 710, {width: 250})
+            .text(data.market6, 370, 710, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market6, 370, 740, {width: 210})
+            .text(data.description_market6, 370, 740, {width: 210})
             .moveDown();
         
-        switch(productSelected.market6){
+        switch(data.market6){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 738, { width:50 })
                 .moveDown();
@@ -5531,17 +5523,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market7, 370, 10, {width: 250})
+            .text(data.market7, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market7, 370, 40, {width: 210})
+            .text(data.description_market7, 370, 40, {width: 210})
             .moveDown();
 
-        switch(productSelected.market7){
+        switch(data.market7){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -5591,7 +5583,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 140, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-       switch(productSelected.market8){
+       switch(data.market8){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -5641,20 +5633,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market8, 370, 160, {width: 250})
+            .text(data.market8, 370, 160, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market8, 370, 190, {width: 210})
+            .text(data.description_market8, 370, 190, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(10, 0, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        switch(productSelected.market9){
+        switch(data.market9){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -5704,14 +5696,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market9, 60, 10, {width: 200})
+            .text(data.market9, 60, 10, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market9, 60, 60, {width: 210})
+            .text(data.description_market9, 60, 60, {width: 210})
             .moveDown();
 
 
@@ -5727,7 +5719,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature1}`,
+            .text(`${data.feature1}`,
             125, 440,  
             {
                 width:150,
@@ -5750,7 +5742,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature2}`,
+            .text(`${data.feature2}`,
             325, 440,  
             {
                 width:150,
@@ -5772,7 +5764,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature3}`,
+            .text(`${data.feature3}`,
             125, 640,  
             {
                 width:150,
@@ -5793,7 +5785,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature4}`,
+            .text(`${data.feature4}`,
             330, 640,  
             {
                 width:150,
@@ -5814,7 +5806,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature5}`,
+            .text(`${data.feature5}`,
             170, 770,  
             {
                 width:300,
@@ -5841,7 +5833,7 @@ const pdfGenerator = async (req, res) => {
             .text('Ventajas competitivas', 170, 20, {width:300})
             .moveDown();
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -5858,7 +5850,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -5866,7 +5858,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -5883,7 +5875,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -5891,7 +5883,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -5908,7 +5900,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -5916,7 +5908,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -5933,7 +5925,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -5941,7 +5933,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -5959,7 +5951,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -5987,7 +5979,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+            .link(300, 600, 200, 105, `${data.url_video}`)
 
         
     } else if( markets.length === 10){
@@ -6001,7 +5993,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#163461')
             .fontSize(25)
             .text(
-                productSelected.name, 
+                data.name, 
                 { width: 200 }, 
                 200, 0
             )
@@ -6019,17 +6011,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 250})
+            .text(data.market1, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 40, {width: 210})
+            .text(data.description_market1, 370, 40, {width: 210})
             .moveDown();
 
-        switch(productSelected.market1){
+        switch(data.market1){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -6079,7 +6071,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 130, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market2){
+        switch(data.market2){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -6129,20 +6121,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 150, {width: 250})
+            .text(data.market2, 370, 150, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 180, {width: 210})
+            .text(data.description_market2, 370, 180, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 270, cuadrado[0], cuadrado[1]).fill('#25acb1');
 
-        switch(productSelected.market3){
+        switch(data.market3){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 318, { width:50 })
                 .moveDown();
@@ -6192,20 +6184,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market3, 370, 290, {width: 200})
+            .text(data.market3, 370, 290, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 320, {width: 210})
+            .text(data.description_market3, 370, 320, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 410, cuadrado[0], cuadrado[1]).fill('#ff9f0f');
 
-        switch(productSelected.market4){
+        switch(data.market4){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 458, { width:50 })
                 .moveDown();
@@ -6255,14 +6247,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 430, {width: 250})
+            .text(data.market4, 370, 430, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 460, {width: 210} )
+            .text(data.description_market4, 370, 460, {width: 210} )
             .moveDown();
 
 
@@ -6272,17 +6264,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market5, 370, 570, {width: 250})
+            .text(data.market5, 370, 570, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market5, 370, 600, {width: 210})
+            .text(data.description_market5, 370, 600, {width: 210})
             .moveDown();
 
-        switch(productSelected.market5){
+        switch(data.market5){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 598, { width:50 })
                 .moveDown();
@@ -6335,17 +6327,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market6, 370, 710, {width: 250})
+            .text(data.market6, 370, 710, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market6, 370, 740, {width: 210})
+            .text(data.description_market6, 370, 740, {width: 210})
             .moveDown();
         
-        switch(productSelected.market6){
+        switch(data.market6){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 738, { width:50 })
                 .moveDown();
@@ -6422,17 +6414,17 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market7, 370, 10, {width: 250})
+            .text(data.market7, 370, 10, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market7, 370, 40, {width: 210})
+            .text(data.description_market7, 370, 40, {width: 210})
             .moveDown();
 
-        switch(productSelected.market7){
+        switch(data.market7){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 38, { width:50 })
                 .moveDown();
@@ -6482,7 +6474,7 @@ const pdfGenerator = async (req, res) => {
         doc.lineJoin('miter')
             .rect(fullDocH / 1.8, 140, cuadrado[0], cuadrado[1]).fill('#ecc101');
 
-        switch(productSelected.market8){
+        switch(data.market8){
             case "INDUSTRIA QUÍMICA":
                 doc.image(logoAcueducto, 305, 178, { width:50 })
                 .moveDown();
@@ -6532,14 +6524,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market8, 370, 160, {width: 250})
+            .text(data.market8, 370, 160, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market8, 370, 190, {width: 210})
+            .text(data.description_market8, 370, 190, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
@@ -6553,14 +6545,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market9, 40, 10, {width: 200})
+            .text(data.market9, 40, 10, {width: 200})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market9, 40, 60, {width: 210})
+            .text(data.description_market9, 40, 60, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
@@ -6574,14 +6566,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market10, 40, 160, {width: 250})
+            .text(data.market10, 40, 160, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market10, 40, 190, {width: 210})
+            .text(data.description_market10, 40, 190, {width: 210})
             .moveDown();
 
 
@@ -6597,7 +6589,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature1}`,
+            .text(`${data.feature1}`,
             125, 440,  
             {
                 width:150,
@@ -6620,7 +6612,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature2}`,
+            .text(`${data.feature2}`,
             325, 440,  
             {
                 width:150,
@@ -6642,7 +6634,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature3}`,
+            .text(`${data.feature3}`,
             125, 640,  
             {
                 width:150,
@@ -6663,7 +6655,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature4}`,
+            .text(`${data.feature4}`,
             330, 640,  
             {
                 width:150,
@@ -6684,7 +6676,7 @@ const pdfGenerator = async (req, res) => {
 
         doc
             .fontSize(11)
-            .text(`${productSelected.feature5}`,
+            .text(`${data.feature5}`,
             170, 770,  
             {
                 width:300,
@@ -6714,7 +6706,7 @@ const pdfGenerator = async (req, res) => {
             .moveDown();
 
 
-        if(productSelected.adventage1 != null){
+        if(data.adventage1 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 80, 450, 70, 3 )
@@ -6731,7 +6723,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage1,
+                .text(data.adventage1,
                 140, 90,  
                 {
                     width:350,
@@ -6739,7 +6731,7 @@ const pdfGenerator = async (req, res) => {
                 })
         }
 
-        if(productSelected.adventage2 != null){
+        if(data.adventage2 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 160, 450, 70, 3 )
@@ -6756,7 +6748,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage2,
+                .text(data.adventage2,
                 140, 170,  
                 {
                     width:350,
@@ -6764,7 +6756,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage3 != null){
+        if(data.adventage3 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 240, 450, 70, 3 )
@@ -6781,7 +6773,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage3,
+                .text(data.adventage3,
                 140, 250,  
                 {
                     width:350,
@@ -6789,7 +6781,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage4 != null){
+        if(data.adventage4 != null){
 
             doc.lineJoin('fondoGris')
                 .roundedRect(70, 320, 450, 70, 3 )
@@ -6806,7 +6798,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage4,
+                .text(data.adventage4,
                 140, 330,  
                 {
                     width:350,
@@ -6814,7 +6806,7 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        if(productSelected.adventage5 != null){
+        if(data.adventage5 != null){
 
             doc.lineJoin('fondoGris')
             .roundedRect(70, 400, 450, 70, 3 )
@@ -6832,7 +6824,7 @@ const pdfGenerator = async (req, res) => {
             doc
                 .fontSize(11)
                 .fillColor('#163461')
-                .text(productSelected.adventage5,
+                .text(data.adventage5,
                 140, 410,  
                 {
                     width:350,
@@ -6860,16 +6852,55 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#016cb2')
             .fontSize(12)
             .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+            .link(300, 600, 200, 105, `${data.url_video}`)
 
     }
 
+    const buffers = await new Promise((resolve, reject) => {
+        const chunks = [];
+        doc.on('data', chunk => chunks.push(chunk));
+        doc.on('end', () => resolve(Buffer.concat(chunks)));
+        doc.end();
+    });
 
-    doc.pipe(res)
-    doc.end();
+    //Subir el buffer del PDF a cloudinary
+    const result = await new Promise((resolve, reject) => {
+        const upload_stream = cloudinary.uploader.upload_stream({
+            resource_type: 'auto',
+            public_id: name
+        }, (error, result) => {
+            if(error){
+                console.error('Error al subir el archivo', error);
+                reject(error);
+            }else{
+                console.log('Archivo subido exitosamente', result.secure_url);
+
+                let dataCloud = {
+                    nameProduct : name,
+                    secureUrl: result.secure_url,
+                    publicId: result.public_id,
+                    productId: id
+                };
+
+                PfdProduct.create(dataCloud);
+
+                resolve(result);
+            }
+        });
+        upload_stream.end(buffers);
+    });
+
+    return result;
 
 }
 
+async function destroyPDF(id){
+    cloudinary.uploader.destroy('public_id_o_URL', function(error, result) {
+        console.log(result, error);
+    });
+}
+
 export {
-    pdfGenerator
+    LocalPDF,
+    destroyPDF,
 }

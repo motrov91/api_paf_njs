@@ -5,8 +5,7 @@ import { secureJWT } from '../helpers/generateJWT.js'
 import { emailRecovery } from '../helpers/emails.js';
 import bcrypt from 'bcrypt';
 
-const  loginUser = async (req, res, next) => {
-    console.log(req.body);
+const  loginUser = async (req, res) => {
     check('email').isEmail().withMessage('Debe ingresar un email').run(req);
     check('password').notEmpty().withMessage('La contraseña debe ser obligatoria').run(req);
 
@@ -66,11 +65,11 @@ const  loginUser = async (req, res, next) => {
 
 const validateTokenUser = async(req, res) => {
 
-    console.log("Ingresa......");
+    //console.log("Ingresa......");
     //Generate JWT
     const token = await secureJWT(req.user.id);
 
-    console.log('TOKEN', token);
+    //console.log('TOKEN', token);
 
     res.send({
         userData : req.user,
