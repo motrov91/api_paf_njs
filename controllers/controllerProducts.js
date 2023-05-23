@@ -91,6 +91,8 @@ const AllProducts = async(req, res) => {
 
 const updateProduct = async( req, res ) => {
 
+    console.log('****************INGRESA****************')
+
     const rolUser = await User.findByPk(req.user.id);
 
     //Check user is admin
@@ -112,6 +114,15 @@ const updateProduct = async( req, res ) => {
     //Retorna el body en formato listo para cargar a la DB.
     //en el body llegan elementos dentro de listas, al final retorma un objeto, listo para cargar.
     let dataProduct = organizedDataSQL(req.body);
+
+    if(req.body.markets[0] == 'TODOS LOS MERCADOS'){
+        for(let i = 1; i<= 12; i++){
+            dataProduct['market'+[i+1]] = null;
+            dataProduct['description_market'+[i+1]] = null;
+        }
+    }
+
+    console.log('DATA PRODUCT******>', dataProduct);
 
     existProduct.set(dataProduct);
 
@@ -349,6 +360,38 @@ const getProductsByCategory = async (req, res) => {
 
 }
 
+const deleteProductCategory = async (req, res) => {
+
+    const { category, productId } = req.body;
+
+    const rolUser = await User.findByPk(req.user.id);
+
+     //Check user is admin
+    if( rolUser.rolId == 3) {
+        return res.status(401).json({
+            message : "No tienes los permisos para realizar la acción deseada"
+        })
+    }
+
+     //Check by exist product
+    const existProduct = await ProductXCategory.findOne({ where: {
+        CategoryId : category, 
+        ProductId : productId,
+    }});
+
+    if(!existProduct){
+        return res.status(400).json({
+            msg: "El producto no existe en esta categoria"
+        })
+    }
+
+    await existProduct.destroy();
+
+    return res.status(200).json({
+        msg: 'Producto eliminado exitosamente'
+    })
+}
+
 export {
     AddProduct,
     addProductToCategory,
@@ -358,8 +401,8 @@ export {
     deleteProduct,
     productPdf,
     productById,
-    getProductsByCategory
-
+    getProductsByCategory,
+    deleteProductCategory
 }
 
 
