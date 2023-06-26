@@ -1012,7 +1012,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 140, {width: 100})
+            .image('data:image/jpeg;base64,'+imgProduct , 120, 140, {width: 150})
             .moveDown();
 
         doc.lineJoin('Producto 1')
@@ -1525,7 +1525,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
+            .image('data:image/jpeg;base64,'+imgProduct , 120, 140, {width: 150})
             .moveDown();
 
         doc.lineJoin('test')
@@ -2122,7 +2122,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
+            .image('data:image/jpeg;base64,'+imgProduct , 120, 140, {width: 150})
             .moveDown();
 
         doc.lineJoin('test')
@@ -2779,7 +2779,7 @@ const pdfGenerator = async (req, res) => {
 
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
+            .image('data:image/jpeg;base64,'+imgProduct , 120, 140, {width: 150})
             .moveDown();
 
         doc.lineJoin('producto uno')
@@ -3499,7 +3499,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
+            .image('data:image/jpeg;base64,'+imgProduct , 120, 140, {width: 150})
             .moveDown();
 
         doc.lineJoin('producto uno')
@@ -4287,7 +4287,7 @@ const pdfGenerator = async (req, res) => {
         console.log('*********',imgProduct)
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
+            .image('data:image/jpeg;base64,'+imgProduct , 120, 140, {width: 150})
             .moveDown();
 
         doc.lineJoin('producto uno')
