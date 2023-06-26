@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "./index.js",
-    "start": "nodemon ./index.js"
+    "start": "nodemon ./index.js",
+    "db:import" : "node ./seed/seeder.js -i"
   },
   "author": "",
   "license": "ISC",

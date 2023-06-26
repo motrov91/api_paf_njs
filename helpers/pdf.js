@@ -159,7 +159,7 @@ const pdfGenerator = async (req, res) => {
         
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 100)
+            .image('data:image/jpeg;base64,'+imgProduct , 120, 100, {width: 130})
             .moveDown();
 
 
