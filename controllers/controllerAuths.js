@@ -46,7 +46,7 @@ const  loginUser = async (req, res) => {
 
         const token = generateJWT({ id: user.id, name: user.name, email: user.email, cargo: user.cargo });
 
-        return res.send({
+        return res.status(200).send({
             userData,
             token,
             code: 200

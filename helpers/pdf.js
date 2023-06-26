@@ -159,15 +159,16 @@ const pdfGenerator = async (req, res) => {
         
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 100, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 100)
             .moveDown();
+
 
         doc.lineJoin('test')
             .rect(fullDocH / 1.8, 60, cuadrado[0], cuadrado[1])
             .fill('#016db4')
             .moveDown();
 
-            doc
+        doc
             .fontSize(16)
             .fillColor('#ffffff')
             .text(productSelected.market1, 380,65, {width: 220})
@@ -1011,7 +1012,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 140, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 140, {width: 100})
             .moveDown();
 
         doc.lineJoin('Producto 1')
@@ -1524,7 +1525,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
             .moveDown();
 
         doc.lineJoin('test')
@@ -1668,7 +1669,7 @@ const pdfGenerator = async (req, res) => {
                 .moveDown();
                 break;
             case "ACUEDUCTOS":
-                doc.image(logoAcueducto, 305, 38, { width:50 })
+                doc.image(logoEducacion, 305, 38, { width:50 })
                 .moveDown();
                 break;
             case "EDUCACIÓN":
@@ -2121,7 +2122,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
             .moveDown();
 
         doc.lineJoin('test')
@@ -2778,7 +2779,7 @@ const pdfGenerator = async (req, res) => {
 
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
             .moveDown();
 
         doc.lineJoin('producto uno')
@@ -3498,7 +3499,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
             .moveDown();
 
         doc.lineJoin('producto uno')
@@ -4286,7 +4287,7 @@ const pdfGenerator = async (req, res) => {
         console.log('*********',imgProduct)
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 200})
+            .image('data:image/jpeg;base64,'+imgProduct , 60, 310, {width: 100})
             .moveDown();
 
         doc.lineJoin('producto uno')
