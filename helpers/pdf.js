@@ -345,7 +345,7 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage5, 125, 775, {width: 30})
 
         doc
-            .fontSize(11)
+            .fontSize(9)
             .text(productSelected.feature5,
             170, 760,  
             {
@@ -1548,7 +1548,7 @@ const pdfGenerator = async (req, res) => {
 
         switch(productSelected.market1){
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 38, { width:50 })
+                doc.image(logoQuimica, 305, 38, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
@@ -1598,7 +1598,7 @@ const pdfGenerator = async (req, res) => {
 
         switch(productSelected.market2){
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 254, { width:50 })
+                doc.image(logoQuimica, 305, 254, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
@@ -1661,27 +1661,27 @@ const pdfGenerator = async (req, res) => {
 
         switch(productSelected.market3){
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 38, { width:50 })
+                doc.image(logoAcueducto, 305, 468, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
-                doc.image(logoIndustriales, 305, 38, { width:50 })
+                doc.image(logoIndustriales, 305, 468, { width:50 })
                 .moveDown();
                 break;
             case "ACUEDUCTOS":
-                doc.image(logoEducacion, 305, 38, { width:50 })
+                doc.image(logoEducacion, 305, 468, { width:50 })
                 .moveDown();
                 break;
             case "EDUCACIÓN":
-                doc.image(logoEducacion, 305, 38, { width:50 })
+                doc.image(logoEducacion, 305, 468, { width:50 })
                 .moveDown();
                 break;
             case "ALIMENTOS":
-                doc.image(logoAlimentos, 305, 38, { width:50 })
+                doc.image(logoAlimentos, 305, 468, { width:50 })
                 .moveDown();
                 break;
             case "GOBIERNO":
-                doc.image(logoGobierno, 305, 38, { width:50 })
+                doc.image(logoGobierno, 305, 468, { width:50 })
                 .moveDown();
                 break;
             case "INVESTIGACIÓN":
@@ -1689,7 +1689,7 @@ const pdfGenerator = async (req, res) => {
                 .moveDown();
                 break;
             case "CLINICO Y HOSPITALARIO":
-                doc.image(logoClinico, 305, 38, { width:50 })
+                doc.image(logoClinico, 305, 468, { width:50 })
                 .moveDown();
                 break;
             case "TRATAMIENTO DE AGUA INDUSTRIAL":
@@ -1697,11 +1697,11 @@ const pdfGenerator = async (req, res) => {
                 .moveDown();
                 break;
             case "FARMACÉUTICA":
-                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                doc.image(logoFarmaceutica, 305, 468, { width:50 })
                 .moveDown();
                 break;
             case "CANNABIS":
-                doc.image(logoCannabis, 305, 38, { width:50 })
+                doc.image(logoCannabis, 305, 468, { width:50 })
                 .moveDown();
                 break;
         }
@@ -1724,7 +1724,7 @@ const pdfGenerator = async (req, res) => {
 
         switch(productSelected.market4){
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 38, { width:50 })
+                doc.image(logoAcueducto, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
@@ -1732,39 +1732,39 @@ const pdfGenerator = async (req, res) => {
                 .moveDown();
                 break;
             case "ACUEDUCTOS":
-                doc.image(logoAcueducto, 305, 38, { width:50 })
+                doc.image(logoAcueducto, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "EDUCACIÓN":
-                doc.image(logoEducacion, 305, 38, { width:50 })
+                doc.image(logoEducacion, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "ALIMENTOS":
-                doc.image(logoAlimentos, 305, 38, { width:50 })
+                doc.image(logoAlimentos, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "GOBIERNO":
-                doc.image(logoGobierno, 305, 38, { width:50 })
+                doc.image(logoGobierno, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "INVESTIGACIÓN":
-                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                doc.image(logoInvestigacion, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "CLINICO Y HOSPITALARIO":
-                doc.image(logoClinico, 305, 38, { width:50 })
+                doc.image(logoClinico, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "TRATAMIENTO DE AGUA INDUSTRIAL":
-                doc.image(logoTratamientoAguas, 305, 738, { width:50 })
+                doc.image(logoTratamientoAguas, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "FARMACÉUTICA":
-                doc.image(logoFarmaceutica, 305, 678, { width:50 })
+                doc.image(logoFarmaceutica, 305, 680, { width:50 })
                 .moveDown();
                 break;
             case "CANNABIS":
-                doc.image(logoCannabis, 305, 38, { width:50 })
+                doc.image(logoCannabis, 305, 680, { width:50 })
                 .moveDown();
                 break;
         }
@@ -2122,7 +2122,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .image('data:image/jpeg;base64,'+imgProduct , 120, 140, {width: 150})
+            .image('data:image/jpeg;base64,'+imgProduct , 100, 140, {width: 150})
             .moveDown();
 
         doc.lineJoin('test')
