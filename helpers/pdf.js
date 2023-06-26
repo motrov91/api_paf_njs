@@ -251,9 +251,9 @@ const pdfGenerator = async (req, res) => {
             .moveDown();
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 400, 170, 170).fill('#2e6ca7');
+            .rect(125, 390, 170, 170).fill('#2e6ca7');
 
-        doc.circle(210, 435, 25)
+        doc.circle(210, 425, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -262,19 +262,19 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature1,
-            135, 465,  
+            135, 455,  
             {
                 width:150,
                 align: 'center'
                 
             })
 
-        doc.image(pathImage1, 195, 420, {width: 30})
+        doc.image(pathImage1, 195, 410, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(300, 400, 170, 170).fill('#25acb1');
+            .rect(300, 390, 170, 170).fill('#25acb1');
 
-        doc.circle(385, 435, 25)
+        doc.circle(385, 425, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -283,18 +283,18 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature2,
-            310, 465,  
+            310, 455,  
             {
                 width:150,
                 align: 'center'
                 
             })
-        doc.image(pathImage2, 370, 420, {width: 30})
+        doc.image(pathImage2, 370, 410, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(300, 575, 170, 170).fill('#90caf9');
+            .rect(300, 565, 170, 170).fill('#90caf9');
 
-        doc.circle(385, 610, 25)
+        doc.circle(385, 600, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -303,19 +303,19 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature3,
-            310, 640,  
+            310, 630,  
             {
                 width:150,
                 align: 'center'
                 
             })
 
-        doc.image(pathImage4, 370, 595, {width: 30})
+        doc.image(pathImage4, 370, 585, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 575, 170, 170).fill('#f8c901');
+            .rect(125, 565, 170, 170).fill('#f8c901');
 
-        doc.circle(210, 610, 25)
+        doc.circle(210, 600, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -324,30 +324,30 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature4,
-            138, 640,  
+            138, 630,  
             {
                 width:150,
                 align: 'center'
                 
             })
 
-        doc.image(pathImage3, 195, 595, {width: 30})
+        doc.image(pathImage3, 195, 585, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(99, 750, 402, 80).fill('#ff6510');
+            .rect(99, 740, 402, 80).fill('#ff6510');
 
-        doc.circle(140, 790, 25)
+        doc.circle(140, 780, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 125, 775, {width: 30})
+        doc.image(pathImage5, 125, 765, {width: 30})
 
         doc
             .fontSize(9)
             .text(productSelected.feature5,
-            170, 760,  
+            170, 745,  
             {
                 width:300,
                 align: 'center'    
