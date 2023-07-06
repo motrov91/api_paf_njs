@@ -5,6 +5,10 @@ const Brand = db.define('Brands', {
     brand:{
         type: DataTypes.STRING,
         allowNull: false
+    },
+    imageBrand:{
+        type: DataTypes.STRING,
+        allowNull: true
     }
 },{
     scopes:{

@@ -1,5 +1,5 @@
 import express from 'express';
-import { addBrand, allBrand, updateBrand, deleteBrand } from '../controllers/controllerBrands.js'
+import { addBrand, allBrand, updateBrand, deleteBrand} from '../controllers/controllerBrands.js'
 import{ validateJWT } from '../middlewares/validate-jwt.js'
 const router = express.Router();
 

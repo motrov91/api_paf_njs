@@ -66,7 +66,7 @@ const  loginUser = async (req, res) => {
 const validateTokenUser = async(req, res) => {
 
     //console.log("Ingresa......");
-    //Generate JWT
+    //Generate JWT  
     const token = await secureJWT(req.user.id);
 
     //console.log('TOKEN', token);

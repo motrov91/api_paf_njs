@@ -6,7 +6,7 @@ import { organizedDataSQL, formaterProduct } from '../helpers/organizedDataSQLPr
 import { v2 as cloudinary } from 'cloudinary'
 
 import { uploadFileHL } from '../helpers/upload_file.js'
-import { Product, User } from '../models/index_model.js';
+import { Brand, Product, User } from '../models/index_model.js';
 
 
 cloudinary.config( process.env.CLOUDINARY_URL )
@@ -154,10 +154,49 @@ const updateImageProductCloud = async (req, res) => {
 
 }
 
+const uploadImageBrandCloud = async (req, res) => {
+
+    const { id } = req.params;
+
+    const existBrand = await Brand.findByPk(id);
+
+    if(!existBrand){
+        return res.status(400).json({
+            msg : "La marca no existe"
+        })
+    }
+
+    try {
+
+        const { tempFilePath } = req.files.archivo;
+        const { secure_url } = await cloudinary.uploader.upload( tempFilePath )
+        existBrand.imageBrand = secure_url;
+
+        await existBrand.save()
+
+        const brand = await Brand.scope('deleteAtributtes').findOne({
+        
+            where:{id : existBrand.id},
+            include: [
+                { model: User.scope('deletePassword') }
+            ]
+
+        }          
+
+        );
+
+        return res.status(200).json(brand);
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 
 export {
     uploadFile,
     updateImageProduct,
-    updateImageProductCloud
+    updateImageProductCloud,
+    uploadImageBrandCloud
 }   

@@ -108,9 +108,21 @@ const deleteCategory = async(req, res, next) => {
 
     
 };
+
+const categoriesBrand = async (req, res) => {
+
+    const categoriesByBrand = await Category.scope('deleteAtributtes').findAll({
+        where: {
+            brandId : req.params.id
+        }
+    })
+
+    return res.status(200).json({categoriesByBrand})
+}
 export{
     addCategory,
     allCategories,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    categoriesBrand
 }
