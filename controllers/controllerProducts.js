@@ -91,8 +91,6 @@ const AllProducts = async(req, res) => {
 
 const updateProduct = async( req, res ) => {
 
-    console.log('****************INGRESA****************')
-
     const rolUser = await User.findByPk(req.user.id);
 
     //Check user is admin
@@ -121,8 +119,6 @@ const updateProduct = async( req, res ) => {
             dataProduct['description_market'+[i+1]] = null;
         }
     }
-
-    console.log('DATA PRODUCT******>', dataProduct);
 
     existProduct.set(dataProduct);
 

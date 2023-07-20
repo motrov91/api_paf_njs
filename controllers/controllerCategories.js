@@ -59,8 +59,6 @@ const allCategories = async (req, res, next) => {
 
 };
 const updateCategory = async (req, res, next) => {
-
-    console.log(req.body);
     const { name, brandId } = req.body;
 
     const existCategory = await Category.findByPk(req.params.id);

@@ -81,8 +81,6 @@ const updateBrand = async (req, res, next) => {
 }
 const deleteBrand = async (req, res, next) => {
 
-    console.log('ingresa');
-
     const { id } = req.params;
 
     const rolUser = await User.findByPk(req.user.id);

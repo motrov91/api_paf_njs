@@ -61,8 +61,6 @@ const updateImageProduct = async (req, res) => {
 
     await existProduct.save()
 
-    console.log('Actualización existosa')
-
     res.json({nameFile})
 
 }
@@ -70,8 +68,6 @@ const updateImageProduct = async (req, res) => {
 const updateImageProductCloud = async (req, res) => {
 
     const { id } = req.params;
-
-    console.log('++++',req.files)
 
     //Check by exist product
     const existProduct = await Product.findByPk(id);

@@ -181,22 +181,19 @@ const pdfGenerator = async (req, res) => {
             .text(productSelected.description_market1, 380, 105, {width:200})
             .moveDown();
         
-        
+        doc.circle(330, 130, 25)
+            .lineWidth(3)
+            .fillAndStroke("white", "#fff")
+            .moveDown();
 
         switch(productSelected.market1){
             case "TODOS LOS MERCADOS":
-                
-                doc.circle(330, 130, 25)
-                    .lineWidth(3)
-                    .fillAndStroke("white", "#fff")
-                    .moveDown();
-
-                doc.image(logoPaf, 305, 118, { width:50 })
+            doc.image(logoPaf, 305, 118, { width:50 })
                 .moveDown();
 
                 break;
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 105, { width:50 })
+                doc.image(logoQuimica, 305, 105, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
@@ -4284,7 +4281,7 @@ const pdfGenerator = async (req, res) => {
             ).moveDown();
         }
 
-        console.log('*********',imgProduct)
+        //console.log('*********',imgProduct)
 
         doc
             .image('data:image/jpeg;base64,'+imgProduct , 120, 140, {width: 150})
