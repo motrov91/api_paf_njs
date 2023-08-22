@@ -2,6 +2,8 @@ import { organizedDataSQL, formaterProduct } from '../helpers/organizedDataSQLPr
 import { Product, User, ProductXCategory } from '../models/index_model.js';
 import { LocalPDF } from '../helpers/localPDF.js';
 
+import axios from 'axios';
+
 const AddProduct = async(req, res) => {
     const { reference } = req.body;
 
@@ -388,6 +390,30 @@ const deleteProductCategory = async (req, res) => {
     })
 }
 
+const getCotization = async (req, res) => {
+
+    console.log('REFERENCE', req.params.reference);
+
+    const queryParams = {
+        Username: '2023PAFi',
+        Password: 'INTUSERPAF',
+    };
+    try {
+        const response = await axios.get(
+            'https://170.239.154.131:4300/CSS_Cotizaciones/api/', 
+            {
+                params: queryParams
+            });
+
+        console.log('RESPONSE', response);
+
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al consultar la API' });
+    }
+    return res.status(200)
+}
+
 export {
     AddProduct,
     addProductToCategory,
@@ -398,7 +424,8 @@ export {
     productPdf,
     productById,
     getProductsByCategory,
-    deleteProductCategory
+    deleteProductCategory,
+    getCotization
 }
 
 
