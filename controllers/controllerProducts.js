@@ -3,6 +3,7 @@ import { Product, User, ProductXCategory } from '../models/index_model.js';
 import { LocalPDF } from '../helpers/localPDF.js';
 
 import axios from 'axios';
+import { Buffer } from 'buffer';
 
 const AddProduct = async(req, res) => {
     const { reference } = req.body;
@@ -394,22 +395,32 @@ const getCotization = async (req, res) => {
 
     console.log('REFERENCE', req.params.reference);
 
-    const queryParams = {
-        Username: '2023PAFi',
-        Password: 'INTUSERPAF',
-    };
+    const username = '2023PAFi';
+    const password = 'INTUSERPAF';
+    const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;  
+    
+    try {
+        const headers = {
+            Authorization: authHeader,
+        };
 
-    const response = await axios.get(
-        'https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', 
-        {
-            params: queryParams
-        });
-    console.log('RESPONSE', response);
+        const response = await axios.get('https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', { headers });
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al consultar la API' });
+    }
 
-    res.json({
-        data: response.data,
-        loading: false
-    });
+    // const response = await axios.get(
+    //     'https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', 
+    //     {
+    //         params: queryParams
+    //     });
+    // console.log('RESPONSE', response);
+
+    // res.json({
+    //     data: response.data,
+    //     loading: false
+    // });
 }
 
 export {
