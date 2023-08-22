@@ -400,14 +400,16 @@ const getCotization = async (req, res) => {
     const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;  
     
     try {
+        console.log('ingresa al try')
         const headers = {
             Authorization: authHeader,
         };
 
         const response = await axios.get('https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', { headers });
-        res.json(response.data);
+        return res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: 'Error al consultar la API' });
+        console.log('Ingresa al catch')
+       return res.status(500).json({ error: 'Error al consultar la API' });
     }
 
     // const response = await axios.get(
