@@ -401,7 +401,7 @@ const getCotization = async (req, res) => {
 
     try {
         const response = await axios.get(
-            'https://170.239.154.131:4300/CSS_Cotizaciones/api/', 
+            'https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', 
             {
                 params: queryParams
             });
