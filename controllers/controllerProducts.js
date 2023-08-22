@@ -399,26 +399,17 @@ const getCotization = async (req, res) => {
         Password: 'INTUSERPAF',
     };
 
-    try {
-        const response = await axios.get(
-            'https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', 
-            {
-                params: queryParams
-            });
-        console.log('RESPONSE', response);
+    const response = await axios.get(
+        'https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', 
+        {
+            params: queryParams
+        });
+    console.log('RESPONSE', response);
 
-        res.json({
-            data: response.data,
-            loading: false
-        });
-    } catch (error) {
-        res.status(500).json({ 
-            error: 'Error al consultar la API', 
-            loading: false
-        });
-    }
-    console.log('PASA')
-    return res.status(200)
+    res.json({
+        data: response.data,
+        loading: false
+    });
 }
 
 export {
