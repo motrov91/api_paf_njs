@@ -398,19 +398,16 @@ const getCotization = async (req, res) => {
         Username: '2023PAFi',
         Password: 'INTUSERPAF',
     };
-    try {
-        const response = await axios.get(
-            'https://170.239.154.131:4300/CSS_Cotizaciones/api/', 
-            {
-                params: queryParams
-            });
 
-        console.log('RESPONSE', response);
-
-        res.json(response.data);
-    } catch (error) {
-        res.status(500).json({ error: 'Error al consultar la API' });
-    }
+    const response = await axios.get(
+        'https://170.239.154.131:4300/CSS_Cotizaciones/api/', 
+        {
+            params: queryParams
+        });
+    console.log('RESPONSE', response);
+        
+   
+    console.log('PASA')
     return res.status(200)
 }
 
