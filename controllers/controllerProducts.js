@@ -4,6 +4,7 @@ import { LocalPDF } from '../helpers/localPDF.js';
 
 import axios from 'axios';
 import { Buffer } from 'buffer';
+import { where } from 'sequelize';
 
 const AddProduct = async(req, res) => {
     const { reference } = req.body;
@@ -359,6 +360,45 @@ const getProductsByCategory = async (req, res) => {
 
 }
 
+const getProductsapprovedByCategory = async (req, res) => {
+    let dataProducts = {
+        "products" : []
+    };
+
+    let productsDB = [];
+
+    //check that user exist
+    const userExist = await User.findByPk(req.user.id);
+
+     //* Si el rol del usuario es 1 0 3 podrán ver todos los productos.
+    //* si el rol es 2 no se ejecuta y pasa a la otra consulta. una vez ingresa a la condicion formatea el resultado 
+    //* para entregarlo como un conjunto de arreglos para cada producto.
+
+    const products = await ProductXCategory.findAll({
+        where: { CategoryId : req.params.id},
+    }); 
+
+    for(let i=0; i<products.length; i++){
+        let product = await Product.findByPk(products[i].ProductId);
+        productsDB.push(product);
+    }
+
+    for(let j=0; j<productsDB.length; j++){
+
+        let dataFormater = await formaterProduct(productsDB[j]);
+        dataProducts.products.push(dataFormater);
+    }
+
+    let dataTest=[];
+    for (const product of dataProducts.products) {
+        if(product.state == true){
+            dataTest.push(product)
+        }
+    }
+
+    return res.status(200).json(dataTest);
+}
+
 const deleteProductCategory = async (req, res) => {
 
     const { category, productId } = req.body;
@@ -438,7 +478,8 @@ export {
     productById,
     getProductsByCategory,
     deleteProductCategory,
-    getCotization
+    getCotization,
+    getProductsapprovedByCategory
 }
 
 
