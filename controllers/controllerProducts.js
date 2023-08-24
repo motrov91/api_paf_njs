@@ -396,7 +396,9 @@ const getProductsapprovedByCategory = async (req, res) => {
         }
     }
 
-    return res.status(200).json(dataTest);
+    dataProducts = dataTest
+
+    return res.status(200).json(dataProducts);
 }
 
 const deleteProductCategory = async (req, res) => {
