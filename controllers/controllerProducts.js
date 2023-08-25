@@ -4,7 +4,6 @@ import { LocalPDF } from '../helpers/localPDF.js';
 
 import axios from 'axios';
 import { Buffer } from 'buffer';
-import { where } from 'sequelize';
 
 const AddProduct = async(req, res) => {
     const { reference } = req.body;
@@ -360,7 +359,7 @@ const getProductsByCategory = async (req, res) => {
 
 }
 
-const getProductsapprovedByCategory = async (req, res) => {
+const getProductsApprovedByCategory = async (req, res) => {
     let dataProducts = {
         "products" : []
     };
@@ -379,8 +378,16 @@ const getProductsapprovedByCategory = async (req, res) => {
     }); 
 
     for(let i=0; i<products.length; i++){
-        let product = await Product.findByPk(products[i].ProductId);
-        productsDB.push(product);
+        let product = await Product.findByPk(
+            products[i].ProductId,
+            // {
+            //     where: {state : true}
+            // }
+        );
+        console.log('product********>', product.state)
+        if(product.state == true){
+            productsDB.push(product);
+        }
     }
 
     for(let j=0; j<productsDB.length; j++){
@@ -388,15 +395,6 @@ const getProductsapprovedByCategory = async (req, res) => {
         let dataFormater = await formaterProduct(productsDB[j]);
         dataProducts.products.push(dataFormater);
     }
-
-    let dataTest=[];
-    for (const product of dataProducts.products) {
-        if(product.state == true){
-            dataTest.push(product)
-        }
-    }
-
-    dataProducts = dataTest
 
     return res.status(200).json(dataProducts);
 }
@@ -481,7 +479,7 @@ export {
     getProductsByCategory,
     deleteProductCategory,
     getCotization,
-    getProductsapprovedByCategory
+    getProductsApprovedByCategory
 }
 
 
