@@ -246,6 +246,35 @@ const Product = db.define('Products', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    videoExtra1:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    urlExtra1:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    urlExtra2:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    urlExtra3:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    etiquetaEnlace1:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    etiquetaEnlace2:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    etiquetaEnlace3:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+
     
 },{
     scopes:{

@@ -7,9 +7,16 @@ const organizedDataSQL = data => {
 
     dataProduct['name'] = data.name;
     dataProduct['img'] = data.img == undefined ? null : data.img;
+    dataProduct['marketObservations'] = data.marketObservations;
     dataProduct['reference'] = data.reference;
     dataProduct['url_video'] = data.url_video;
-
+    dataProduct['videoExtra1'] = data.videoExtra1;
+    dataProduct['urlExtra1'] = data.urlExtra1;
+    dataProduct['urlExtra2'] = data.urlExtra2;
+    dataProduct['urlExtra3'] = data.urlExtra3;
+    dataProduct['etiquetaEnlace1'] = data.etiquetaEnlace1;
+    dataProduct['etiquetaEnlace2'] = data.etiquetaEnlace2;
+    dataProduct['etiquetaEnlace3'] = data.etiquetaEnlace3;
 
     for(let i=0; i<=4; i++){
         if(data.features[i] != null){
@@ -22,26 +29,25 @@ const organizedDataSQL = data => {
 
     }
 
-    for(let i=0; i<=11; i++){
+    console.log("dataprod1", dataProduct)
 
+    for(let i=0; i<=11; i++){
         if(data.markets[i] != null){
             dataProduct['market'+[i+1]] = data.markets[i];
             dataProduct['description_market'+[i+1]] = data.descriptionsMarkets[i];
-            dataProduct['observations'+[i+1]] = data.marketObservations[i];
+            dataProduct['observations'+[i+1]] = data.marketObservations[i] == undefined ? null : data.marketObservations[i];
         }else{
             dataProduct['market'+[i+1]] = null;
             dataProduct['description_market'+[i+1]] = null;
             dataProduct['observations'+[i+1]] = null;
         }
     }
-
+    console.log('DATAPRODUCT', dataProduct)
     return dataProduct;
 
 }
 
 const formaterProduct = async (dataSQL) => {
-
-    console.log('ingresa formater')
 
     let datasql = {
         "id" : dataSQL.id,
@@ -52,6 +58,13 @@ const formaterProduct = async (dataSQL) => {
         "createdAt": dataSQL.createdAt,
         "updatedAt": dataSQL.updatedAt,
         "url_video": dataSQL.url_video,
+        "videoExtra1": dataSQL.videoExtra1,
+        "urlExtra1": dataSQL.urlExtra1,
+        "urlExtra2": dataSQL.urlExtra2,
+        "urlExtra3": dataSQL.urlExtra3,
+        "etiquetaEnlace1": dataSQL.etiquetaEnlace1,
+        "etiquetaEnlace2": dataSQL.etiquetaEnlace2,
+        "etiquetaEnlace3": dataSQL.etiquetaEnlace3,
         "markets" : [],
         "descriptionsMarkets" : [],
         "observationsMarkets" : [],
@@ -73,10 +86,6 @@ const formaterProduct = async (dataSQL) => {
     }
 
     for(let i=0; i<=4; i++){
-        // if(dataSQL['feature'+[i+1]] != null){
-            
-        // };
-
         datasql.features.push(dataSQL['feature'+[i+1]]);
         datasql.advantages.push(dataSQL['adventage'+[i+1]]);
         datasql.observationsFeature.push(dataSQL['observationsFeature' + [i+1]]);

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Buffer } from 'buffer';
 
 const AddProduct = async(req, res) => {
+    console.log('body', req.body)
     const { reference } = req.body;
 
     //Verify product by reference
@@ -20,7 +21,7 @@ const AddProduct = async(req, res) => {
     try {
 
         //Retorna el body en formato listo para cargar a la DB.
-        //en el body llegan elementos dentro de listas, al final retorma un objeto, listo para cargar.
+        //en el body llegan elementos dentro de listas, al final retoraa un objeto, listo para cargar.
         let dataProduct = organizedDataSQL(req.body);
 
         //Revisar esta linea porque puede esta haciendo lo mismo que la de abajo(40).
@@ -29,15 +30,16 @@ const AddProduct = async(req, res) => {
         //Se le asigna la respuesta de la creacion del usuario en la base de datos.
         const productData = await Product.create(dataProduct);
 
-        //console.log(productData);
-
         //Recibe el objeto del producto recien creado y lo formatea para organizarlo en listas para mostrar en la respuesta.
         let dataFormater = await formaterProduct(productData);
 
         return res.status(200).json(dataFormater);
         
     } catch (error) {
-         return console.log(`Error: ${error}`)
+        console.log(`Error: ${error}`)
+        return res.status(400).json({
+            message: "Ha sucedido un error al momento de crear el producto"
+        })
     }
 
 }
@@ -56,20 +58,26 @@ const AllProducts = async(req, res) => {
     //* Si el rol del usuario es 1 0 3 podrán ver todos los productos.
     //* si el rol es 2 no se ejecuta y pasa a la otra consulta. una vez ingresa a la condicion formatea el resultado 
     //* para entregarlo como un conjunto de arreglos para cada producto.
-    if( userExist.rolId == 1 || userExist.rolId == 3 ){
-        const products = await Product.findAll({
-            include: [
-                { model: User.scope('deletePassword') }
-            ]
-        });         
+    try {
 
-        for(let j=0; j<products.length; j++){
-
-            let dataFormater = await formaterProduct(products[j]);
-            dataProducts.products.push(dataFormater);
+        if( userExist.rolId == 1 || userExist.rolId == 3 ){
+            const products = await Product.findAll({
+                include: [
+                    { model: User.scope('deletePassword') }
+                ]
+            });         
+    
+            for(let j=0; j<products.length; j++){
+    
+                let dataFormater = await formaterProduct(products[j]);
+                dataProducts.products.push(dataFormater);
+            }
+    
+            return res.status(200).json(dataProducts);
         }
-
-        return res.status(200).json(dataProducts);
+        
+    } catch (error) {
+        return res.status(400).json({msg : 'Error al momento de cargar los producto'})
     }
 
 
@@ -94,6 +102,8 @@ const AllProducts = async(req, res) => {
 
 const updateProduct = async( req, res ) => {
 
+    console.log('REQ.BODY', req.body);
+
     const rolUser = await User.findByPk(req.user.id);
 
     //Check user is admin
@@ -103,33 +113,42 @@ const updateProduct = async( req, res ) => {
         })
     }
 
-    //Check by exist product
-    const existProduct = await Product.findByPk(req.params.id);
-    
-    if(!existProduct){
+    try {
+        //Check by exist product
+        const existProduct = await Product.findByPk(req.params.id);
+        
+        if(!existProduct){
+            return res.status(400).json({
+                msg: "El producto no existe"
+            })
+        }
+
+        //Retorna el body en formato listo para cargar a la DB.
+        //en el body llegan elementos dentro de listas, al final retorma un objeto, listo para cargar.
+        let dataProduct = organizedDataSQL(req.body);
+
+        if(req.body.markets[0] == 'TODOS LOS MERCADOS'){
+            for(let i = 1; i<= 12; i++){
+                dataProduct['market'+[i+1]] = null;
+                dataProduct['description_market'+[i+1]] = null;
+            }
+        }
+
+        existProduct.set(dataProduct);
+
+        await existProduct.save()
+
+        return res.status(200).json({
+            msg: 'Actualización exitosa.'
+        });
+    } catch (error) {
+        console.log('Error', error)
         return res.status(400).json({
-            msg: "El producto no existe"
+            msg: "Se ha producido un error almomento de modificar el producto"
         })
     }
 
-    //Retorna el body en formato listo para cargar a la DB.
-    //en el body llegan elementos dentro de listas, al final retorma un objeto, listo para cargar.
-    let dataProduct = organizedDataSQL(req.body);
-
-    if(req.body.markets[0] == 'TODOS LOS MERCADOS'){
-        for(let i = 1; i<= 12; i++){
-            dataProduct['market'+[i+1]] = null;
-            dataProduct['description_market'+[i+1]] = null;
-        }
-    }
-
-    existProduct.set(dataProduct);
-
-    await existProduct.save()
-
-    return res.status(200).json({
-        msg: 'Actualización exitosa.'
-    });
+    
 
 }
 
@@ -317,11 +336,23 @@ const productById = async(req, res) => {
 
 const addProductToCategory = async (req, res) => {
 
-    await ProductXCategory.create(req.body)
+    const {CategoryId, ProductId} = req.body;
 
-    console.log('Exitoso');
+    const productById = await ProductXCategory.findOne({ where: {
+        CategoryId : CategoryId, 
+        ProductId : ProductId,
+    }})
 
-    res.json({msg: "Exitoso"})
+    if(productById == null){
+        try {
+            await ProductXCategory.create(req.body)
+            return res.json({msg: "Exitoso"})
+        } catch (error) {
+            return res.status(404).json({msg: "No se ha podido completar la trasacción"})
+        }
+    }else{
+        return res.status(400).json({msg: "Al parecer ya esta vinculado el producto a la categoria"})
+    }
 
 }
 
@@ -340,23 +371,29 @@ const getProductsByCategory = async (req, res) => {
     //* si el rol es 2 no se ejecuta y pasa a la otra consulta. una vez ingresa a la condicion formatea el resultado 
     //* para entregarlo como un conjunto de arreglos para cada producto.
 
-    const products = await ProductXCategory.findAll({
-        where: { CategoryId : req.params.id},
-    }); 
-
-    for(let i=0; i<products.length; i++){
-        let product = await Product.findByPk(products[i].ProductId);
-        productsDB.push(product);
+    try {
+        const products = await ProductXCategory.findAll({
+            where: { CategoryId : req.params.id},
+        }); 
+    
+        for(let i=0; i<products.length; i++){
+            let product = await Product.findByPk(products[i].ProductId);
+            productsDB.push(product);
+        }
+    
+        for(let j=0; j<productsDB.length; j++){
+    
+            let dataFormater = await formaterProduct(productsDB[j]);
+            dataProducts.products.push(dataFormater);
+        }
+    
+        return res.status(200).json(dataProducts);
+    
+    } catch (error) {
+        return res.status(501).json({
+            'Error': "No se pudo completar la transacción"
+        })
     }
-
-    for(let j=0; j<productsDB.length; j++){
-
-        let dataFormater = await formaterProduct(productsDB[j]);
-        dataProducts.products.push(dataFormater);
-    }
-
-    return res.status(200).json(dataProducts);
-
 }
 
 const getProductsApprovedByCategory = async (req, res) => {
@@ -432,7 +469,7 @@ const deleteProductCategory = async (req, res) => {
 
 const getCotization = async (req, res) => {
 
-    console.log('REFERENCE', req.params.reference);
+    //console.log('REFERENCE', req.params.reference);
 
     const username = '2023PAFi';
     const password = 'INTUSERPAF';
