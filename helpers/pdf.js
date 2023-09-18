@@ -103,7 +103,11 @@ const pdfGenerator = async (req, res) => {
     const ventaja4 = path.join( __dirname, '../assets/', 'ventaja4.png' ); 
     const ventaja5 = path.join( __dirname, '../assets/', 'ventaja5.png' );
     const pathImage6 = path.join( __dirname, '../assets/', 'icon_video.png' ); 
-    const logo = path.join( __dirname, '../assets/', 'logo.png' );   
+    const logo = path.join( __dirname, '../assets/', 'logo.png' );  
+    const ic_youtube = path.join( __dirname, '../assets/iconos/', 'youtube.png' );  
+    const ic_enlace = path.join( __dirname, '../assets/iconos/', 'enlace.png' );  
+
+
 
     //Crea el pdf y se asignamos un tamaño y una información general
     const doc = new pdf({ 
@@ -497,28 +501,76 @@ const pdfGenerator = async (req, res) => {
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
+        /* ------------------- Información Extra del producto ------------------------ */
 
         doc 
             .fontSize(20)
             .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
+            .text('Información extra del producto', 180, 530)
 
+        if(productSelected.videoExtra1 !== ''){
+            doc
+                .image(ic_youtube, 50, 565, {width: 17})
+        
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 75, 569)
+
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 569)
+        }
+
+        if(productSelected.urlExtra1 !== ''){
+            doc
+            .image(ic_enlace, 50, 600, {width: 15})
+        
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 75, 590);
+
+            doc 
+                .fontSize(9)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 610)
+        }
+
+       
+        if(productSelected.urlExtra2 !== ''){
+            doc
+            .image(ic_enlace, 50, 655, {width: 15})
+        
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace2}:`, 75, 650);
+
+            doc 
+                .fontSize(9)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        }
+       
+        if(productSelected.urlExtra3 !== ''){
+            doc
+            .image(ic_enlace, 50, 705, {width: 15})
+        
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace3}:`, 75, 700);
+
+            doc 
+                .fontSize(9)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+        }
+            
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
-
-        doc.image(logo, 250, 748, {width: 120})
+            .image(logo, 230, 740, {width: 100})
 
     } 
     /* PDF PARA UN PRODUCTO DE DOS (2) MERCADOS */
@@ -950,28 +1002,56 @@ const pdfGenerator = async (req, res) => {
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
+        /* ------------------- Información Extra del producto ------------------------ */
 
         doc 
             .fontSize(20)
             .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
+            .text('Información extra del producto', 180, 530)
 
-        doc
-            .fillColor('#016cb2')
+        doc 
             .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+            .fillColor('#575756')
+            .text('Video Extra:', 50, 570)
 
-        doc.image(logo, 250, 748, {width: 120})
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(productSelected.videoExtra1, 150, 570)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+
+        
+        doc
+            .image(logo, 230, 740, {width: 100})
 
     } else if( markets.length === 3 ){
         doc
@@ -1462,30 +1542,58 @@ const pdfGenerator = async (req, res) => {
                     align: 'center'    
                 })
 
-        }
-
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
+        }       
+/* ------------------- Información Extra del producto ------------------------ */
 
         doc 
             .fontSize(20)
             .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
+            .text('Información extra del producto', 180, 530)
 
-        doc
-            .fillColor('#016cb2')
+        doc 
             .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)        
+            .fillColor('#575756')
+            .text('Video Extra:', 50, 570)
 
-        doc.image(logo, 250, 748, {width: 120})
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(productSelected.videoExtra1, 150, 570)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+
+        
+        doc
+            .image(logo, 230, 740, {width: 100})
+
     } else if( markets.length === 4 ){
         doc
         .fillColor('#016cb2')
@@ -1906,25 +2014,6 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 620, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 640)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${productSelected.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2078,10 +2167,65 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        
 
         doc
-            .image(logo, 200, 700, {width: 200})
+            .fontSize(11)
+            .fillColor('#163461')
+            .text(productSelected.adventage3,
+            140, 250,  
+            {
+                width:350,
+                align: 'center'    
+            })
+/** -------------------------------- Info Extra  ---------------------------------------- */
+            doc 
+                .fontSize(20)
+                .fillColor('#575756')
+                .text('Información extra del producto', 180, 530)
+
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 50, 570)
+
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 570)
+            
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+            
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+            
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+
+            
+        doc
+            .image(logo, 230, 740, {width: 100})
 
     } else if( markets.length === 5 ){
         doc
@@ -2566,25 +2710,6 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 620, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 640)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${productSelected.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2734,10 +2859,55 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Información extra del producto', 180, 530)
 
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text('Video Extra:', 50, 570)
 
-        doc
-            .image(logo, 200, 700, {width: 200})
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(productSelected.videoExtra1, 150, 570)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+
+        
+    doc
+        .image(logo, 230, 740, {width: 100})
+
     } else if( markets.length === 6 ){
 
          doc
@@ -3288,25 +3458,6 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 620, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 640)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${productSelected.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -3454,10 +3605,55 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
+        
+        doc 
+            .fontSize(20)
+            .fillColor('#575756')
+            .text('Información extra del producto', 180, 530)
 
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text('Video Extra:', 50, 570)
 
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(productSelected.videoExtra1, 150, 570)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+
+        
         doc
-            .image(logo, 200, 700, {width: 200})
+            .image(logo, 230, 740, {width: 100})
 
     } else if( markets.length === 7 ){
 
@@ -4221,29 +4417,56 @@ const pdfGenerator = async (req, res) => {
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
+/* ------------------- Información Extra del producto ------------------------ */
 
         doc 
             .fontSize(20)
             .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
+            .text('Información extra del producto', 180, 530)
 
-        doc
-            .fillColor('#016cb2')
+        doc 
             .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+            .fillColor('#575756')
+            .text('Video Extra:', 50, 570)
 
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(productSelected.videoExtra1, 150, 570)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+
+        
         doc
-            .image(logo, 200, 750, {width: 200})
+            .image(logo, 230, 740, {width: 100})
 
     } else if( markets.length === 8 ){
 
@@ -5072,29 +5295,56 @@ const pdfGenerator = async (req, res) => {
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
+        /* ------------------- Información Extra del producto ------------------------ */
 
         doc 
             .fontSize(20)
             .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
+            .text('Información extra del producto', 180, 530)
 
-        doc
-            .fillColor('#016cb2')
+        doc 
             .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)        
+            .fillColor('#575756')
+            .text('Video Extra:', 50, 570)
 
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(productSelected.videoExtra1, 150, 570)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+
+        
         doc
-            .image(logo, 200, 700, {width: 200})
+            .image(logo, 230, 740, {width: 100})
 
     } else if( markets.length === 9 ){
 
@@ -5966,26 +6216,56 @@ const pdfGenerator = async (req, res) => {
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
+        /* ------------------- Información Extra del producto ------------------------ */
 
         doc 
             .fontSize(20)
             .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
+            .text('Información extra del producto', 180, 530)
 
-        doc
-            .fillColor('#016cb2')
+        doc 
             .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
+            .fillColor('#575756')
+            .text('Video Extra:', 50, 570)
+
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(productSelected.videoExtra1, 150, 570)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        
+        doc 
+            .fontSize(12)
+            .fillColor('#575756')
+            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+        doc 
+            .fontSize(10)
+            .fillColor('#575756')
+            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+
+        
+        doc
+            .image(logo, 230, 740, {width: 100})
 
         
     } else if( markets.length === 10){
@@ -6839,26 +7119,6 @@ const pdfGenerator = async (req, res) => {
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${productSelected.url_video}`)
 
     }
 
