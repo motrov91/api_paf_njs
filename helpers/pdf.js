@@ -508,7 +508,7 @@ const pdfGenerator = async (req, res) => {
             .fillColor('#575756')
             .text('Información extra del producto', 180, 530)
 
-        if(productSelected.videoExtra1 !== ''){
+        if(productSelected.videoExtra1 !== '' && productSelected.videoExtra1 !== null){
             doc
                 .image(ic_youtube, 50, 565, {width: 17})
         
@@ -523,7 +523,8 @@ const pdfGenerator = async (req, res) => {
                 .text(productSelected.videoExtra1, 150, 569)
         }
 
-        if(productSelected.urlExtra1 !== ''){
+        if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
+            
             doc
             .image(ic_enlace, 50, 600, {width: 15})
         
@@ -539,7 +540,7 @@ const pdfGenerator = async (req, res) => {
         }
 
        
-        if(productSelected.urlExtra2 !== ''){
+        if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
             doc
             .image(ic_enlace, 50, 655, {width: 15})
         
@@ -554,7 +555,7 @@ const pdfGenerator = async (req, res) => {
                 .text(`- ${productSelected.urlExtra2}`, 70, 670)
         }
        
-        if(productSelected.urlExtra3 !== ''){
+        if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
             doc
             .image(ic_enlace, 50, 705, {width: 15})
         
@@ -1004,51 +1005,58 @@ const pdfGenerator = async (req, res) => {
 
         /* ------------------- Información Extra del producto ------------------------ */
 
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Información extra del producto', 180, 530)
+        if(productSelected.videoExtra1 !== '' && productSelected.videoExtra1 !== null){
+            doc 
+                .fontSize(20)
+                .fillColor('#575756')
+                .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text('Video Extra:', 50, 570)
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 50, 570)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(productSelected.videoExtra1, 150, 570)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 570)
+        }
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra1}`, 70, 620)
-        
-        doc 
+        if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        }
+
+        if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
+            doc 
             .fontSize(12)
             .fillColor('#575756')
             .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        }
         
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+        if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra3}`, 70, 720)
-
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+        }
         
         doc
             .image(logo, 230, 740, {width: 100})
@@ -1545,51 +1553,59 @@ const pdfGenerator = async (req, res) => {
         }       
 /* ------------------- Información Extra del producto ------------------------ */
 
-        doc 
+        if(productSelected.videoExtra1 != '' && productSelected.videoExtra1 != null){
+            doc 
             .fontSize(20)
             .fillColor('#575756')
             .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text('Video Extra:', 50, 570)
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 50, 570)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(productSelected.videoExtra1, 150, 570)
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 570)
+        }
         
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+        if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra1}`, 70, 620)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        }
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+            }
         
-        doc 
+        
+        if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
+            doc 
             .fontSize(12)
             .fillColor('#575756')
             .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra3}`, 70, 720)
-
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+        }
         
         doc
             .image(logo, 230, 740, {width: 100})
@@ -2178,51 +2194,71 @@ const pdfGenerator = async (req, res) => {
                 align: 'center'    
             })
 /** -------------------------------- Info Extra  ---------------------------------------- */
-            doc 
-                .fontSize(20)
-                .fillColor('#575756')
-                .text('Información extra del producto', 180, 530)
+          
+            if(productSelected.videoExtra1 !== '' && productSelected.videoExtra1 !== null){
+                doc 
+                    .fontSize(20)
+                    .fillColor('#575756')
+                    .text('Información extra del producto', 180, 530)
 
-            doc 
-                .fontSize(12)
-                .fillColor('#575756')
-                .text('Video Extra:', 50, 570)
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text('Video Extra:', 50, 570)
 
-            doc 
-                .fontSize(12)
-                .fillColor('#575756')
-                .text(productSelected.videoExtra1, 150, 570)
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(productSelected.videoExtra1, 150, 570)
+            }
             
-            doc 
-                .fontSize(12)
-                .fillColor('#575756')
-                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+            if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
 
-            doc 
-                .fontSize(12)
-                .fillColor('#575756')
-                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(`- ${productSelected.urlExtra1}`, 70, 620)
+            }
             
-            doc 
-                .fontSize(12)
-                .fillColor('#575756')
-                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+            if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
 
-            doc 
-                .fontSize(12)
-                .fillColor('#575756')
-                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(`- ${productSelected.urlExtra2}`, 70, 670)
+            }
             
-            doc 
-                .fontSize(12)
-                .fillColor('#575756')
-                .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+            if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
 
-            doc 
-                .fontSize(12)
-                .fillColor('#575756')
-                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(`- ${productSelected.urlExtra2}`, 70, 670)
+            }
 
+            if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+                doc 
+                    .fontSize(12)
+                    .fillColor('#575756')
+                    .text(`- ${productSelected.urlExtra3}`, 70, 720)
+            }
             
         doc
             .image(logo, 230, 740, {width: 100})
@@ -2859,52 +2895,58 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text('Video Extra:', 50, 570)
+        if(productSelected.videoExtra1 !== '' && productSelected.videoExtra1){
+            doc 
+                .fontSize(20)
+                .fillColor('#575756')
+                .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(productSelected.videoExtra1, 150, 570)
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 50, 570)
+
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 570)
+        }
         
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+        if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra1}`, 70, 620)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 620) 
+        }
+        if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra2}`, 70, 670)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        }
+        if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+        }
 
-        
     doc
         .image(logo, 230, 740, {width: 100})
 
@@ -3605,52 +3647,57 @@ const pdfGenerator = async (req, res) => {
                 })
 
         }
-        
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text('Video Extra:', 50, 570)
+        if(productSelected.videoExtra1 !== '' && productSelected.videoExtra1 !== null){
+            doc 
+                .fontSize(20)
+                .fillColor('#575756')
+                .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(productSelected.videoExtra1, 150, 570)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 50, 570)
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra1}`, 70, 620)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 570)
+        }
+        if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra2}`, 70, 670)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        }
+        if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        }
 
+        if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+        }
         
         doc
             .image(logo, 230, 740, {width: 100})
@@ -4419,51 +4466,55 @@ const pdfGenerator = async (req, res) => {
 
 /* ------------------- Información Extra del producto ------------------------ */
 
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Información extra del producto', 180, 530)
+        if(productSelected.videoExtra1 !== '' && productSelected.videoExtra1 !== null){
+            doc 
+                .fontSize(20)
+                .fillColor('#575756')
+                .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text('Video Extra:', 50, 570)
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 50, 570)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(productSelected.videoExtra1, 150, 570)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 570)
+        }
+        if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra1}`, 70, 620)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        }
+        if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra2}`, 70, 670)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        }
+        if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra3}`, 70, 720)
-
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+        }
         
         doc
             .image(logo, 230, 740, {width: 100})
@@ -5297,51 +5348,55 @@ const pdfGenerator = async (req, res) => {
 
         /* ------------------- Información Extra del producto ------------------------ */
 
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Información extra del producto', 180, 530)
+        if( productSelected.videoExtra1 !== '' && productSelected.videoExtra1 !== null){
+            doc 
+                .fontSize(20)
+                .fillColor('#575756')
+                .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text('Video Extra:', 50, 570)
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 50, 570)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(productSelected.videoExtra1, 150, 570)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 570)
+        }
+        if( productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra1}`, 70, 620)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        }
+        if( productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra2}`, 70, 670)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        }
+        if( productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra3}`, 70, 720)
-
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+        }
         
         doc
             .image(logo, 230, 740, {width: 100})
@@ -6218,50 +6273,55 @@ const pdfGenerator = async (req, res) => {
 
         /* ------------------- Información Extra del producto ------------------------ */
 
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Información extra del producto', 180, 530)
+        if(productSelected.videoExtra1 !== '' && productSelected.videoExtra1 !== null){
+            doc 
+                .fontSize(20)
+                .fillColor('#575756')
+                .text('Información extra del producto', 180, 530)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text('Video Extra:', 50, 570)
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text('Video Extra:', 50, 570)
 
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(productSelected.videoExtra1, 150, 570)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(productSelected.videoExtra1, 150, 570)
+        }
+        if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra1}`, 70, 620)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+        }
+        if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra2}`, 70, 670)
-        
-        doc 
-            .fontSize(12)
-            .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+        }
+        if(productSelected.urlExtra3 !== '' && productSelected.urlExtra3 !== null){
+            doc 
+                .fontSize(12)
+                .fillColor('#575756')
+                .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
 
-        doc 
-            .fontSize(10)
-            .fillColor('#575756')
-            .text(`- ${productSelected.urlExtra3}`, 70, 720)
+            doc 
+                .fontSize(10)
+                .fillColor('#575756')
+                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+        }
 
         
         doc
