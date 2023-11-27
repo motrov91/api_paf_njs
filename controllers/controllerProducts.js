@@ -1,9 +1,11 @@
 import { organizedDataSQL, formaterProduct } from '../helpers/organizedDataSQLProduct.js';
 import { Product, User, ProductXCategory } from '../models/index_model.js';
 import { LocalPDF } from '../helpers/localPDF.js';
-
+import https from 'https';
 import axios from 'axios';
-import { Buffer } from 'buffer';
+import curlirize from 'axios-curlirize';
+
+
 
 const AddProduct = async(req, res) => {
     console.log('body', req.body)
@@ -432,6 +434,8 @@ const getProductsApprovedByCategory = async (req, res) => {
         dataProducts.products.push(dataFormater);
     }
 
+    console.log(dataProducts)
+
     return res.status(200).json(dataProducts);
 }
 
@@ -467,39 +471,107 @@ const deleteProductCategory = async (req, res) => {
     })
 }
 
-const getCotization = async (req, res) => {
+const getLoginCotization = async (req, res) => {
 
-    //console.log('REFERENCE', req.params.reference);
+    console.log('Ingresa')
+    let data;
 
-    const username = '2023PAFi';
-    const password = 'INTUSERPAF';
-    const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;  
-    
-    try {
-        console.log('ingresa al try')
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; 
+
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login',
+        headers: { 
+          'Authorization': 'Basic SU5UVVNFUlBBRjoyMDIzUEFGaQ==', 
+          'Cookie': 'sapxslb=598F97697387964C85FCDE1F8FAEC4A0; xsSecureId44E71A007C073438083DAAC5655DC2FF=C799030EE83F2341939BC18AE4DB6CC9'
+        },
+        data: {
+            "Username": process.env.USERNAMEPRODUCT,
+            "Password" : process.env.PASSWORDPRODUCT
+        }
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        data = response.data
+        return res.json(response.data)
+      })
+      .catch((error) => {
+        return console.log(error);
+      });
+}
+
+const getProductsChild = async (req, res) => {
+
+    const { reference, token } = req.body;
+
+
+    // Valor del encabezado X-CSRF-Token que deseas enviar
+    const csrfToken = token.trim();
+
+    //inicia axios-curlirize
+    curlirize(axios);
+
+    const username = process.env.USERNAMEPRODUCT;
+    const password = process.env.PASSWORDPRODUCT;
+    console.log({token, username, password})
+
+    // Combina el nombre de usuario y la contraseña en una cadena con formato "usuario:contraseña"
+    const credentials = `${username}:${password}`;
+
+    // Codifica las credenciales en Base64
+    const base64Credentials = Buffer.from(credentials).toString('base64');
+
+    // process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; 
+
+    // // Configura los encabezados personalizados
+    // const customHeaders = {
+    //     'X-CSRF-Token': csrfToken,
+    //     // 'Authorization': `Basic ${base64Credentials}`,
+    //     'Cookie' : 'sapxslb=CD48102D46475246AAF242318DAB2B60; xsSecureIdBCF4987D100731B9F6395E03CB8613C3=510B062BB170BD44B2EA4268FA71127E',
+    // };
+
+
+    // // Opciones de la solicitud
+    // const requestOptions = {
+    //     method: 'get', 
+    //     url: 'https://170.239.154.131:4300/CSS_Cotizaciones/api/references/6300096400', // URL de la API que deseas consultar
+    //     headers: customHeaders, 
+    // };
+
+    // // Realiza la solicitud utilizando axios.request
+    // axios.request(requestOptions)
+    // .then(response => {
+    //     // Aquí puedes manejar la respuesta de la API
+    //     console.log('Respuesta de la API:', response.data);
+    // })
+    // .catch(error => {
+    //     // Aquí puedes manejar errores
+    //     console.error('Error al hacer la solicitud:', error);
+    // })
+
+    const url = 'https://170.239.154.131:4300/CSS_Cotizaciones/api/references/6300096400';
         const headers = {
-            Authorization: authHeader,
+            'Authorization': `Bearer ${token}`, // Utiliza el tipo de token adecuado (Bearer en este ejemplo)
+            'X-CSRF-Token': '4170084BB5F62C4D90EFB004BE1FF0A9',
+            'Cookie': 'sapxslb=CD48102D46475246AAF242318DAB2B60; xsSecureIdBCF4987D100731B9F6395E03CB8613C3=510B062BB170BD44B2EA4268FA71127E'
         };
 
-        const response = await axios.get('https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', { headers });
-        return res.json(response.data);
-        
-    } catch (error) {
-        console.log('Ingresa al catch')
-       return res.status(500).json({ error: 'Error al consultar la API' });
-    }
+        // Realizar la solicitud GET con Axios
+        axios.get(url, {
+        headers: headers
+        })
+        .then(response => {
+            // Manejo de la respuesta
+            console.log(response.data);
+        })
+        .catch(error => {
+            // Manejo de errores
+            console.error(error);
+        });
 
-    // const response = await axios.get(
-    //     'https://170.239.154.131:4300/CSS_Cotizaciones/api/test/login', 
-    //     {
-    //         params: queryParams
-    //     });
-    // console.log('RESPONSE', response);
-
-    // res.json({
-    //     data: response.data,
-    //     loading: false
-    // });
 }
 
 export {
@@ -513,7 +585,8 @@ export {
     productById,
     getProductsByCategory,
     deleteProductCategory,
-    getCotization,
+    getLoginCotization,
+    getProductsChild,
     getProductsApprovedByCategory
 }
 
