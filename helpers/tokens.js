@@ -6,7 +6,7 @@ const generateJWT = data => jwt.sign({
         email: data.email,
         cargo: data.cargo
     }, process.env.JWT_SECRET,{
-        expiresIn: '7d'
+        expiresIn: '60m'
 })
 
 const tokenRecovery = () => Date.now().toString(32) + Math.random().toString().substring(2);

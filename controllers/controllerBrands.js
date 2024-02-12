@@ -48,12 +48,13 @@ const addBrand = async (req, res, next) => {
 const allBrand = async (req, res, next) => {
 
     const brands = await Brand.scope('deleteAtributtes').findAll({
-
         include: [
             { model: User.scope('deletePassword') }
         ]
     
     });
+
+    console.log(brands)
     return res.status(200).json({brands});
 
 }

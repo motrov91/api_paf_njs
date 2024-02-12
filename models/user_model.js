@@ -35,7 +35,7 @@ const User = db.define('Users', {
     scopes:{
         deletePassword:{
             attributes:{
-                exclude: ['password', 'createdAt', 'updatedAt']
+                exclude: ['password', 'createdAt', 'updatedAt', 'token']
             }
         }
     }

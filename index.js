@@ -6,6 +6,7 @@ import brands from './routes/brands_routes.js';
 import categories from './routes/category_routes.js'
 import products from './routes/products_routes.js'
 import uploads from './routes/uploads.js'
+import reports from './routes/reports.js'
 import db from './config/db.js';
 import bodyParser from "body-parser";
 import fileUpload from 'express-fileupload';
@@ -45,6 +46,7 @@ app.use('/brand', brands);
 app.use('/category', categories);
 app.use('/product', products);
 app.use('/uploads', uploads)
+app.use('/reports', reports)
 
 
 

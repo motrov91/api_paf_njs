@@ -8,7 +8,6 @@ import curlirize from 'axios-curlirize';
 
 
 const AddProduct = async(req, res) => {
-    console.log('body', req.body)
     const { reference } = req.body;
 
     //Verify product by reference
@@ -62,7 +61,7 @@ const AllProducts = async(req, res) => {
     //* para entregarlo como un conjunto de arreglos para cada producto.
     try {
 
-        if( userExist.rolId == 1 || userExist.rolId == 3 ){
+        if( userExist.rolId == 1 || userExist.rolId == 3 || userExist.rolId == 4 ){
             const products = await Product.findAll({
                 include: [
                     { model: User.scope('deletePassword') }
@@ -103,8 +102,6 @@ const AllProducts = async(req, res) => {
 }
 
 const updateProduct = async( req, res ) => {
-
-    console.log('REQ.BODY', req.body);
 
     const rolUser = await User.findByPk(req.user.id);
 
@@ -434,8 +431,6 @@ const getProductsApprovedByCategory = async (req, res) => {
         dataProducts.products.push(dataFormater);
     }
 
-    console.log(dataProducts)
-
     return res.status(200).json(dataProducts);
 }
 
@@ -472,8 +467,6 @@ const deleteProductCategory = async (req, res) => {
 }
 
 const getLoginCotization = async (req, res) => {
-
-    console.log('Ingresa')
     let data;
 
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; 
@@ -524,53 +517,33 @@ const getProductsChild = async (req, res) => {
     // Codifica las credenciales en Base64
     const base64Credentials = Buffer.from(credentials).toString('base64');
 
-    // process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; 
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; 
 
-    // // Configura los encabezados personalizados
-    // const customHeaders = {
-    //     'X-CSRF-Token': csrfToken,
-    //     // 'Authorization': `Basic ${base64Credentials}`,
-    //     'Cookie' : 'sapxslb=CD48102D46475246AAF242318DAB2B60; xsSecureIdBCF4987D100731B9F6395E03CB8613C3=510B062BB170BD44B2EA4268FA71127E',
-    // };
+    // Configura los encabezados personalizados
+    const customHeaders = {
+        'X-CSRF-Token': csrfToken,
+        'Authorization': `Basic ${base64Credentials}`,
+        'Cookie' : 'sapxslb=CD48102D46475246AAF242318DAB2B60; xsSecureIdBCF4987D100731B9F6395E03CB8613C3=510B062BB170BD44B2EA4268FA71127E',
+    };
 
 
-    // // Opciones de la solicitud
-    // const requestOptions = {
-    //     method: 'get', 
-    //     url: 'https://170.239.154.131:4300/CSS_Cotizaciones/api/references/6300096400', // URL de la API que deseas consultar
-    //     headers: customHeaders, 
-    // };
+    // Opciones de la solicitud
+    const requestOptions = {
+        method: 'get', 
+        url: 'https://170.239.154.131:4300/CSS_Cotizaciones/api/references/6300096400', // URL de la API que deseas consultar
+        headers: customHeaders, 
+    };
 
-    // // Realiza la solicitud utilizando axios.request
-    // axios.request(requestOptions)
-    // .then(response => {
-    //     // Aquí puedes manejar la respuesta de la API
-    //     console.log('Respuesta de la API:', response.data);
-    // })
-    // .catch(error => {
-    //     // Aquí puedes manejar errores
-    //     console.error('Error al hacer la solicitud:', error);
-    // })
-
-    const url = 'https://170.239.154.131:4300/CSS_Cotizaciones/api/references/6300096400';
-        const headers = {
-            'Authorization': `Bearer ${token}`, // Utiliza el tipo de token adecuado (Bearer en este ejemplo)
-            'X-CSRF-Token': '4170084BB5F62C4D90EFB004BE1FF0A9',
-            'Cookie': 'sapxslb=CD48102D46475246AAF242318DAB2B60; xsSecureIdBCF4987D100731B9F6395E03CB8613C3=510B062BB170BD44B2EA4268FA71127E'
-        };
-
-        // Realizar la solicitud GET con Axios
-        axios.get(url, {
-        headers: headers
-        })
-        .then(response => {
-            // Manejo de la respuesta
-            console.log(response.data);
-        })
-        .catch(error => {
-            // Manejo de errores
-            console.error(error);
-        });
+    // Realiza la solicitud utilizando axios.request
+    axios.request(requestOptions)
+    .then(response => {
+        // Aquí puedes manejar la respuesta de la API
+        console.log('Respuesta de la API:', response.data);
+    })
+    .catch(error => {
+        // Aquí puedes manejar errores
+        console.error('Error al hacer la solicitud:', error);
+    })
 
 }
 
