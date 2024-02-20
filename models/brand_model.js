@@ -10,7 +10,7 @@ const Brand = db.define('Brands', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    published:{
+    publish:{
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
