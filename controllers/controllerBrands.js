@@ -53,10 +53,30 @@ const allBrand = async (req, res, next) => {
     
     });
 
-    console.log(brands)
+    //console.log(brands)
     return res.status(200).json({brands});
 
 }
+const updateShowStatus = async (req, res) =>{
+    const {id, status } = req.body;
+    console.log(req.body)
+
+    const existBrand = await Brand.findByPk(id);
+
+    if(!existBrand){
+        return res.status(400).json({
+            msg: "La marca no existe"
+        })
+    }
+
+    existBrand.set({ publish: status });
+
+    existBrand.save();
+    return res.status(200).json({
+        msg: "Modificación exitosa."
+    })
+};
+
 const updateBrand = async (req, res, next) => {
 
     // console.log(req.body)
@@ -113,5 +133,6 @@ export {
     addBrand,
     allBrand,
     updateBrand,
-    deleteBrand
+    deleteBrand,
+    updateShowStatus
 }
