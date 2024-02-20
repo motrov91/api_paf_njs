@@ -37,7 +37,6 @@ const addBrand = async (req, res, next) => {
 
         );
 
-
         return res.status(200).json(brand);
 
     } catch (error) {

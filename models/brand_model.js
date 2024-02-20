@@ -9,6 +9,11 @@ const Brand = db.define('Brands', {
     imageBrand:{
         type: DataTypes.STRING,
         allowNull: true
+    },
+    published:{
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 },{
     scopes:{
