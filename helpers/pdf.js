@@ -4,6 +4,7 @@ import imageToBase from 'image-to-base64';
 
 import {fileURLToPath} from 'url';
 import path from 'path';
+import { header } from 'express-validator';
 
 const pdfGenerator = async (req, res) => {
 
@@ -105,7 +106,9 @@ const pdfGenerator = async (req, res) => {
     const pathImage6 = path.join( __dirname, '../assets/', 'icon_video.png' ); 
     const logo = path.join( __dirname, '../assets/', 'logo.png' );  
     const ic_youtube = path.join( __dirname, '../assets/iconos/', 'youtube.png' );  
-    const ic_enlace = path.join( __dirname, '../assets/iconos/', 'enlace.png' );  
+    const ic_enlace = path.join( __dirname, '../assets/iconos/', 'enlace.png' ); 
+    const footerPDF = path.join(__dirname, '../assets/footer.png'); 
+    const headerPDF = path.join(__dirname, '../assets/header.png'); 
 
 
 
@@ -117,6 +120,7 @@ const pdfGenerator = async (req, res) => {
         },
         // size: 'A4',
         size: [595, 920],
+        margins: { top: 0, bottom: 0, left: 0, right:0 }
     });
 
     //Medidas de la hota
@@ -126,12 +130,9 @@ const pdfGenerator = async (req, res) => {
     /* PFD PARA 1 PRODUCTO */
 
     if( markets.length === 1){
-
+        
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 220,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 600})
 
         if(productSelected.name.length > 25){
             doc
@@ -353,6 +354,10 @@ const pdfGenerator = async (req, res) => {
                 width:300,
                 align: 'center'    
             })
+        
+            //FOOTER
+        doc
+            .image(footerPDF, 0, 830, {width: 600})
 
         //* Ventajas comerciales 
 
@@ -501,16 +506,17 @@ const pdfGenerator = async (req, res) => {
 
         }
 
+        doc
+            .image(footerPDF, 0, 830, {width: 600})
+
         /* ------------------- Información Extra del producto ------------------------ */
 
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Información extra del producto', 180, 530)
-
         if(productSelected.videoExtra1 !== '' && productSelected.videoExtra1 !== null){
-            doc
-                .image(ic_youtube, 50, 565, {width: 17})
+
+            doc 
+                .fontSize(20)
+                .fillColor('#575756')
+                .text('Información extra del producto', 180, 530)
         
             doc 
                 .fontSize(12)
@@ -577,10 +583,7 @@ const pdfGenerator = async (req, res) => {
     /* PDF PARA UN PRODUCTO DE DOS (2) MERCADOS */
     else if( markets.length === 2 ){
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 80,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(productSelected.name.length > 25){
             doc
@@ -743,6 +746,9 @@ const pdfGenerator = async (req, res) => {
             .font('Helvetica-Oblique')
             .text(productSelected.description_market2, 370, 210, {width: 210})
             .moveDown();
+        
+        doc
+            .image(footerPDF, 0, 830, {width: 600})
 
         //* -------------------- CARACTERISTICAS -------------------------
 
@@ -756,9 +762,9 @@ const pdfGenerator = async (req, res) => {
             .moveDown();
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 400, 170, 170).fill('#2e6ca7');
+            .rect(125, 390, 170, 170).fill('#2e6ca7');
 
-        doc.circle(210, 435, 25)
+        doc.circle(210, 425, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -767,19 +773,19 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature1,
-            135, 465,  
+            135, 455,  
             {
                 width:150,
                 align: 'center'
                 
             })
 
-        doc.image(pathImage1, 195, 420, {width: 30})
+        doc.image(pathImage1, 195, 410, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(300, 400, 170, 170).fill('#25acb1');
+            .rect(300, 390, 170, 170).fill('#25acb1');
 
-        doc.circle(385, 435, 25)
+        doc.circle(385, 425, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -788,18 +794,18 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature2,
-            310, 465,  
+            310, 455,  
             {
                 width:150,
                 align: 'center'
                 
             })
-        doc.image(pathImage2, 370, 420, {width: 30})
+        doc.image(pathImage2, 370, 410, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(300, 575, 170, 170).fill('#ff9f0f');
+            .rect(300, 565, 170, 170).fill('#ff9f0f');
 
-        doc.circle(385, 610, 25)
+        doc.circle(385, 600, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -808,7 +814,7 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature3,
-            310, 640,  
+            310, 630,  
             {
                 width:150,
                 align: 'center'
@@ -818,9 +824,9 @@ const pdfGenerator = async (req, res) => {
         doc.image(pathImage4, 370, 595, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 575, 170, 170).fill('#fbc02d');
+            .rect(125, 565, 170, 170).fill('#fbc02d');
 
-        doc.circle(210, 610, 25)
+        doc.circle(210, 600, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -829,30 +835,30 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature4,
-            138, 640,  
+            138, 630,  
             {
                 width:150,
                 align: 'center'
                 
             })
 
-        doc.image(pathImage3, 195, 595, {width: 30})
+        doc.image(pathImage3, 195, 585, {width: 30})
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(99, 750, 402, 80).fill('#ff6510');
+            .rect(99, 740, 402, 80).fill('#ff6510');
 
-        doc.circle(140, 790, 25)
+        doc.circle(140, 780, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 125, 775, {width: 30})
+        doc.image(pathImage5, 125, 765, {width: 30})
 
         doc
             .fontSize(11)
             .text(productSelected.feature5,
-            170, 760,  
+            170, 750,  
             {
                 width:300,
                 align: 'center'    
@@ -1063,10 +1069,7 @@ const pdfGenerator = async (req, res) => {
 
     } else if( markets.length === 3 ){
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 80,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(productSelected.name.length > 25){
             doc
@@ -1292,6 +1295,9 @@ const pdfGenerator = async (req, res) => {
             .font('Helvetica-Oblique')
             .text(productSelected.description_market3, 370, 290, {width: 210})
             .moveDown();
+        
+        doc
+            .image(footerPDF, 0, 800, {width: 600})
 
         //* -------------------- CARACTERISTICAS -------------------------
 
@@ -1612,10 +1618,7 @@ const pdfGenerator = async (req, res) => {
 
     } else if( markets.length === 4 ){
         doc
-        .fillColor('#016cb2')
-        .fontSize(12)
-        .text('Purificación y Análisis de Fluidos', 50,10)
-        .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(productSelected.name.length > 25){
             doc
@@ -1904,10 +1907,7 @@ const pdfGenerator = async (req, res) => {
             .moveDown();
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 790)
-            .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2265,10 +2265,7 @@ const pdfGenerator = async (req, res) => {
 
     } else if( markets.length === 5 ){
         doc
-        .fillColor('#016cb2')
-        .fontSize(12)
-        .text('Purificación y Análisis de Fluidos', 50,10)
-        .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(productSelected.name.length > 25){
             doc
@@ -2620,10 +2617,7 @@ const pdfGenerator = async (req, res) => {
             .moveDown();
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 700)
-            .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2952,11 +2946,8 @@ const pdfGenerator = async (req, res) => {
 
     } else if( markets.length === 6 ){
 
-         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 50,10)
-            .moveDown();
+        doc
+        .image(headerPDF, 0, 0, {width: 330})
 
         if(productSelected.name.length > 25){
             doc
@@ -3374,10 +3365,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 790)
-            .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -3705,10 +3693,7 @@ const pdfGenerator = async (req, res) => {
     } else if( markets.length === 7 ){
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 50,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
        if(productSelected.name.length > 25){
             doc
@@ -4124,10 +4109,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 790)
-            .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -4522,10 +4504,7 @@ const pdfGenerator = async (req, res) => {
     } else if( markets.length === 8 ){
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 50,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(productSelected.name.length > 25){
             doc
@@ -4943,10 +4922,7 @@ const pdfGenerator = async (req, res) => {
         }
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 790)
-            .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 

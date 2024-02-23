@@ -44,16 +44,30 @@ const addBrand = async (req, res, next) => {
         next;
     }
 }
-const allBrand = async (req, res, next) => {
+const allBrandMobile = async (req, res, next) => {
+
+    const brands = await Brand.scope('deleteAtributtes').findAll({
+        where: {
+            publish : true
+        },
+        include: [
+            { model: User.scope('deletePassword') }
+        ]
+    });
+
+    console.log(brands)
+    return res.status(200).json({brands});
+
+}
+const allBrandWeb = async (req, res, next) => {
 
     const brands = await Brand.scope('deleteAtributtes').findAll({
         include: [
             { model: User.scope('deletePassword') }
         ]
-    
     });
 
-    //console.log(brands)
+    console.log(brands)
     return res.status(200).json({brands});
 
 }
@@ -131,7 +145,8 @@ const deleteBrand = async (req, res, next) => {
 
 export {
     addBrand,
-    allBrand,
+    allBrandMobile,
+    allBrandWeb,
     updateBrand,
     deleteBrand,
     updateShowStatus
