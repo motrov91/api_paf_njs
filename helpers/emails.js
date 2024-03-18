@@ -112,14 +112,19 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
 
     try {
 
+        console.log('CORREO ***', process.env.EMAIL_SEND_PDF)
+        console.log('CONTRASEÑA ***', process.env.EMAIL_PASS_PDF)
+
         const transporter = nodemailer.createTransport({
             host: '72.167.224.32',
             port: 465,
-            secure: true, // Usar SSL
+            secure: true,
+            secureConnection: false, // Usar SSL
             auth: {
                 user: process.env.EMAIL_SEND_PDF,
                 pass: process.env.EMAIL_PASS_PDF
             },
+            requireTLS: true,
             tls: {
                 // Configurar para ignorar la verificación del certificado SSL
                 rejectUnauthorized: false,
