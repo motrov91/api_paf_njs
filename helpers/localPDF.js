@@ -1,6 +1,6 @@
 import pdf from 'pdfkit';
 import imageToBase from 'image-to-base64';
-import { PfdProduct } from '../models/index_model.js';
+import { PdfProduct, Product, Category } from '../models/index_model.js';
 
 import {fileURLToPath} from 'url';
 import path from 'path';
@@ -12,6 +12,7 @@ cloudinary.config( process.env.CLOUDINARY_URL )
 
 async function LocalPDF (data){
 
+    console.log('DATOS ENTRANTES: ',data.id, data.name)
     const { id, name } = data;
 
 
@@ -109,6 +110,8 @@ async function LocalPDF (data){
     const ventaja5 = path.join( __dirname, '../assets/', 'ventaja5.png' );
     const pathImage6 = path.join( __dirname, '../assets/', 'icon_video.png' ); 
     const logo = path.join( __dirname, '../assets/', 'logo.png' );   
+    const footerPDF = path.join(__dirname, '../assets/footer.png'); 
+    const headerPDF = path.join(__dirname, '../assets/header.png'); 
 
     //Crea el pdf y se asignamos un tamaño y una información general
     const doc = new pdf({ 
@@ -118,6 +121,7 @@ async function LocalPDF (data){
         },
         // size: 'A4',
         size: [595, 920],
+        margins: { top: 0, bottom: 0, left: 0, right:0 }
     });
 
     //Medidas de la hota
@@ -129,10 +133,7 @@ async function LocalPDF (data){
     if( markets.length === 1){
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 220,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 600})
 
         if(data.name.length > 25){
             doc
@@ -346,6 +347,9 @@ async function LocalPDF (data){
                 align: 'center'    
             })
 
+        doc
+            .image(footerPDF, 0, 830, {width: 600})
+
         //* Ventajas comerciales 
 
         doc.addPage({
@@ -493,37 +497,11 @@ async function LocalPDF (data){
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${data.url_video}`)
-
-        doc.image(logo, 250, 748, {width: 120})
-
     } 
     /* PDF PARA UN PRODUCTO DE DOS (2) MERCADOS */
-    else if( markets.length === 2 ){
+    else if( markets.length === 2 ){ 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 80,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(data.name.length > 25){
             doc
@@ -801,6 +779,9 @@ async function LocalPDF (data){
                 align: 'center'    
             })
 
+        doc
+            .image(footerPDF, 0, 830, {width: 600})
+
         doc.addPage({
             size: [595, 920],
         })
@@ -946,35 +927,9 @@ async function LocalPDF (data){
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${data.url_video}`)
-
-        doc.image(logo, 250, 748, {width: 120})
-
     } else if( markets.length === 3 ){
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 80,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(data.name.length > 25){
             doc
@@ -1314,6 +1269,9 @@ async function LocalPDF (data){
                 width:300,
                 align: 'center'    
             })
+        
+        doc
+            .image(footerPDF, 0, 830, {width: 600})
 
         doc.addPage({
             size: [595, 920],
@@ -1461,33 +1419,10 @@ async function LocalPDF (data){
         }
 
 
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${data.url_video}`)        
-
-        doc.image(logo, 250, 748, {width: 120})
+        
     } else if( markets.length === 4 ){
         doc
-        .fillColor('#016cb2')
-        .fontSize(12)
-        .text('Purificación y Análisis de Fluidos', 50,10)
-        .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(data.name.length > 25){
             doc
@@ -1780,6 +1715,9 @@ async function LocalPDF (data){
             .fontSize(12)
             .text('www.paf.com.co', fullDocH/5.5, 790)
             .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+        
+        doc
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -1901,26 +1839,6 @@ async function LocalPDF (data){
                 width:300,
                 align: 'center'    
             })
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 620, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 640)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${data.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2081,10 +1999,7 @@ async function LocalPDF (data){
 
     } else if( markets.length === 5 ){
         doc
-        .fillColor('#016cb2')
-        .fontSize(12)
-        .text('Purificación y Análisis de Fluidos', 50,10)
-        .moveDown();
+        .image(headerPDF, 0, 0, {width: 330})
 
         if(data.name.length > 25){
             doc
@@ -2436,10 +2351,7 @@ async function LocalPDF (data){
             .moveDown();
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 700)
-            .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2561,26 +2473,6 @@ async function LocalPDF (data){
                 width:300,
                 align: 'center'    
             })
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 620, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 640)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${data.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -2736,11 +2628,8 @@ async function LocalPDF (data){
             .image(logo, 200, 700, {width: 200})
     } else if( markets.length === 6 ){
 
-         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 50,10)
-            .moveDown();
+        doc
+        .image(headerPDF, 0, 0, {width: 330})
 
         if(data.name.length > 25){
             doc
@@ -3158,10 +3047,7 @@ async function LocalPDF (data){
         }
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 790)
-            .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -3283,26 +3169,6 @@ async function LocalPDF (data){
                 width:300,
                 align: 'center'    
             })
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 620, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 640)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 700, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 700, {width: 200})
-            .link(300, 700, 200, 105, `${data.url_video}`)
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -3458,10 +3324,7 @@ async function LocalPDF (data){
     } else if( markets.length === 7 ){
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 50,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
        if(data.name.length > 25){
             doc
@@ -3877,10 +3740,7 @@ async function LocalPDF (data){
         }
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('www.paf.com.co', fullDocH/5.5, 790)
-            .link(100, 100, 160, 27, 'https://www.paf.com.co/')
+            .image(footerPDF, 0, 830, {width: 600})
 
     //------------------------------ NEW PAGE ------------------------------------------
 
@@ -4218,36 +4078,10 @@ async function LocalPDF (data){
         }
 
 
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${data.url_video}`)
-
-        doc
-            .image(logo, 200, 750, {width: 200})
-
     } else if( markets.length === 8 ){
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 50,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         if(data.name.length > 25){
             doc
@@ -5066,37 +4900,10 @@ async function LocalPDF (data){
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${data.url_video}`)        
-
-        doc
-            .image(logo, 200, 700, {width: 200})
-
     } else if( markets.length === 9 ){
 
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 50,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         doc
             .fillColor('#163461')
@@ -5960,34 +5767,9 @@ async function LocalPDF (data){
 
         }
 
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${data.url_video}`)
-
-        
     } else if( markets.length === 10){
         doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .text('Purificación y Análisis de Fluidos', 50,10)
-            .moveDown();
+            .image(headerPDF, 0, 0, {width: 330})
 
         doc
             .fillColor('#163461')
@@ -6832,28 +6614,6 @@ async function LocalPDF (data){
                 })
 
         }
-
-
-        //* TIPS COMERCIALES 
-         doc.lineJoin('fondoazul')
-            .rect(40, 520, 175, 55).fill('#2e6ca7');
-
-        doc 
-            .fontSize(20)
-            .fillColor('#fff')
-            .text('Tips comerciales', 50, 540)
-
-        doc 
-            .fontSize(20)
-            .fillColor('#575756')
-            .text('Conoce los tips de venta de este producto en el siguiente video.', 50, 620, {width: 230} )
-
-        doc
-            .fillColor('#016cb2')
-            .fontSize(12)
-            .image(pathImage6, 300, 600, {width: 200})
-            .link(300, 600, 200, 105, `${data.url_video}`)
-
     }
 
     const buffers = await new Promise((resolve, reject) => {
@@ -6868,21 +6628,21 @@ async function LocalPDF (data){
         const upload_stream = cloudinary.uploader.upload_stream({
             resource_type: 'auto',
             public_id: name
-        }, (error, result) => {
+        }, async (error, result) => {
             if(error){
                 console.error('Error al subir el archivo', error);
                 reject(error);
             }else{
-                console.log('Archivo subido exitosamente', result.secure_url);
+                console.log('Archivo subido exitosamente');
 
-                let dataCloud = {
-                    nameProduct : name,
-                    secureUrl: result.secure_url,
-                    publicId: result.public_id,
-                    productId: id
-                };
+                //Check by exist product
+                const dataQuery = await Product.findByPk(id);
 
-                PfdProduct.create(dataCloud);
+                //console.log('DATAQUERY', dataQuery)
+                dataQuery['secureUrlPdf'] = result.secure_url;
+                dataQuery['publicIdPdf'] = result.public_id;
+
+                await dataQuery.save()
 
                 resolve(result);
             }
@@ -6894,8 +6654,8 @@ async function LocalPDF (data){
 
 }
 
-async function destroyPDF(id){
-    cloudinary.uploader.destroy('public_id_o_URL', function(error, result) {
+async function destroyPDF(publicId){
+    cloudinary.uploader.destroy(publicId, function(error, result) {
         console.log(result, error);
     });
 }

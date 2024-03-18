@@ -274,6 +274,14 @@ const Product = db.define('Products', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    secureUrlPdf:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    publicIdPdf: {
+        type: DataTypes.STRING,
+        allowNull: true
+    }
 
     
 },{

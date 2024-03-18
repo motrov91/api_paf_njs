@@ -11,6 +11,6 @@ const ProductXCategory = db.define('ProductXCategories', {
             }
         }
     }
-});
+},);
 
 export default ProductXCategory;

@@ -55,7 +55,6 @@ const allBrandMobile = async (req, res, next) => {
         ]
     });
 
-    console.log(brands)
     return res.status(200).json({brands});
 
 }
@@ -67,13 +66,11 @@ const allBrandWeb = async (req, res, next) => {
         ]
     });
 
-    console.log(brands)
     return res.status(200).json({brands});
 
 }
 const updateShowStatus = async (req, res) =>{
     const {id, status } = req.body;
-    console.log(req.body)
 
     const existBrand = await Brand.findByPk(id);
 
@@ -93,7 +90,6 @@ const updateShowStatus = async (req, res) =>{
 
 const updateBrand = async (req, res, next) => {
 
-    // console.log(req.body)
     const { brand, userId } = req.body;
 
     const existBrand = await Brand.findByPk(req.params.id);

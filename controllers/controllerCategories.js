@@ -1,5 +1,5 @@
 import { check, validationResult } from 'express-validator';
-import { Category, Brand, User } from '../models/index_model.js';
+import { Category, Brand, User, ProductXCategory } from '../models/index_model.js';
 
 const addCategory = async (req, res, next) => {
 
@@ -117,10 +117,11 @@ const categoriesBrand = async (req, res) => {
 
     return res.status(200).json({categoriesByBrand})
 }
+
 export{
     addCategory,
     allCategories,
     updateCategory,
     deleteCategory,
-    categoriesBrand
+    categoriesBrand,
 }

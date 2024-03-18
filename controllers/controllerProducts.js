@@ -1,9 +1,9 @@
 import { organizedDataSQL, formaterProduct } from '../helpers/organizedDataSQLProduct.js';
-import { Product, User, ProductXCategory } from '../models/index_model.js';
-import { LocalPDF } from '../helpers/localPDF.js';
-import https from 'https';
+import { Product, User, ProductXCategory, PdfProduct } from '../models/index_model.js';
+import { LocalPDF, destroyPDF } from '../helpers/localPDF.js';
 import axios from 'axios';
 import curlirize from 'axios-curlirize';
+import { sendEmailProduct } from '../helpers/emails.js'
 
 
 
@@ -53,8 +53,6 @@ const AllProducts = async(req, res) => {
 
     //check that user exist
     const userExist = await User.findByPk(req.user.id);
-
-    
 
     //* Si el rol del usuario es 1 0 3 podrán ver todos los productos.
     //* si el rol es 2 no se ejecuta y pasa a la otra consulta. una vez ingresa a la condicion formatea el resultado 
@@ -152,7 +150,6 @@ const updateProduct = async( req, res ) => {
 }
 
 const updateStatus = async (req, res ) => {
-    let createPdf = {};
     const {state} = req.body; 
 
     const rolUser = await User.findByPk(req.user.id);
@@ -207,34 +204,30 @@ const updateStatus = async (req, res ) => {
         })
 
     } else{
-        console.log('despublicar');
-        return res.json('Despublicado...');
+        try {
+            //* Check if exist pdf producto in db
+            const pdfExist = await Product.findByPk(req.params.id);
+
+            if(!pdfExist){
+                console.log('ingresa porque no existe ningun pdf')
+                return res.status(404).json('No se ha encontrado el producto que se busca.');
+            };
+
+            
+            pdfExist['secureUrlPdf'] = null;
+            pdfExist['publicIdPdf'] = null;
+
+            pdfExist.save();
+            await destroyPDF(pdfExist.publicId)
+
+            return res.status(200).json('Producto despublicado exitosamente');
+
+        } catch (error) {
+            return res.status(400).json('No se ha podido completar la acción');
+        }
     }
 
     return;
-
-    // if(state == 1){
-
-    //     const urlPDF = await LocalPDF(existProduct);
-    //     console.log('rul', urlPDF);
-        
-    //    console.log('se ejecuta al final');
-
-       
-    // }else{
-    //     //Check by exist product
-    //     // const existProductPdf = await Product.findOne({
-    //     //     where: {productId : existProduct.id}
-    //     // });
-
-    //     // if(!existProductPdf){
-    //     //     return res.status(400).json({
-    //     //         msg: "El producto no existe"
-    //     //     })
-    //     // }
-
-    //     // await existProductPdf.destroy();
-    // }
 
 }
 
@@ -352,6 +345,10 @@ const addProductToCategory = async (req, res) => {
     }else{
         return res.status(400).json({msg: "Al parecer ya esta vinculado el producto a la categoria"})
     }
+
+    const pdfProduct = await PdfProduct.findOne({
+
+    })
 
 }
 
@@ -547,6 +544,47 @@ const getProductsChild = async (req, res) => {
 
 }
 
+const sendProductoEmail = async(req, res) => {
+    console.log('body message', req.body)
+    const { emailUser, nameUser, emailClient, messageList } = req.body;
+    
+    let listaConvertidaMensajes = JSON.parse(messageList);
+    
+    let result = await sendEmailProduct(emailClient, nameUser, emailUser, listaConvertidaMensajes)
+    return res.status(200).json({'statusMessage': result});
+} 
+
+const getProductsByPdf = async(req, res) => {
+    const productListPdf = []
+    try {
+        const products = await ProductXCategory.findAll({
+            where: { CategoryId: req.params.id },
+        });
+
+        await Promise.all(products.map(async (e)=>{
+            try {
+                const producto = await Product.findByPk(e['ProductId']);
+                const { publicIdPdf, secureUrlPdf } = producto;
+                
+                if(secureUrlPdf !== null){
+                    const item = {
+                        publicIdPdf,
+                        secureUrlPdf
+                    }
+                    productListPdf.push(item);
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        }))
+
+        res.status(200).json(productListPdf);
+    } catch (error) {
+        console.log('ERROR', error)
+    }
+}
+
 export {
     AddProduct,
     addProductToCategory,
@@ -560,7 +598,9 @@ export {
     deleteProductCategory,
     getLoginCotization,
     getProductsChild,
-    getProductsApprovedByCategory
+    getProductsApprovedByCategory,
+    sendProductoEmail,
+    getProductsByPdf,
 }
 
 
