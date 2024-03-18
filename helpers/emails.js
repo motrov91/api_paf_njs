@@ -68,8 +68,8 @@ const emailReportFailure = async (data) => {
         requireTLS: true,
         debug: true,
         auth: {
-            user: 'recovery@productospaf.com.co',
-            pass: 'productospaf12345.'
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     });
 
@@ -111,9 +111,6 @@ const emailReportFailure = async (data) => {
 const sendEmailProduct = async (to, userName, emailUser, info = []) => {
 
     try {
-
-        console.log('CORREO ***', )
-        console.log('CONTRASEÑA ***', )
 
         const transporter = nodemailer.createTransport({
             host: '72.167.224.32',
@@ -219,8 +216,8 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                             </p>
             
                             <!-- Gracias -->
-                            <p>Gracias por tu tiempo.</p>
-                            <p style="margin-bottom: 50px;"><i>Atentamente:</i><br>PURIFICACIÓN Y ÁNALIIS DE FLUIDOS S.A.S</p>
+                            <p>Gracias por su tiempo.</p>
+                            <p style="margin-bottom: 50px;"><i>Atentamente:</i><br>PURIFICACIÓN Y ANÁLISIS DE FLUIDOS S.A.S</p>
                             <p style="margin-bottom: 50px;">Contacto<br><i>${userNameMessage}</i><br>${email}<br></p>
     
                             <!-- Botones generados dinámicamente -->
