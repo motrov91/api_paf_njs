@@ -20,6 +20,14 @@ const User = db.define('Users', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    ciudad:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    telefono:{
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     token:{
         type: DataTypes.STRING,
         allowNull: true
