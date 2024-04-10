@@ -149,109 +149,71 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
             subject: 'Infográfias de los productos cotizados PAF',
             html: `
             <!DOCTYPE html>
-            <html lang="en">
+            <html lang="es">
             <head>
                 <meta charset="UTF-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            
+                <title>Mi página con Bootstrap</title>
+                <!-- Enlaces a Bootstrap CSS -->
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
                 <style>
                     p, a, h1, h2, h3, h4, h5, h6 {font-family: 'Roboto', sans-serif !important;}
-                    h1{ font-size: 30px !important;}
-                    h2{ font-size: 25px !important;}
-                    h3{ font-size: 18px !important;}
-                    h4{ font-size: 16px !important;}
-                    p, a{font-size: 15px !important;}
-            
-                    .claseBoton{
-                        width: 12%;
-                        background-color: #f3db3a;
-                        border: 2px solid #e5cc26;
-                        color: black; 
-                        padding: 16px 32px;
-                        text-align: center;
-                        text-decoration: none;
-                        font-weight: bold;
-                        display: inline-block;
-                        font-size: 16px;
-                        margin: 4px 2px;
-                        transition-duration: 0.4s;
-                        cursor: pointer;
-                    }
-                    .claseBoton:hover{
-                        background-color: #fcae3b;
-                        border: 2px solid #e1982b;
-                        color: #ffffff;
-                    }
-                    .imag{
-                        width: 20px;
-                        height: 20px;
-                    }
-                    .contA{
-                        margin: 0px 5px 0 5px;
-                    }
-                    .afooter{
-                        color: #ffffff !important; 
-                        text-decoration: none;
-                        font-size: 13px !important;
-                    }
                 </style>
             </head>
             <body>
                 <div style="width: 100%; background-color: #F5F5F5;">
-                    <div style="padding: 20px 10px 20px 10px;">
+                    <div class="container" style="padding: 20px 10px 20px 10px;">
                         <!-- Imagen inicial -->
-                        <div style="background-color: #3794c4; padding: 10px 0px 10px 0px; width: 100%; text-align: center;">
-                            <img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304723/logo_blanco_2_cjb1it.png" alt="" style=" height: 100px;">
+                        <div class="jumbotron text-center" style="background-color: #3794c4;">
+                            <img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304723/logo_blanco_2_cjb1it.png" alt="Logo" class="img-fluid">
                         </div>
                         <!-- Imagen inicial -->
-            
+
                         <!-- Contenido principal -->
-                        <div style="background-color: #ffffff; padding: 20px 0px 5px 0px; width: 100%; text-align: center;">
-                            <h1 style="color: #616161">Infográfias de los productos cotizados</h1>
-                            <p style="color: #757575"> En Purificación y Análisis de Fluidos estamos comprometidos con la innovación científica y tecnológica, 
-                                buscando siempre mejorar la calidad de vida de los colombianos, por eso constantemente diseñamos y creamos soluciones adaptadas 
-                                a la medida de nuestros clientes, ofreciendo no solo nuestra experiencia sino el respaldo que nos ha caracterizado en estos 40 años 
-                                en los que hemos dejado huella. A continuación encontrará información de interés de nuestros productos y servicios.
-                            </p>
-            
+                        <div class="container py-5">
+                            <h1 class="text-center text-muted">Infografías de los productos cotizados</h1>
+                            <p class="text-center text-muted">En Purificación y Análisis de Fluidos estamos comprometidos con la innovación científica y tecnológica, buscando siempre mejorar la calidad de vida de los colombianos, por eso constantemente diseñamos y creamos soluciones adaptadas a la medida de nuestros clientes, ofreciendo no solo nuestra experiencia sino el respaldo que nos ha caracterizado en estos 40 años en los que hemos dejado huella. A continuación encontrará información de interés de nuestros productos y servicios.</p>
+
                             <!-- Gracias -->
-                            <p>Gracias por su tiempo.</p>
-                            <p style="margin-bottom: 50px;"><i>Atentamente:</i><br>PURIFICACIÓN Y ANÁLISIS DE FLUIDOS S.A.S</p>
-                            <p style="margin-bottom: 50px;">Contacto<br><i>${userNameMessage}</i><br>${email}<br></p>
-    
+                            <p class="text-center">Gracias por su tiempo.</p>
+                            <p class="text-center mb-5"><i>Atentamente:</i><br>PURIFICACIÓN Y ANÁLISIS DE FLUIDOS S.A.S</p>
+
                             <!-- Botones generados dinámicamente -->
-                            ${buttonsHTML}
+                            <div class="text-center">
+                                ${buttonsHTML}
+                            </div>
                         </div>
                         <!-- Contenido principal -->
-            
+
                         <!-- Footer -->
-                        <div style="background-color: #3794c4; color: #ffffff; padding: 5px 0px 0px 0px; width: 100%; text-align: center;">
-                            <!-- Redes sociales -->
-                            <a href="https://www.facebook.com/pafltda" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_facebook_zsi82u.png" class="imag" /></a>
-                            <a href="https://www.instagram.com/paf.sas/" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_instagram_lepahe.png" class="imag" /></a>
-                            <a href="https://wa.me/3183776315" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_whatsapp_tnoztu.png" class="imag" /></a>
-                            <a href="mailto:alexandra_sandoval@paf.com.co" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_email_rkdijz.png" class="imag" /></a>
-                            <!-- Redes sociales -->
-            
-                            <h4>Soporte</h4>
-                            <p style="font-size: 13px; padding: 0px 20px 0px 20px;">
-                                Comunícate con nosotros por los siguientes medios:<br>
-                                Correo: <a class="afooter" href="mailto:alexandra_sandoval@paf.com.co">contacto@paf.com.co</a><br>
-                                Whatsapp: <a class="afooter" href="https://wa.me/573224294332">+57 318 3776315</a><br>
-                            </p>
-                            <p style="background-color: #00629d; padding: 10px 0px 10px 0px; font-size: 12px !important;">
-                                © 2024 Todos los derechos reservados, Purificación y Análisis de Fluidos SAS.
-                            </p>
-                        </div>
+                        <footer class="bg-primary text-white py-4">
+                            <div class="container">
+                                <div class="text-center mb-3">
+                                    <!-- Redes sociales -->
+                                    <a href="https://www.facebook.com/pafltda" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_facebook_zsi82u.png" alt="Facebook" class="imag"></a>
+                                    <a href="https://www.instagram.com/paf.sas/" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_instagram_lepahe.png" alt="Instagram" class="imag"></a>
+                                    <a href="https://wa.me/3183776315" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_whatsapp_tnoztu.png" alt="WhatsApp" class="imag"></a>
+                                    <a href="mailto:alexandra_sandoval@paf.com.co" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_email_rkdijz.png" alt="Email" class="imag"></a>
+                                    <!-- Redes sociales -->
+                                </div>
+                                <div class="text-center">
+                                    <h4>Soporte</h4>
+                                    <p class="small">Comunícate con nosotros por los siguientes medios:<br>
+                                    Correo: <a href="mailto:alexandra_sandoval@paf.com.co" class="afooter">contacto@paf.com.co</a><br>
+                                    Whatsapp: <a href="https://wa.me/573224294332" class="afooter">+57 318 3776315</a></p>
+                                </div>
+                            </div>
+                            <div class="text-center mt-3" style="background-color: #00629d;">
+                                <p class="mb-0 small">© 2024 Todos los derechos reservados, Purificación y Análisis de Fluidos SAS.</p>
+                            </div>
+                        </footer>
                         <!-- Footer -->
-            
-            
-            
                     </div>
                 </div>
             </body>
             </html>
+
             `
         };
 

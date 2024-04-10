@@ -108,7 +108,7 @@ const addRol = async (req, res, next) =>{
 const modifyUser = async (req, res) => {
 
     try {
-        const {name, email, cargo, rolId} = req.body;
+        const {name, email, cargo, rolId, ciudad, telefono} = req.body;
 
         const rolUser = await User.findByPk(req.user.id);
 
@@ -131,7 +131,9 @@ const modifyUser = async (req, res) => {
             name,
             email,
             cargo,
-            rolId
+            rolId,
+            ciudad, 
+            telefono
         })
 
         await existUser.save();
