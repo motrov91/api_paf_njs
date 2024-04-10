@@ -137,7 +137,7 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
         });
 
         // Generar botones para los enlaces recibidos
-        const buttonsHTML = info.map(info => `<a class="claseBoton" href="${info['url']}">${info['name']}</a>`).join('');
+        const buttonsHTML = info.map(info => `<a href="${info['url']}" class="btn claseBoton">${info['name']}</a>`).join('');
 
         const toMessage = `${to}`
         const userNameMessage = `${userName}`
@@ -180,34 +180,42 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                             <p class="text-center mb-5"><i>Atentamente:</i><br>PURIFICACIÓN Y ANÁLISIS DE FLUIDOS S.A.S</p>
 
                             <!-- Botones generados dinámicamente -->
-                            <div class="text-center">
-                                ${buttonsHTML}
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8"> <!-- Establece el ancho del div -->
+                                        <div class="text-center">
+                                            ${buttonsHTML}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        
                         </div>
                         <!-- Contenido principal -->
 
                         <!-- Footer -->
                         <footer class="bg-primary text-white py-4">
-                            <div class="container">
-                                <div class="text-center mb-3">
-                                    <!-- Redes sociales -->
-                                    <a href="https://www.facebook.com/pafltda" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_facebook_zsi82u.png" alt="Facebook" class="imag"></a>
-                                    <a href="https://www.instagram.com/paf.sas/" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_instagram_lepahe.png" alt="Instagram" class="imag"></a>
-                                    <a href="https://wa.me/3183776315" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_whatsapp_tnoztu.png" alt="WhatsApp" class="imag"></a>
-                                    <a href="mailto:alexandra_sandoval@paf.com.co" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_email_rkdijz.png" alt="Email" class="imag"></a>
-                                    <!-- Redes sociales -->
-                                </div>
-                                <div class="text-center">
-                                    <h4>Soporte</h4>
-                                    <p class="small">Comunícate con nosotros por los siguientes medios:<br>
-                                    Correo: <a href="mailto:alexandra_sandoval@paf.com.co" class="afooter">contacto@paf.com.co</a><br>
-                                    Whatsapp: <a href="https://wa.me/573224294332" class="afooter">+57 318 3776315</a></p>
-                                </div>
+                        <div class="container">
+                            <div class="text-center mb-3">
+                                <!-- Redes sociales -->
+                                <a href="https://www.facebook.com/pafltda" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_facebook_zsi82u.png" alt="Facebook" class="imag img-fluid"></a>
+                                <a href="https://www.instagram.com/paf.sas/" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_instagram_lepahe.png" alt="Instagram" class="imag img-fluid"></a>
+                                <a href="https://wa.me/3183776315" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_whatsapp_tnoztu.png" alt="WhatsApp" class="imag img-fluid"></a>
+                                <a href="mailto:alexandra_sandoval@paf.com.co" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_email_rkdijz.png" alt="Email" class="imag img-fluid"></a>
+                                <!-- Redes sociales -->
+                            </div>
+                            <div class="text-center">
+                                <h4>Soporte</h4>
+                                <p class="small">Comunícate con nosotros por los siguientes medios:<br>
+                                Correo: <a href="mailto:alexandra_sandoval@paf.com.co" class="afooter">contacto@paf.com.co</a><br>
+                                Whatsapp: <a href="https://wa.me/573224294332" class="afooter">+57 318 3776315</a></p>
+                            </div>
                             </div>
                             <div class="text-center mt-3" style="background-color: #00629d;">
                                 <p class="mb-0 small">© 2024 Todos los derechos reservados, Purificación y Análisis de Fluidos SAS.</p>
                             </div>
                         </footer>
+
                         <!-- Footer -->
                     </div>
                 </div>
