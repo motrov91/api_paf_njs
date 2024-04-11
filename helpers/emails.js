@@ -156,7 +156,8 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                 <title></title>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]--><!--[if !mso]><!-->
-                <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900" rel="stylesheet" type="text/css"><!--<![endif]-->
+                <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900" rel="stylesheet" type="text/css">
+                <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800;900" rel="stylesheet" type="text/css"><!--<![endif]-->
                 <style>
                     * {
                         box-sizing: border-box;
@@ -297,7 +298,7 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                </table><!--[if mso]><style>#list-r1c0m2 ul{ margin: 0 !important; padding: 0 !important; } #list-r1c0m2 ul li{ mso-special-format: bullet; }#list-r1c0m2 .levelOne li { margin-top: 0 !important; } #list-r1c0m2 .levelOne { margin-left: -20px !important; }#list-r1c0m2 .levelTwo li { margin-top: 0 !important; } #list-r1c0m2 .levelTwo { margin-left: 10px !important; }#list-r1c0m2 .levelThree li { margin-top: 0 !important; } #list-r1c0m2 .levelThree { margin-left: 40px !important; }#list-r1c0m2 .levelFour li { margin-top: 0 !important; } #list-r1c0m2 .levelFour { margin-left: 70px !important; }#list-r1c0m2 .levelFive li { margin-top: 0 !important; } #list-r1c0m2 .levelFive { margin-left: 100px !important; }#list-r1c0m2 .levelSix li { margin-top: 0 !important; } #list-r1c0m2 .levelSix { margin-left: 130px !important; }#list-r1c0m2 .levelSeven li { margin-top: 0 !important; } #list-r1c0m2 .levelSeven { margin-left: 160px !important; }#list-r1c0m2 .levelEight li { margin-top: 0 !important; } #list-r1c0m2 .levelEight { margin-left: 190px !important; }#list-r1c0m2 .levelNine li { margin-top: 0 !important; } #list-r1c0m2 .levelNine { margin-left: 220px !important; }</style><![endif]-->
+                                                                </table><!--[if mso]><style>#list-r1c0m2 ul{ margin: 0 !important; padding: 0 !important; } #list-r1c0m2 ul li{ mso-special-format: bullet; }#list-r1c0m2 .levelOne li { margin-top: 0 !important; } #list-r1c0m2 .levelOne { margin-left: -20px !important; }#list-r1c0m2 .levelTwo li { margin-top: 0 !important; } #list-r1c0m2 .levelTwo { margin-left: 10px !important; }#list-r1c0m2 .levelThree li { margin-top: 0 !important; } #list-r1c0m2 .levelThree { margin-left: 40px !important; }</style><![endif]-->
                                                                 <table class="list_block block-3" id="list-r1c0m2" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
                                                                     <tr>
                                                                         <td class="pad">
@@ -314,10 +315,14 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                                                                         <td class="pad">
                                                                             <div style="font-family: Tahoma, Verdana, sans-serif">
                                                                                 <div class style="font-size: 12px; font-family: Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">Gracias por su tiempo.</p>
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;"><em>Atentamente:</em><br>PURIFICACIÓN Y ANÁLISIS DE FLUIDOS S.A.S</p>
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;"><span style="font-size:14px;">&nbsp;</span></p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px; letter-spacing: 2px;"><span style="font-size:14px;">Gracias por su tiempo.</span></p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px; letter-spacing: 2px;"><span style="font-size:14px;"><em>Atentamente:</em></span></p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px; letter-spacing: 2px;"><span style="font-size:14px;">${userName}</span></p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px; letter-spacing: 2px;"><span style="font-size:14px;">${emailUser}</span><br><span style="font-size:14px;">PURIFICACIÓN Y ANÁLISIS DE FLUIDOS S.A.S</span></p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px; letter-spacing: 2px;"><span style="font-size:14px;">&nbsp;</span></p>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -339,13 +344,13 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                                                                         <td class="pad">
                                                                             <div style="font-family: Tahoma, Verdana, sans-serif">
                                                                                 <div class style="font-size: 12px; font-family: Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #888888; line-height: 1.2;">
-                                                                                    <p style="margin: 0; font-size: 12px; text-align: left; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">Comunícate con nosotros por los siguientes medios:</p>
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">Correo: <a href="mailto:alexandra_sandoval@paf.com.co" target="_blank" style="text-decoration: underline; color: #7747FF;" rel="noopener">contacto@paf.com.co</a><br>Whatsapp: <a href="https://wa.me/573224294332" target="_blank" style="text-decoration: underline; color: #7747FF;" rel="noopener">+57 318 3776315</a></p>
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
-                                                                                    <p style="margin: 0; text-align: center; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">© 2024 Todos los derechos reservados, Purificación y Análisis de Fluidos SAS.</p>
-                                                                                    <p style="margin: 0; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
+                                                                                    <p style="margin: 0; font-size: 14px; text-align: left; mso-line-height-alt: 16.8px; letter-spacing: 2px;"><span style="font-size:14px;">Comunícate con nosotros por los siguientes medios:</span></p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px; letter-spacing: 2px;"><span style="font-size:14px;">Correo: <a href="mailto:alexandra_sandoval@paf.com.co" target="_blank" style="text-decoration: underline; color: #7747FF;" rel="noopener">contacto@paf.com.co</a></span><br><span style="font-size:14px;">Whatsapp: <a href="https://wa.me/573224294332" target="_blank" style="text-decoration: underline; color: #7747FF;" rel="noopener">+57 318 3776315</a></span></p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
+                                                                                    <p style="margin: 0; text-align: center; font-size: 14px; mso-line-height-alt: 16.8px; letter-spacing: 2px;"><span style="font-size:14px;">© 2024 Todos los derechos reservados, Purificación y Análisis de Fluidos SAS.</span></p>
+                                                                                    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px; letter-spacing: 2px;">&nbsp;</p>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -363,41 +368,6 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                                                                                     </tr>
                                                                                 </table>
                                                                             </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <table class="row row-3" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff;">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 760px; margin: 0 auto;" width="760">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="column column-1" width="100%" style="font-weight: 400; text-align: left; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
-                                                                <table class="icons_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; text-align: center;">
-                                                                    <tr>
-                                                                        <td class="pad" style="vertical-align: middle; color: #1e0e4b; font-family: 'Inter', sans-serif; font-size: 15px; padding-bottom: 5px; padding-top: 5px; text-align: center;">
-                                                                            <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                                                                <tr>
-                                                                                    <td class="alignment" style="vertical-align: middle; text-align: center;"><!--[if vml]><table align="center" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"><![endif]-->
-                                                                                        <!--[if !vml]><!-->
-                                                                                        <table class="icons-inner" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; margin-right: -4px; padding-left: 0px; padding-right: 0px;" cellpadding="0" cellspacing="0" role="presentation"><!--<![endif]-->
-                                                                                            <tr>
-                                                                                                <td style="vertical-align: middle; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;"><a href="http://designedwithbeefree.com/" target="_blank" style="text-decoration: none;"><img class="icon" alt="Beefree Logo" src="https://d1oco4z2z1fhwp.cloudfront.net/assets/Beefree-logo.png" height="auto" width="34" align="center" style="display: block; height: auto; margin: 0 auto; border: 0;"></a></td>
-                                                                                                <td style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: undefined; color: #1e0e4b; vertical-align: middle; letter-spacing: undefined; text-align: center;"><a href="http://designedwithbeefree.com/" target="_blank" style="color: #1e0e4b; text-decoration: none;">Designed with Beefree</a></td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
