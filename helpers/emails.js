@@ -159,6 +159,27 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
                 <style>
                     p, a, h1, h2, h3, h4, h5, h6 {font-family: 'Roboto', sans-serif !important;}
+                    .img-container {
+                        max-width: 28%;
+                        margin: 0 auto;
+                    }
+                    .imag {
+                        width: 20px; /* Tamaño de las imágenes */
+                        margin: 0 7.5px; /* Ajuste para la separación */
+                    }
+                    .imagFacebook {
+                        width: 13px; /* Tamaño de las imágenes */
+                        margin: 0 7.5px; /* Ajuste para la separación */
+                    }
+                    .contA {
+                        display: inline-block; /* Para que las imágenes queden una al lado de la otra */
+                        text-align: center;
+                    }
+                    .contacto {
+                        color: #ffffff; /* Color del texto */
+                        text-decoration: none; /* Quitar subrayado */
+                        font-weight: bold; /* Hacer el texto en negrita */
+                    }
                 </style>
             </head>
             <body>
@@ -166,10 +187,11 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                     <div class="container" style="padding: 20px 10px 20px 10px;">
                         <!-- Imagen inicial -->
                         <div class="jumbotron text-center" style="background-color: #3794c4;">
-                            <img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304723/logo_blanco_2_cjb1it.png" alt="Logo" class="img-fluid">
+                            <div class="img-container">
+                                <img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304723/logo_blanco_2_cjb1it.png" alt="Logo" class="img-fluid">
+                            </div>
                         </div>
                         <!-- Imagen inicial -->
-
                         <!-- Contenido principal -->
                         <div class="container py-5">
                             <h1 class="text-center text-muted">Infografías de los productos cotizados</h1>
@@ -184,7 +206,10 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                                 <div class="row justify-content-center">
                                     <div class="col-md-8"> <!-- Establece el ancho del div -->
                                         <div class="text-center">
-                                            ${buttonsHTML}
+                                            <a href="${info.url}" class="btn btn-primary my-1">baños de agua dulce</a>
+                                            <a href="${info.url}" class="btn btn-primary my-1">baños de agua dulce</a>
+                                            <a href="${info.url}" class="btn btn-primary my-1">baños de agua dulce</a>
+                                            <a href="${info.url}" class="btn btn-primary my-1">baños de agua dulce</a>
                                         </div>
                                     </div>
                                 </div>
@@ -192,36 +217,38 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                         
                         </div>
                         <!-- Contenido principal -->
-
                         <!-- Footer -->
-                        <footer class="bg-primary text-white py-4">
-                        <div class="container">
-                            <div class="text-center mb-3">
-                                <!-- Redes sociales -->
-                                <a href="https://www.facebook.com/pafltda" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_facebook_zsi82u.png" alt="Facebook" class="imag img-fluid"></a>
-                                <a href="https://www.instagram.com/paf.sas/" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_instagram_lepahe.png" alt="Instagram" class="imag img-fluid"></a>
-                                <a href="https://wa.me/3183776315" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_whatsapp_tnoztu.png" alt="WhatsApp" class="imag img-fluid"></a>
-                                <a href="mailto:alexandra_sandoval@paf.com.co" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_email_rkdijz.png" alt="Email" class="imag img-fluid"></a>
-                                <!-- Redes sociales -->
-                            </div>
-                            <div class="text-center">
-                                <h4>Soporte</h4>
-                                <p class="small">Comunícate con nosotros por los siguientes medios:<br>
-                                Correo: <a href="mailto:alexandra_sandoval@paf.com.co" class="afooter">contacto@paf.com.co</a><br>
-                                Whatsapp: <a href="https://wa.me/573224294332" class="afooter">+57 318 3776315</a></p>
-                            </div>
-                            </div>
-                            <div class="text-center mt-3" style="background-color: #00629d;">
-                                <p class="mb-0 small">© 2024 Todos los derechos reservados, Purificación y Análisis de Fluidos SAS.</p>
+                        <footer class="bg-primary text-white py-4 d-block">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-12 text-center"> <!-- Utilizamos una sola columna para centrar el contenido -->
+                                        <div class="contA">
+                                            <!-- Redes sociales -->
+                                            <a href="https://www.facebook.com/pafltda" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_facebook_zsi82u.png" alt="Facebook" class="imagFacebook img-fluid"></a>
+                                            <a href="https://www.instagram.com/paf.sas/" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_instagram_lepahe.png" alt="Instagram" class="imag img-fluid"></a>
+                                            <a href="https://wa.me/3183776315" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_whatsapp_tnoztu.png" alt="WhatsApp" class="imag img-fluid"></a>
+                                            <a href="mailto:alexandra_sandoval@paf.com.co" class="contA"><img src="https://res.cloudinary.com/denrlu9gn/image/upload/v1709304678/ic_email_rkdijz.png" alt="Email" class="imag img-fluid"></a>
+                                            <!-- Redes sociales -->
+                                        </div>
+                                        <div class="text-center">
+                                            <h4 class="mt-4">Soporte</h4>
+                                            <p class="small">Comunícate con nosotros por los siguientes medios:<br>
+                                            Correo: <a href="mailto:alexandra_sandoval@paf.com.co" class="contacto"">contacto@paf.com.co</a><br>
+                                            Whatsapp: <a href="https://wa.me/573224294332" class="contacto">+57 318 3776315</a></p>
+                                        </div>
+                                        <div class="text-center mt-3"">
+                                            <p class="mb-0 small">© 2024 Todos los derechos reservados, Purificación y Análisis de Fluidos SAS.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </footer>
-
+                        
                         <!-- Footer -->
                     </div>
                 </div>
             </body>
             </html>
-
             `
         };
 
