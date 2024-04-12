@@ -5,6 +5,9 @@ const Category = db.define('Categories', {
     name:{
         type: DataTypes.STRING,
         allowNull: false
+    },
+    publishCategory:{
+        type: DataTypes.BOOLEAN,
     }
 },{
     scopes:{

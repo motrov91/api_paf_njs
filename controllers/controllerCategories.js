@@ -111,11 +111,31 @@ const categoriesBrand = async (req, res) => {
 
     const categoriesByBrand = await Category.scope('deleteAtributtes').findAll({
         where: {
-            brandId : req.params.id
+            brandId : req.params.id,
+            publishCategory : true
         }
     })
 
     return res.status(200).json({categoriesByBrand})
+}
+
+const updateShowCategory = async( req, res ) => {
+    const {id, status } = req.body;
+
+    const existCategory = await Category.findByPk(id);
+
+    if(!existCategory){
+        return res.status(400).json({
+            msg: "La categoria no existe"
+        })
+    }
+
+    existCategory.set({ publishCategory: status });
+
+    existCategory.save();
+    return res.status(200).json({
+        msg: "Modificación exitosa."
+    })
 }
 
 export{
@@ -124,4 +144,5 @@ export{
     updateCategory,
     deleteCategory,
     categoriesBrand,
+    updateShowCategory
 }
