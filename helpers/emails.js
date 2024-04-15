@@ -282,7 +282,7 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
                                                                         <td class="pad">
                                                                             <div style="font-family: Arial, sans-serif">
                                                                                 <div class style="font-size: 12px; font-family: 'Roboto Slab', Arial, 'Helvetica Neue', Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
-                                                                                    <p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;"><em><strong>Infografías de los productos cotizados</strong></em></p>
+                                                                                    <p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;"><em><strong>Conoce las soluciones que tenemos para ti.</strong></em></p>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
