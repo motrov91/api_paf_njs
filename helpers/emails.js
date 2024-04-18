@@ -118,8 +118,10 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
             secure: true,
             secureConnection: false, // Usar SSL
             auth: {
-                user: process.env.EMAIL_SEND_PDF,
-                pass: process.env.EMAIL_PASS_PDF
+                // user: process.env.EMAIL_SEND_PDF,
+                // pass: process.env.EMAIL_PASS_PDF
+                user: 'productos@productospaf.com.co',
+                pass: 'Pr0ducto5PAF2024.'
             },
             requireTLS: true,
             tls: {
