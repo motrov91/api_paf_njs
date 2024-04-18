@@ -145,7 +145,7 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
         const email = `${emailUser}`
 
         const mailOptions = {
-            from: 'producto@productospaf.com.co',
+            from: 'productos@productospaf.com.co',
             to: toMessage,
             subject: 'Infográfias de los productos cotizados PAF',
             html: `
