@@ -113,7 +113,7 @@ const sendEmailProduct = async (to, userName, emailUser, info = []) => {
     try {
 
         const transporter = nodemailer.createTransport({
-            host: '72.167.224.32',
+            host: '162.240.171.222',
             port: 465,
             secure: true,
             secureConnection: false, // Usar SSL
