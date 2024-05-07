@@ -1069,7 +1069,7 @@ const pdfGenerator = async (req, res) => {
 
     } else if( markets.length === 3 ){
         doc
-            .image(headerPDF, 0, 0, {width: 330})
+            .image(headerPDF, 0, 0, {width: 600})
 
         if(productSelected.name.length > 25){
             doc
@@ -1104,117 +1104,123 @@ const pdfGenerator = async (req, res) => {
             .moveDown();
 
         doc.lineJoin('Producto 1')
-        .rect(fullDocH / 1.8, 0, cuadrado[0], 120)
+        .rect(fullDocH / 1.8, 50, cuadrado[0], 150)
         .fill('#016db4')
         .moveDown();
 
         doc
             .fontSize(18)
             .fillColor('#ffffff')
-            .text(productSelected.market1, 370, 10, {width: 230})
+            .text(productSelected.market1, 370, 60, {width: 230})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 50, {width: 210})
+            .text(productSelected.description_market1, 370, 90, {width: 210})
             .moveDown();
+        
+        const posUnoX = 305;
+        const posUnoY = 88;
 
         switch(productSelected.market1){
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 38, { width:50 })
+                doc.image(logoAcueducto, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
-                doc.image(logoIndustriales, 305, 38, { width:50 })
+                doc.image(logoIndustriales, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "ACUEDUCTOS":
-                doc.image(logoAcueducto, 305, 38, { width:50 })
+                doc.image(logoAcueducto, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "EDUCACIÓN":
-                doc.image(logoEducacion, 305, 38, { width:50 })
+                doc.image(logoEducacion, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "ALIMENTOS":
-                doc.image(logoAlimentos, 305, 38, { width:50 })
+                doc.image(logoAlimentos, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "GOBIERNO":
-                doc.image(logoGobierno, 305, 38, { width:50 })
+                doc.image(logoGobierno, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "INVESTIGACIÓN":
-                doc.image(logoInvestigacion, 305, 38, { width:50 })
+                doc.image(logoInvestigacion, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "CLINICO Y HOSPITALARIO":
-                doc.image(logoClinico, 305, 38, { width:50 })
+                doc.image(logoClinico, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "TRATAMIENTO DE AGUA INDUSTRIAL":
-                doc.image(logoTratamientoAguas, 305, 38, { width:50 })
+                doc.image(logoTratamientoAguas, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "FARMACÉUTICA":
-                doc.image(logoFarmaceutica, 305, 38, { width:50 })
+                doc.image(logoFarmaceutica, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
             case "CANNABIS":
-                doc.image(logoCannabis, 305, 38, { width:50 })
+                doc.image(logoCannabis, posUnoX, posUnoY, { width:50 })
                 .moveDown();
                 break;
         }
 
 
         doc.lineJoin('producto 2')
-            .rect(fullDocH / 1.8, 120, cuadrado[0], 120).fill('#ecc101');
+            .rect(fullDocH / 1.8, 210, cuadrado[0], 150).fill('#ecc101');
 
-        switch(productSelected.market2){
+        const logoPosX = 305;
+        const logoPosY = 260;
+        
+        switch (productSelected.market2) {
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 155, { width:50 })
+                doc.image(logoAcueducto, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
-                doc.image(logoIndustriales, 305, 155, { width:50 })
+                doc.image(logoIndustriales, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "ACUEDUCTOS":
-                doc.image(logoAcueducto, 305, 155, { width:50 })
+                doc.image(logoAcueducto, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "EDUCACIÓN":
-                doc.image(logoEducacion, 305, 155, { width:50 })
+                doc.image(logoEducacion, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "ALIMENTOS":
-                doc.image(logoAlimentos, 305, 155, { width:50 })
+                doc.image(logoAlimentos, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "GOBIERNO":
-                doc.image(logoGobierno, 305, 155, { width:50 })
+                doc.image(logoGobierno, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "INVESTIGACIÓN":
-                doc.image(logoInvestigacion, 305, 155, { width:50 })
+                doc.image(logoInvestigacion, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "CLINICO Y HOSPITALARIO":
-                doc.image(logoClinico, 305, 155, { width:50 })
+                doc.image(logoClinico, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "TRATAMIENTO DE AGUA INDUSTRIAL":
-                doc.image(logoTratamientoAguas, 305, 155, { width:50 })
+                doc.image(logoTratamientoAguas, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "FARMACÉUTICA":
-                doc.image(logoFarmaceutica, 305, 155, { width:50 })
+                doc.image(logoFarmaceutica, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
             case "CANNABIS":
-                doc.image(logoCannabis, 305, 155, { width:50 })
+                doc.image(logoCannabis, logoPosX, logoPosY, { width:50 })
                 .moveDown();
                 break;
         }
@@ -1223,62 +1229,65 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#285258')
-            .text(productSelected.market2, 370, 130, {width: 250})
+            .text(productSelected.market2, 370, 220, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 170, {width: 210})
+            .text(productSelected.description_market2, 370, 240, {width: 210})
             .moveDown();
 
         doc.lineJoin('producto 3')
-            .rect(fullDocH / 1.8, 240, cuadrado[0], 120).fill('#25acb1');
+            .rect(fullDocH / 1.8, 380, cuadrado[0], 150).fill('#25acb1');
+        
+        const prodTresX = 305;
+        const prodTresy = 430;
 
         switch(productSelected.market3){
             case "INDUSTRIA QUÍMICA":
-                doc.image(logoAcueducto, 305, 278, { width:50 })
+                doc.image(logoAcueducto, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "PROCESOS INDUSTRIALES":
-                doc.image(logoIndustriales, 305, 278, { width:50 })
+                doc.image(logoIndustriales, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "ACUEDUCTOS":
-                doc.image(logoAcueducto, 305, 278, { width:50 })
+                doc.image(logoAcueducto, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "EDUCACIÓN":
-                doc.image(logoEducacion, 305, 278, { width:50 })
+                doc.image(logoEducacion, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "ALIMENTOS":
-                doc.image(logoAlimentos, 305, 278, { width:50 })
+                doc.image(logoAlimentos, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "GOBIERNO":
-                doc.image(logoGobierno, 305, 278, { width:50 })
+                doc.image(logoGobierno, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "INVESTIGACIÓN":
-                doc.image(logoInvestigacion, 305, 278, { width:50 })
+                doc.image(logoInvestigacion, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "CLINICO Y HOSPITALARIO":
-                doc.image(logoClinico, 305, 278, { width:50 })
+                doc.image(logoClinico, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "TRATAMIENTO DE AGUA INDUSTRIAL":
-                doc.image(logoTratamientoAguas, 305, 278, { width:50 })
+                doc.image(logoTratamientoAguas, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "FARMACÉUTICA":
-                doc.image(logoFarmaceutica, 305, 278, { width:50 })
+                doc.image(logoFarmaceutica, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
             case "CANNABIS":
-                doc.image(logoCannabis, 305, 278, { width:50 })
+                doc.image(logoCannabis, prodTresX, prodTresy, { width:50 })
                 .moveDown();
                 break;
         }
@@ -1286,34 +1295,34 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#ffffff')
-            .text(productSelected.market3, 370, 250, {width: 250})
+            .text(productSelected.market3, 370, 400, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 290, {width: 210})
+            .text(productSelected.description_market3, 370, 420, {width: 210})
             .moveDown();
         
         doc
-            .image(footerPDF, 0, 800, {width: 600})
+            .image(footerPDF, 0, 830, {width: 600})
 
         //* -------------------- CARACTERISTICAS -------------------------
 
         doc.lineJoin('miter')
-        .rect(0, 365, fullDocH, 45).fill('#2e6ca7');
+        .rect(0, 550, fullDocH, 45).fill('#2e6ca7');
 
         doc
             .fillColor('#fff')
             .fontSize(30)
-            .text('Características', 190,374)
+            .text('Características', 190,560)
             .moveDown();
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(125, 415, 170, 170).fill('#2e6ca7');
+            .rect(70, 600, 220, 170).fill('#2e6ca7');
 
-        doc.circle(210, 450, 25)
+        doc.circle(180, 630, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -1322,19 +1331,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature1,
-            135, 480,  
+            80, 660,  
             {
-                width:150,
-                align: 'center'
+                width:190,
+                align: 'justify'
                 
             })
 
-        doc.image(pathImage1, 195, 435, {width: 30})
+        doc.image(pathImage1, 165, 615, {width: 30})
         //* ---------------------------------------------
+        
         doc.lineJoin('miter')
-            .rect(300, 415, 170, 170).fill('#25acb1');
+            .rect(300, 600, 220, 170).fill('#25acb1');
 
-        doc.circle(385, 450, 25)
+        doc.circle(410, 630, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -1343,18 +1353,25 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature2,
-            310, 480,  
+            310, 665,  
             {
-                width:150,
-                align: 'center'
+                width:190,
+                align: 'justify'
                 
             })
-        doc.image(pathImage2, 370, 435, {width: 30})
+        doc.image(pathImage2, 395, 615, {width: 30})
         //* ---------------------------------------------
-        doc.lineJoin('miter')
-            .rect(300, 590, 170, 170).fill('#ff9f0f');
 
-        doc.circle(385, 625, 25)
+        doc.addPage({
+            size: [595, 920],
+        })
+            .moveDown()
+ 
+        
+            doc.lineJoin('miter')
+            .rect(70, 10, 220, 170).fill('#fbc02d');
+
+        doc.circle(180, 40, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -1363,19 +1380,20 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature3,
-            310, 655,  
+            80, 75,  
             {
-                width:150,
-                align: 'center'
+                width:190,
+                align: 'justify'
                 
             })
 
-        doc.image(pathImage4, 370, 610, {width: 30})
+        doc.image(pathImage3, 165, 25, {width: 30})
         //* ---------------------------------------------
+        
         doc.lineJoin('miter')
-            .rect(125, 590, 170, 170).fill('#fbc02d');
+            .rect(300, 10, 220, 170).fill('#ff9f0f');
 
-        doc.circle(210, 625, 25)
+        doc.circle(410, 40, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -1384,72 +1402,68 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(10)
             .text(productSelected.feature4,
-            138, 655,  
+            310, 75,  
             {
-                width:150,
-                align: 'center'
+                width:190,
+                align: 'justify'
                 
             })
-
-        doc.image(pathImage3, 195, 610, {width: 30})
+        doc.image(pathImage4, 395, 25, { width: 30 })
+        
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(99, 770, 402, 80).fill('#ff6510');
+            .rect(99, 190, 402, 80).fill('#ff6510');
 
-        doc.circle(140, 800, 25)
+        doc.circle(140, 220, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage5, 125, 785, {width: 30})
+        doc.image(pathImage5, 125, 205, {width: 30})
 
         doc
             .fontSize(11)
             .text(productSelected.feature5,
-            170, 780,  
+            170, 200,  
             {
                 width:300,
                 align: 'center'    
             })
-
-        doc.addPage({
-            size: [595, 920],
-        })
-            .moveDown()
+        
 
         doc.lineJoin('FondoAzulClaro')
-            .roundedRect(50,0, 500, 500, 30 )
+            .roundedRect(50,290, 500, 500, 30 )
             .fillAndStroke('#EDF4F7', '#D5E8F4')
 
         doc.lineJoin('VentajasCompetitivas')
-            .rect(0, 0, fullDocH, 60).fill('#2e6ca7');
+            .rect(0, 290, fullDocH, 60).fill('#2e6ca7');
 
         doc
             .fillColor('#fff')
             .fontSize(30)
-            .text('Ventajas competitivas', 170,18)
+            .text('Ventajas competitivas', 170, 300)
             .moveDown();
 
         if(productSelected.adventage1 != null){
 
             doc.lineJoin('fondoGris')
-            .roundedRect(70, 80, 450, 70, 3 )
+            .roundedRect(70, 365, 450, 70, 3 )
             .fill('#E2E8EA')
 
-            doc.circle(100, 113, 25)
+            doc.circle(100, 400, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
                 .fillAndStroke("#2e6ca7", "#fff")
                 .moveDown();
 
-            doc.image(ventaja1, 88, 100, {width: 25})
+            doc.image(ventaja1, 88, 390, {width: 25})
 
             doc
                 .fontSize(11)
                 .fillColor('#163461')
                 .text(productSelected.adventage1,
-                140, 90,  
+                140, 370,  
                 {
                     width:350,
                     align: 'center'    
@@ -1459,22 +1473,22 @@ const pdfGenerator = async (req, res) => {
         if(productSelected.adventage2 != null){
 
             doc.lineJoin('fondoGris')
-            .roundedRect(70, 160, 450, 70, 3 )
+            .roundedRect(70, 440, 450, 70, 3 )
             .fill('#E2E8EA')
 
-            doc.circle(100, 195, 25)
+            doc.circle(100, 475, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
                 .fillAndStroke("#fbc02d", "#fff")
                 .moveDown();
 
-            doc.image(ventaja2, 88, 183, {width: 30})
+            doc.image(ventaja2, 88, 463, {width: 30})
 
             doc
                 .fontSize(11)
                 .fillColor('#163461')
                 .text(productSelected.adventage2,
-                140, 170,  
+                140, 450,  
                 {
                     width:350,
                     align: 'center'    
@@ -1484,22 +1498,22 @@ const pdfGenerator = async (req, res) => {
         if(productSelected.adventage3 != null){
 
             doc.lineJoin('fondoGris')
-            .roundedRect(70, 240, 450, 70, 3 )
+            .roundedRect(70, 520, 450, 70, 3 )
             .fill('#E2E8EA')
 
-            doc.circle(100, 275, 25)
+            doc.circle(100, 555, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
                 .fillAndStroke("#ff9f0f", "#fff")
                 .moveDown();
 
-            doc.image(ventaja3, 88, 263, {width: 30})
+            doc.image(ventaja3, 88, 543, {width: 30})
 
             doc
                 .fontSize(11)
                 .fillColor('#163461')
                 .text(productSelected.adventage3,
-                140, 250,  
+                140, 530,  
                 {
                     width:350,
                     align: 'center'    
@@ -1509,22 +1523,22 @@ const pdfGenerator = async (req, res) => {
         if(productSelected.adventage4 != null){
 
             doc.lineJoin('fondoGris')
-                .roundedRect(70, 320, 450, 70, 3 )
+                .roundedRect(70, 610, 450, 70, 3 )
                 .fill('#E2E8EA')
 
-            doc.circle(100, 355, 25)
+            doc.circle(100, 635, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
                 .fillAndStroke("#24abb1", "#fff")
                 .moveDown();
 
-            doc.image(ventaja4, 88, 343, {width: 30})
+            doc.image(ventaja4, 88, 623, {width: 30})
 
             doc
                 .fontSize(11)
                 .fillColor('#163461')
                 .text(productSelected.adventage4,
-                140, 330,  
+                140, 620,  
                 {
                     width:350,
                     align: 'center'    
@@ -1534,23 +1548,23 @@ const pdfGenerator = async (req, res) => {
         if(productSelected.adventage5 != null){
 
             doc.lineJoin('fondoGris')
-            .roundedRect(70, 400, 450, 70, 3 )
+            .roundedRect(70, 690, 450, 70, 3 )
             .fill('#E2E8EA')
 
-            doc.circle(100, 440, 25)
+            doc.circle(100, 720, 25)
                 .lineWidth(3)
                 .fillOpacity(0.95)
                 .fillAndStroke("#ff6510", "#fff")
                 .moveDown();
 
-            doc.image(ventaja5, 84, 426, {width: 30})
+            doc.image(ventaja5, 84, 706, {width: 30})
 
 
             doc
                 .fontSize(11)
                 .fillColor('#163461')
                 .text(productSelected.adventage5,
-                140, 410,  
+                140, 650,  
                 {
                     width:350,
                     align: 'center'    
@@ -1563,41 +1577,41 @@ const pdfGenerator = async (req, res) => {
             doc 
             .fontSize(20)
             .fillColor('#575756')
-            .text('Información extra del producto', 180, 530)
+            .text('Información extra del producto', 180, 730)
 
             doc 
                 .fontSize(12)
                 .fillColor('#575756')
-                .text('Video Extra:', 50, 570)
+                .text('Video Extra:', 50, 750)
 
             doc 
                 .fontSize(12)
                 .fillColor('#575756')
-                .text(productSelected.videoExtra1, 150, 570)
+                .text(productSelected.videoExtra1, 150, 760)
         }
         
         if(productSelected.urlExtra1 !== '' && productSelected.urlExtra1 !== null){
             doc 
                 .fontSize(12)
                 .fillColor('#575756')
-                .text(`${productSelected.etiquetaEnlace1}:`, 50, 600);
+                .text(`${productSelected.etiquetaEnlace1}:`, 50, 800);
 
             doc 
                 .fontSize(10)
                 .fillColor('#575756')
-                .text(`- ${productSelected.urlExtra1}`, 70, 620)
+                .text(`- ${productSelected.urlExtra1}`, 70, 815)
         }
 
         if(productSelected.urlExtra2 !== '' && productSelected.urlExtra2 !== null){
             doc 
                 .fontSize(12)
                 .fillColor('#575756')
-                .text(`${productSelected.etiquetaEnlace2}:`, 50, 650);
+                .text(`${productSelected.etiquetaEnlace2}:`, 50, 800);
 
             doc 
                 .fontSize(10)
                 .fillColor('#575756')
-                .text(`- ${productSelected.urlExtra2}`, 70, 670)
+                .text(`- ${productSelected.urlExtra2}`, 70, 820)
             }
         
         
@@ -1605,16 +1619,16 @@ const pdfGenerator = async (req, res) => {
             doc 
             .fontSize(12)
             .fillColor('#575756')
-            .text(`${productSelected.etiquetaEnlace3}:`, 50, 700);
+            .text(`${productSelected.etiquetaEnlace3}:`, 50, 850);
 
             doc 
                 .fontSize(10)
                 .fillColor('#575756')
-                .text(`- ${productSelected.urlExtra3}`, 70, 720)
+                .text(`- ${productSelected.urlExtra3}`, 70, 870)
         }
         
         doc
-            .image(logo, 230, 740, {width: 100})
+            .image(logo, 230, 860, {width: 100})
 
     } else if( markets.length === 4 ){
         doc
@@ -1667,7 +1681,7 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#ffffff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market1, 370, 60, {width: 210})
+            .text(productSelected.description_market1, 370, 30, {width: 210})
             .moveDown();
 
         switch(productSelected.market1){
@@ -1777,7 +1791,7 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#285258')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market2, 370, 260, {width: 210})
+            .text(productSelected.description_market2, 370, 240, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
@@ -1840,7 +1854,7 @@ const pdfGenerator = async (req, res) => {
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market3, 370, 470, {width: 210})
+            .text(productSelected.description_market3, 370, 450, {width: 210})
             .moveDown();
 
         doc.lineJoin('miter')
@@ -1896,14 +1910,14 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(16)
             .fillColor('#fff')
-            .text(productSelected.market4, 370, 650, {width: 250})
+            .text(productSelected.market4, 370, 640, {width: 250})
             .moveDown();
 
         doc
             .fontSize(10)
             .fillColor('#fff')
             .font('Helvetica-Oblique')
-            .text(productSelected.description_market4, 370, 690, {width: 210})
+            .text(productSelected.description_market4, 370, 670, {width: 210})
             .moveDown();
 
         doc
@@ -1926,9 +1940,9 @@ const pdfGenerator = async (req, res) => {
             .moveDown();
 
         doc.lineJoin('miter')
-            .rect(99, 100, 200, 200).fill('#2e6ca7');
+            .rect(79, 100, 230, 200).fill('#2e6ca7');
 
-        doc.circle(200, 150, 25)
+        doc.circle(200, 135, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
@@ -1937,76 +1951,76 @@ const pdfGenerator = async (req, res) => {
         doc
             .fontSize(11)
             .text(`${productSelected.feature1}`,
-            125, 190,  
+            95, 170,  
             {
-                width:150,
-                align: 'center'
+                width:195,
+                align: 'justify'
                 
             })
 
-        doc.image(pathImage1, 185, 135, {width: 30})
+        doc.image(pathImage1, 185, 120, {width: 30})
 
         doc.lineJoin('miter')
-            .rect(301, 100, 200, 200).fill('#fbc02d');
+            .rect(311, 100, 230, 200).fill('#fbc02d');
 
-        doc.circle(400, 150, 25)
+        doc.circle(430, 135, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage2, 385, 135, {width: 30})
+        doc.image(pathImage2, 415, 120, {width: 30})
 
         doc
             .fontSize(11)
             .text(`${productSelected.feature2}`,
-            325, 190,  
+            325, 170,  
             {
-                width:150,
-                align: 'center'
+                width:195,
+                align: 'justify'
                 
             })
 
 
         doc.lineJoin('miter')
-            .rect(99, 302, 200, 200).fill('#ff9f0f');
+            .rect(79, 302, 230, 200).fill('#ff9f0f');
 
-        doc.circle(200, 350, 25)
+        doc.circle(200, 335, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
             .moveDown();
         
-        doc.image(pathImage3, 185, 335, {width: 30})
+        doc.image(pathImage3, 185, 320, {width: 30})
 
         doc
             .fontSize(11)
             .text(`${productSelected.feature3}`,
-            125, 390,  
+            95, 370,  
             {
-                width:150,
-                align: 'center'
+                width:195,
+                align: 'justify'
                 
             })
 
         doc.lineJoin('miter')
-            .rect(301, 302, 200, 200).fill('#24abb1');
+            .rect(311, 302, 230, 200).fill('#24abb1');
 
-        doc.circle(400, 350, 25)
+        doc.circle(420, 335, 25)
             .lineWidth(3)
             .fillOpacity(0.95)
             .fillAndStroke("white", "#fff")
             .moveDown();
 
-        doc.image(pathImage4, 385, 335, {width: 30})
+        doc.image(pathImage4, 405, 320, {width: 30})
 
         doc
             .fontSize(11)
             .text(`${productSelected.feature4}`,
-            330, 390,  
+            330, 370,  
             {
-                width:150,
-                align: 'center'
+                width:195,
+                align: 'justify'
                 
             })
 
