@@ -1412,7 +1412,7 @@ const pdfGenerator = async (req, res) => {
         
         //* ---------------------------------------------
         doc.lineJoin('miter')
-            .rect(99, 190, 402, 80).fill('#ff6510');
+            .rect(99, 190, 402, 90).fill('#ff6510');
 
         doc.circle(140, 220, 25)
             .lineWidth(3)
@@ -1564,7 +1564,7 @@ const pdfGenerator = async (req, res) => {
                 .fontSize(11)
                 .fillColor('#163461')
                 .text(productSelected.adventage5,
-                140, 650,  
+                140, 710,  
                 {
                     width:350,
                     align: 'center'    
