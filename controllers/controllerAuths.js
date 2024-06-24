@@ -1,5 +1,5 @@
 import {check, validationResult} from 'express-validator';
-import { User } from '../models/index_model.js';
+import { User, Session } from '../models/index_model.js';
 import { generateJWT, tokenRecovery } from '../helpers/tokens.js'
 import { secureJWT } from '../helpers/generateJWT.js'
 import { emailRecovery } from '../helpers/emails.js';
@@ -28,13 +28,20 @@ const  loginUser = async (req, res) => {
             });
         }
 
+        const dataSession = {
+            'name' : user.name,
+            'email' : user.email
+        }
+
+        await Session.create(dataSession);
+
+        
         const userData = {
             "id" : user.id,
             "name": user.name,
             "email": user.email,
             "cargo": user.cargo,
             "rolId": user.rolId
-
         }
 
         //Check password with db and client
