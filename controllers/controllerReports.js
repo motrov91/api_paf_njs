@@ -1,5 +1,5 @@
 import { emailReportFailure } from '../helpers/emails.js';
-
+import { Session } from '../models/index_model.js';
 
 const reportProblem = async (req, res) => {
 
@@ -15,8 +15,13 @@ const reportProblem = async (req, res) => {
 }
 
 const deleteAccount = async (req, res) => {
-    console.log(req.body)
     res.json({msg: "Tu solicitud se ha enviado con éxito"})
+}
+
+const sessionsApp = async (req, res) => { 
+    const sessions = Session.findAll;  
+    console.log('SESSIONS', sessions)
+    return res.status(200).json(sessions);
 }
 
 
@@ -24,5 +29,6 @@ const deleteAccount = async (req, res) => {
 
 export {
     reportProblem,
-    deleteAccount
+    deleteAccount,
+    sessionsApp
 }   
