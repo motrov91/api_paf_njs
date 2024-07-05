@@ -6627,7 +6627,7 @@ async function LocalPDF(data) {
     const result = await new Promise((resolve, reject) => {
         const upload_stream = cloudinary.uploader.upload_stream({
             resource_type: 'auto',
-            public_id: `productosPAF${id}`
+            public_id: name.trim()
         }, async (error, result) => {
             if(error){
                 console.error('Error al subir el archivo', error);
