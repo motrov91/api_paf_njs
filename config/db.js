@@ -3,8 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config({path: 'variables.env'})
 
 const db = new Sequelize(
+    //'api_rest',
     process.env.BD_NAME,
+    //'root',
     process.env.DB_USER,
+    // '',
     process.env.DB_PASS,
     {
         host: process.env.BD_HOST,

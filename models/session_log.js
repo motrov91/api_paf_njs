@@ -15,6 +15,14 @@ const Session = db.define('Sessions', {
         allowNull: false,
         defaultValue: Sequelize.NOW
     }
+},{
+    scopes:{
+        deleteCreatedAndUpadated:{
+            attributes:{
+                exclude: ['password', 'createdAt', 'updatedAt', 'token']
+            }
+        }
+    }
 });
 
 export default Session;

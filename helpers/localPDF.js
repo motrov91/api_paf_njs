@@ -10,7 +10,7 @@ import { v2 as cloudinary } from 'cloudinary';
 cloudinary.config( process.env.CLOUDINARY_URL )
 
 
-async function LocalPDF (data){
+async function LocalPDF(data) {
 
     console.log('DATOS ENTRANTES: ',data.id, data.name)
     const { id, name } = data;
@@ -6627,7 +6627,7 @@ async function LocalPDF (data){
     const result = await new Promise((resolve, reject) => {
         const upload_stream = cloudinary.uploader.upload_stream({
             resource_type: 'auto',
-            public_id: name
+            public_id: `productosPAF${id}`
         }, async (error, result) => {
             if(error){
                 console.error('Error al subir el archivo', error);
@@ -6637,6 +6637,11 @@ async function LocalPDF (data){
 
                 //Check by exist product
                 const dataQuery = await Product.findByPk(id);
+
+                //INGRESA Y GUARDA EL PDF PRODUCTO
+                console.log('GUARDA EL PDF');
+                console.log('secureUrlPdf', result.secure_url);
+                console.log('publicIdPdf', result.public_id);
 
                 //console.log('DATAQUERY', dataQuery)
                 dataQuery['secureUrlPdf'] = result.secure_url;

@@ -19,9 +19,13 @@ const deleteAccount = async (req, res) => {
 }
 
 const sessionsApp = async (req, res) => { 
-    const sessions = Session.findAll;  
-    console.log('SESSIONS', sessions)
-    return res.status(200).json(sessions);
+    const sessions = await Session.findAll({
+        order: [
+            ['id', 'DESC'],
+        ]
+    });  
+    console.log('SESSIONS', sessions.length)
+    return res.status(200).json({sessions});
 }
 
 
